@@ -1,0 +1,84 @@
+startup:
+  httpClientAuthentication:
+    - id: "api_integration_pix"
+      type: clientCredential
+      clientId: "abc"
+      clientSecret: "123456"
+      tokenUri: "https://test.pix.com"
+      valueFrom: declared
+
+
+#  apiSecuret:
+#    type: basic
+#    valueFrom: 
+  
+#  connections:
+#    kafka:
+#      valueFrom:
+#    redis:
+#      valueFrom:
+
+
+#entrypoints:
+#  endpoints:
+#  - route: "api/test"
+#    method: post
+#    flowActionId: {id}
+  
+#  consumers:
+#    kafka:
+#      - groupId:
+#        topicName:
+#        actionId: {id}
+  
+
+#actions:
+#  - id: 1
+#    type: http
+#    uri: 'https://api/test'
+#    contractMapId:
+#    autenticationId: 10
+  
+#  - id: 2
+#    type: kafkaConsumer
+#    topicName: 'stepladder.test.request'
+#    groupId: ''
+
+## how put condictions between actions
+#flowActions:
+#  - id: 2001
+#    actionsId:
+#      - 1
+#      - 2
+
+#contractMaps:
+#  - id: 1005
+#    # fromName to destinationName separated by :
+#    map:
+#      - "customer.address.citi:customer.address.city"
+#    remove:
+#      - "customer.address.country"
+
+                  
+#strategies:
+#  - cache:
+#      id: redisCache_22
+#      type: redis
+
+#  - httpIdempotency:
+#      id: idemp_55
+#      ttl: 60s
+#      provider: 
+#        type: redis
+#        id: redisCache_22
+#      mapFields:
+#        - "customer.id"
+
+#validations:
+#  - id: 8001
+#    fields:
+#    - name: "customer.name"
+#      type: Required
+#    - name: "customer.name"
+#      type: biggerThen
+#      size: 10
