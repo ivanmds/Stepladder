@@ -1,4 +1,5 @@
-﻿using App.Settings.Validations;
+﻿using App.Settings;
+using App.Validations;
 using YamlDotNet.Serialization.NamingConventions;
 
 namespace App.Extensions
@@ -13,16 +14,16 @@ namespace App.Extensions
 
 
             var pathConfigFile = "configApp.yaml";
-            var applicationSettings = deserializer.Deserialize<Settings.ApplicationSetting>(File.ReadAllText(pathConfigFile));
+            var applicationSettings = deserializer.Deserialize<ApplicationSetting>(File.ReadAllText(pathConfigFile));
 
             ApplicationSettingValidate(applicationSettings);
             Console.WriteLine($"AddConfigFile File {pathConfigFile} loaded and validated");
         }
 
-        private static void ApplicationSettingValidate(Settings.ApplicationSetting setting)
+        private static void ApplicationSettingValidate(ApplicationSetting setting)
         {
             var validables = setting.GetValidables();
-            var result = ValidationResult.Create();
+            var result = ValidateResult.Create();
             foreach (var validable in validables)
                 result.Concate(validable.Valid());
 

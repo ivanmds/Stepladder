@@ -1,10 +1,10 @@
 ﻿using System.Text;
 
-namespace App.Settings.Validations
+namespace App.Validations
 {
-    public class ValidationResult
+    public class ValidateResult
     {
-        public ValidationResult()
+        public ValidateResult()
         {
             Errors = new List<string>();
         }
@@ -19,7 +19,7 @@ namespace App.Settings.Validations
 
         public bool HasError => Errors.Count > 0;
         public bool IsSuccess => !HasError;
-        public void Concate(ValidationResult validation)
+        public void Concate(ValidateResult validation)
             => Errors.AddRange(validation.Errors);
 
         public override string ToString()
@@ -36,8 +36,8 @@ namespace App.Settings.Validations
         }
 
 
-        public static ValidationResult Create() => new ValidationResult();
-        public static ValidationResult Concate(params ValidationResult[] validations)
+        public static ValidateResult Create() => new ValidateResult();
+        public static ValidateResult Concate(params ValidateResult[] validations)
         {
             var result = Create();
             foreach (var validation in validations)

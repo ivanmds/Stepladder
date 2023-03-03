@@ -1,7 +1,7 @@
 ﻿using App.Settings.HttpClients.Types;
 using App.Settings.HttpClients.ValidateRules;
 using App.Settings.Types;
-using App.Settings.Validations;
+using App.Validations;
 
 namespace App.Settings.HttpClients
 {
@@ -16,22 +16,15 @@ namespace App.Settings.HttpClients
         public ValueFromType ValueFrom { get; set; }
 
 
-        public ValidationResult Valid()
+        public ValidateResult Valid()
         {
-            var validations = new IValidateSetting<HttpClientAuthentication>[]
+            var rules = new IRule<HttpClientAuthentication>[]
             {
                 new HttpClientAuthenticationBaseValidateRule(),
                 new HttpClientAuthenticationClientCredentialValidateRule()
             };
 
-            var finalResult = ValidationResult.Create();
-            foreach (var validation in validations) 
-            {
-                var result = validation.Validate(this);
-                finalResult.Concate(result);
-            }
-
-            return finalResult;
+            return RuleExecute.Execute(this, rules);
         }
     }
 }

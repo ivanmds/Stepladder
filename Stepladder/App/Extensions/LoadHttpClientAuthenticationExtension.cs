@@ -7,9 +7,9 @@ namespace App.Extensions
 {
     public static class LoadHttpClientAuthenticationExtension
     {
-        public static async Task AddLoadHttpClientAuthenticationAsync(this WebApplicationBuilder builder)
+        public static async Task AddHttpClientAuthenticationAsync(this WebApplicationBuilder builder)
         {
-            var appConfig = ApplicationSetting.CurrentValue;
+            var appConfig = ApplicationSetting.Current;
 
             if (appConfig.Startup?.HttpClientAuthentication?.Count > 0)
             {

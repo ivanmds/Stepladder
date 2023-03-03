@@ -1,28 +1,23 @@
-﻿using App.Settings.HttpClients;
+﻿using App.Settings.ApiSecurets;
+using App.Settings.HttpClients;
 using App.Settings.ValidateRules;
-using App.Settings.Validations;
+using App.Validations;
 
 namespace App.Settings
 {
     public class StartupSetting : IValidable
     {
         public List<HttpClientAuthentication> HttpClientAuthentication { get; set; }
+        public ApiSecuretSetting ApiSecuret { get; set; }
 
-        public ValidationResult Valid()
+        public ValidateResult Valid()
         {
-            var validations = new IValidateSetting<StartupSetting>[]
+            var rules = new IRule<StartupSetting>[]
             {
                 new StartupSettingValidateRule(),
             };
 
-            var finalResult = ValidationResult.Create();
-            foreach (var validation in validations)
-            {
-                var result = validation.Validate(this);
-                finalResult.Concate(result);
-            }
-
-            return finalResult;
+            return RuleExecute.Execute(this, rules);
         }
     }
 }

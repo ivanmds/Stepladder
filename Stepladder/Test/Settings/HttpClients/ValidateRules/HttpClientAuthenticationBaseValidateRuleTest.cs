@@ -13,7 +13,7 @@ namespace Test.Settings.HttpClients.ValidateRules
             var rule = new HttpClientAuthenticationBaseValidateRule();
 
             // act
-            var result = rule.Validate(httpClientAuthentication);
+            var result = rule.Do(httpClientAuthentication);
 
             // assert
             var contains = result.Errors.Contains("HttpClientAuthentication.Id is required");
@@ -28,7 +28,7 @@ namespace Test.Settings.HttpClients.ValidateRules
             var rule = new HttpClientAuthenticationBaseValidateRule();
 
             // act
-            var result = rule.Validate(httpClientAuthentication);
+            var result = rule.Do(httpClientAuthentication);
 
             // assert
             Assert.True(result.HasError);
@@ -42,7 +42,7 @@ namespace Test.Settings.HttpClients.ValidateRules
             var rule = new HttpClientAuthenticationBaseValidateRule();
 
             // act
-            var result = rule.Validate(httpClientAuthentication);
+            var result = rule.Do(httpClientAuthentication);
 
             // assert
             Assert.False(result.IsSuccess);

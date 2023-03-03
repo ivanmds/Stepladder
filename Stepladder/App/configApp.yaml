@@ -7,9 +7,11 @@ startup:
       endpointAuth: "https://pix-h.bancobv.com.br/auth/oauth/v2/token-jwt"
       valueFrom: declared
 
-#  apiSecuret:
-#    type: basic
-#    valueFrom: 
+  apiSecuret:
+    type: basic
+    user: admin
+    password: 123456
+    valueFrom: declared
   
 #  connections:
 #    kafka:
@@ -18,11 +20,11 @@ startup:
 #      valueFrom:
 
 
-#entrypoints:
-#  endpoints:
-#  - route: "api/test"
-#    method: post
-#    flowActionId: {id}
+entrypoints:
+  routes:
+  - route: "api/test"
+    method: post
+    flowActionId: {id}
   
 #  consumers:
 #    kafka:

@@ -14,7 +14,7 @@ namespace Test.Settings.HttpClients.ValidateRules
 
             // act 
 
-            var result = rule.Validate(httpClientAuthentication);
+            var result = rule.Do(httpClientAuthentication);
 
             // assert
             var contains = result.Errors.Contains("HttpClientAuthentication.ClientId is required");
@@ -29,7 +29,7 @@ namespace Test.Settings.HttpClients.ValidateRules
             var rule = new HttpClientAuthenticationClientCredentialValidateRule();
 
             // act 
-            var result = rule.Validate(httpClientAuthentication);
+            var result = rule.Do(httpClientAuthentication);
 
             // assert
             var contains = result.Errors.Contains("HttpClientAuthentication.ClientSecret is required");
@@ -45,7 +45,7 @@ namespace Test.Settings.HttpClients.ValidateRules
             var rule = new HttpClientAuthenticationClientCredentialValidateRule();
 
             // act 
-            var result = rule.Validate(httpClientAuthentication);
+            var result = rule.Do(httpClientAuthentication);
 
             // assert
             var contains = result.Errors.Contains("HttpClientAuthentication.EndpointAuth is required");
@@ -63,7 +63,7 @@ namespace Test.Settings.HttpClients.ValidateRules
             var rule = new HttpClientAuthenticationClientCredentialValidateRule();
 
             // act 
-            var result = rule.Validate(httpClientAuthentication);
+            var result = rule.Do(httpClientAuthentication);
 
             // assert
             var contains = result.Errors.Contains("HttpClientAuthentication.EndpointAuth should a valid uri");
@@ -81,7 +81,7 @@ namespace Test.Settings.HttpClients.ValidateRules
             var rule = new HttpClientAuthenticationClientCredentialValidateRule();
 
             // act 
-            var result = rule.Validate(httpClientAuthentication);
+            var result = rule.Do(httpClientAuthentication);
 
             // assert
             var contains = result.Errors.Contains("HttpClientAuthentication.TokenUri should a valid uri");

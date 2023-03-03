@@ -1,14 +1,15 @@
-﻿using App.Settings.Validations;
+﻿using App.Validations;
 
 namespace App.Settings
 {
     public class ApplicationSetting
     {
-        public static ApplicationSetting CurrentValue { get; private set; }
+        public static ApplicationSetting Current { get; private set; }
 
         public ApplicationSetting()
         {
-            CurrentValue = this;
+            if (Current == null)
+                Current = this;
         }
 
         public StartupSetting Startup { get; set; }
@@ -17,10 +18,11 @@ namespace App.Settings
         public List<IValidable> GetValidables()
         {
             var validables = new List<IValidable>();
-            if(Startup != null)
+            if (Startup != null)
             {
                 validables.Add(Startup);
                 validables.AddRange(Startup.HttpClientAuthentication);
+                validables.Add(Startup.ApiSecuret);
             }
 
 

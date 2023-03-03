@@ -22,7 +22,7 @@ namespace Test.Settings.ValidateRules
             var rule = new StartupSettingValidateRule();
 
             // act
-            var result = rule.Validate(startupSetting);
+            var result = rule.Do(startupSetting);
 
             // assert
             var contains = result.Errors.Contains("StartupSetting.HttpClientAuthentication.Id duplicate");
@@ -45,7 +45,7 @@ namespace Test.Settings.ValidateRules
             var rule = new StartupSettingValidateRule();
 
             // act
-            var result = rule.Validate(startupSetting);
+            var result = rule.Do(startupSetting);
 
             // assert
             var contains = result.Errors.Contains("StartupSetting.HttpClientAuthentication.Id duplicate");

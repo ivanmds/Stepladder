@@ -1,12 +1,12 @@
-﻿using App.Settings.Validations;
+﻿using App.Validations;
 
 namespace App.Settings.ValidateRules
 {
-    public class StartupSettingValidateRule : IValidateSetting<StartupSetting>
+    public class StartupSettingValidateRule : IRule<StartupSetting>
     {
-        public ValidationResult Validate(StartupSetting value)
+        public ValidateResult Do(StartupSetting value)
         {
-            var result = ValidationResult.Create();
+            var result = ValidateResult.Create();
 
             var httpClientAuthenticationDuplicateIds = value.HttpClientAuthentication?.GroupBy(p => p.Id)
                 .Where(g => g.Count() > 1)

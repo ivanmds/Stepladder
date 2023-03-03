@@ -10,8 +10,4 @@
     <PackageReference Include="YamlDotNet" Version="13.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Http\" />
-  </ItemGroup>
-
 </Project>

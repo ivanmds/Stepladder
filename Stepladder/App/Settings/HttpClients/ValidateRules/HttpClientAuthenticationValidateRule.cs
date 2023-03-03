@@ -1,12 +1,12 @@
-﻿using App.Settings.Validations;
+﻿using App.Validations;
 
 namespace App.Settings.HttpClients.ValidateRules
 {
-    public class HttpClientAuthenticationClientCredentialValidateRule : IValidateSetting<HttpClientAuthentication>
+    public class HttpClientAuthenticationClientCredentialValidateRule : IRule<HttpClientAuthentication>
     {
-        public ValidationResult Validate(HttpClientAuthentication value)
+        public ValidateResult Do(HttpClientAuthentication value)
         {
-            var result = ValidationResult.Create();
+            var result = ValidateResult.Create();
 
             if(value.Type == Types.AuthenticationType.ClientCredential)
             {
