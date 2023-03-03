@@ -4,6 +4,8 @@ namespace App.Settings.HttpClients.Tokens
 {
     public class AuthToken
     {
+        public string AuthenticationId { get; set; }
+
         [JsonPropertyName("access_token")]
         public string AccessToken { get; set; }
 

@@ -49,7 +49,12 @@ namespace App.Extensions
 
 
                     if (response.IsSuccessStatusCode)
-                        return await response.Content.ReadFromJsonAsync<AuthToken>();
+                    {
+                        var authToken = await response.Content.ReadFromJsonAsync<AuthToken>();
+                        authToken.AuthenticationId = authentication.Id;
+
+                        return authToken;
+                    }
                     else
                         throw new Exception($"Error when try load autenticate {authentication.Id}");
                 }
