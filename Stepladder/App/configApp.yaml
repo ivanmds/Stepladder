@@ -2,9 +2,9 @@ startup:
   httpClientAuthentication:
     - id: "api_integration_pix"
       type: clientCredential
-      clientId: "l7xx4aa0899f169346aab8c1c5eae99c7bda"
-      clientSecret: "23d251e9f0464739a81e75a71e0dd14a"
-      endpointAuth: "https://pix-h.bancobv.com.br/auth/oauth/v2/token-jwt"
+      clientId: ""
+      clientSecret: ""
+      endpointAuth: ""
       valueFrom: declared
 
   apiSecuret:
