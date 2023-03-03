@@ -1,8 +1,8 @@
 ﻿using App.Settings.Validations;
 
-namespace App.Settings.HttpClients.Validations
+namespace App.Settings.HttpClients.ValidateRules
 {
-    public class HttpClientAuthenticationBaseValidate : IValidateSetting<HttpClientAuthentication>
+    public class HttpClientAuthenticationBaseValidateRule : IValidateSetting<HttpClientAuthentication>
     {
         public ValidationResult Validate(HttpClientAuthentication value)
         {
@@ -10,6 +10,7 @@ namespace App.Settings.HttpClients.Validations
 
             if (string.IsNullOrEmpty(value.Id))
                 result.AddError("HttpClientAuthentication.Id is required");
+
 
             return result;
         }

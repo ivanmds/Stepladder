@@ -1,8 +1,8 @@
 ﻿using App.Settings.Validations;
 
-namespace App.Settings.HttpClients.Validations
+namespace App.Settings.HttpClients.ValidateRules
 {
-    public class HttpClientAuthenticationClientCredentialValidate : IValidateSetting<HttpClientAuthentication>
+    public class HttpClientAuthenticationClientCredentialValidateRule : IValidateSetting<HttpClientAuthentication>
     {
         public ValidationResult Validate(HttpClientAuthentication value)
         {
@@ -16,14 +16,14 @@ namespace App.Settings.HttpClients.Validations
                 if (string.IsNullOrEmpty(value.ClientSecret))
                     result.AddError("HttpClientAuthentication.ClientSecret is required");
 
-                if(string.IsNullOrEmpty(value.TokenUri))
-                    result.AddError("HttpClientAuthentication.TokenUri is required");
+                if(string.IsNullOrEmpty(value.EndpointAuth))
+                    result.AddError("HttpClientAuthentication.EndpointAuth is required");
                 else
                 {
                     Uri uri;
-                    Uri.TryCreate(value.TokenUri, UriKind.Absolute, out uri);
+                    Uri.TryCreate(value.EndpointAuth, UriKind.Absolute, out uri);
                     if(uri is null)
-                        result.AddError("HttpClientAuthentication.TokenUri should a valid uri");
+                        result.AddError("HttpClientAuthentication.EndpointAuth should a valid uri");
                 }
             }
 

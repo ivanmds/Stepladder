@@ -4,11 +4,11 @@ namespace App.Settings
 {
     public class ApplicationSetting
     {
-        public static ApplicationSetting Value { get; private set; }
+        public static ApplicationSetting CurrentValue { get; private set; }
 
         public ApplicationSetting()
         {
-            Value = this;
+            CurrentValue = this;
         }
 
         public StartupSetting Startup { get; set; }
@@ -19,6 +19,7 @@ namespace App.Settings
             var validables = new List<IValidable>();
             if(Startup != null)
             {
+                validables.Add(Startup);
                 validables.AddRange(Startup.HttpClientAuthentication);
             }
 

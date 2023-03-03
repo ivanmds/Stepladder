@@ -1,19 +1,19 @@
 ﻿using App.Settings.HttpClients;
-using App.Settings.HttpClients.Validations;
+using App.Settings.HttpClients.ValidateRules;
 
-namespace Test.Settings.HttpClients.Validations
+namespace Test.Settings.HttpClients.ValidateRules
 {
-    public class HttpClientAuthenticationBaseValidateTest
+    public class HttpClientAuthenticationBaseValidateRuleTest
     {
         [Fact]
         public void WhenIdIsNullOrEmpty_ShouldReturnError()
         {
             // arrange
             var httpClientAuthentication = new HttpClientAuthentication();
-            var validate = new HttpClientAuthenticationBaseValidate();
+            var rule = new HttpClientAuthenticationBaseValidateRule();
 
             // act
-            var result = validate.Validate(httpClientAuthentication);
+            var result = rule.Validate(httpClientAuthentication);
 
             // assert
             var contains = result.Errors.Contains("HttpClientAuthentication.Id is required");
@@ -25,10 +25,10 @@ namespace Test.Settings.HttpClients.Validations
         {
             // arrange
             var httpClientAuthentication = new HttpClientAuthentication();
-            var validate = new HttpClientAuthenticationBaseValidate();
+            var rule = new HttpClientAuthenticationBaseValidateRule();
 
             // act
-            var result = validate.Validate(httpClientAuthentication);
+            var result = rule.Validate(httpClientAuthentication);
 
             // assert
             Assert.True(result.HasError);
@@ -39,10 +39,10 @@ namespace Test.Settings.HttpClients.Validations
         {
             // arrange
             var httpClientAuthentication = new HttpClientAuthentication();
-            var validate = new HttpClientAuthenticationBaseValidate();
+            var rule = new HttpClientAuthenticationBaseValidateRule();
 
             // act
-            var result = validate.Validate(httpClientAuthentication);
+            var result = rule.Validate(httpClientAuthentication);
 
             // assert
             Assert.False(result.IsSuccess);

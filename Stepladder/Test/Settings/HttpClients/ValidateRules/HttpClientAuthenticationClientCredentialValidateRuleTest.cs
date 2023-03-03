@@ -1,20 +1,20 @@
 ﻿using App.Settings.HttpClients;
-using App.Settings.HttpClients.Validations;
+using App.Settings.HttpClients.ValidateRules;
 
-namespace Test.Settings.HttpClients.Validations
+namespace Test.Settings.HttpClients.ValidateRules
 {
-    public class HttpClientAuthenticationClientCredentialValidateTest
+    public class HttpClientAuthenticationClientCredentialValidateRuleTest
     {
         [Fact]
         public void WhenClientIdIsNullOrEmpty_ShouldReturnError()
         {
             // arrange 
             var httpClientAuthentication = new HttpClientAuthentication();
-            var validate = new HttpClientAuthenticationClientCredentialValidate();
+            var rule = new HttpClientAuthenticationClientCredentialValidateRule();
 
             // act 
 
-            var result = validate.Validate(httpClientAuthentication);
+            var result = rule.Validate(httpClientAuthentication);
 
             // assert
             var contains = result.Errors.Contains("HttpClientAuthentication.ClientId is required");
@@ -26,10 +26,10 @@ namespace Test.Settings.HttpClients.Validations
         {
             // arrange 
             var httpClientAuthentication = new HttpClientAuthentication();
-            var validate = new HttpClientAuthenticationClientCredentialValidate();
+            var rule = new HttpClientAuthenticationClientCredentialValidateRule();
 
             // act 
-            var result = validate.Validate(httpClientAuthentication);
+            var result = rule.Validate(httpClientAuthentication);
 
             // assert
             var contains = result.Errors.Contains("HttpClientAuthentication.ClientSecret is required");
@@ -38,35 +38,35 @@ namespace Test.Settings.HttpClients.Validations
 
 
         [Fact]
-        public void WhenTokenUriIsNullOrEmpty_ShouldReturnError()
+        public void WhenEndpointAuthIsNullOrEmpty_ShouldReturnError()
         {
             // arrange 
             var httpClientAuthentication = new HttpClientAuthentication();
-            var validate = new HttpClientAuthenticationClientCredentialValidate();
+            var rule = new HttpClientAuthenticationClientCredentialValidateRule();
 
             // act 
-            var result = validate.Validate(httpClientAuthentication);
+            var result = rule.Validate(httpClientAuthentication);
 
             // assert
-            var contains = result.Errors.Contains("HttpClientAuthentication.TokenUri is required");
+            var contains = result.Errors.Contains("HttpClientAuthentication.EndpointAuth is required");
             Assert.True(contains);
         }
 
         [Fact]
-        public void WhenTokenUriIsNotValid_ShouldReturnError()
+        public void WhenEndpointAuthIsNotValid_ShouldReturnError()
         {
             // arrange 
             var httpClientAuthentication = new HttpClientAuthentication
             {
-                TokenUri = "http://ts@tes@com"
+                EndpointAuth = "http://ts@tes@com"
             };
-            var validate = new HttpClientAuthenticationClientCredentialValidate();
+            var rule = new HttpClientAuthenticationClientCredentialValidateRule();
 
             // act 
-            var result = validate.Validate(httpClientAuthentication);
+            var result = rule.Validate(httpClientAuthentication);
 
             // assert
-            var contains = result.Errors.Contains("HttpClientAuthentication.TokenUri should a valid uri");
+            var contains = result.Errors.Contains("HttpClientAuthentication.EndpointAuth should a valid uri");
             Assert.True(contains);
         }
 
@@ -76,12 +76,12 @@ namespace Test.Settings.HttpClients.Validations
             // arrange 
             var httpClientAuthentication = new HttpClientAuthentication
             {
-                TokenUri = "http://pix.com/api/test"
+                EndpointAuth = "http://pix.com/api/test"
             };
-            var validate = new HttpClientAuthenticationClientCredentialValidate();
+            var rule = new HttpClientAuthenticationClientCredentialValidateRule();
 
             // act 
-            var result = validate.Validate(httpClientAuthentication);
+            var result = rule.Validate(httpClientAuthentication);
 
             // assert
             var contains = result.Errors.Contains("HttpClientAuthentication.TokenUri should a valid uri");

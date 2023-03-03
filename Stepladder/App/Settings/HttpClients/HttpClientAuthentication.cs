@@ -1,5 +1,5 @@
 ﻿using App.Settings.HttpClients.Types;
-using App.Settings.HttpClients.Validations;
+using App.Settings.HttpClients.ValidateRules;
 using App.Settings.Types;
 using App.Settings.Validations;
 
@@ -10,7 +10,7 @@ namespace App.Settings.HttpClients
         public string Id { get; set; }
         public string ClientId { get; set; }
         public string ClientSecret { get; set; }
-        public string TokenUri { get; set; }
+        public string EndpointAuth { get; set; }
 
         public AuthenticationType Type { get; set; }
         public ValueFromType ValueFrom { get; set; }
@@ -20,8 +20,8 @@ namespace App.Settings.HttpClients
         {
             var validations = new IValidateSetting<HttpClientAuthentication>[]
             {
-                new HttpClientAuthenticationBaseValidate(),
-                new HttpClientAuthenticationClientCredentialValidate()
+                new HttpClientAuthenticationBaseValidateRule(),
+                new HttpClientAuthenticationClientCredentialValidateRule()
             };
 
             var finalResult = ValidationResult.Create();
