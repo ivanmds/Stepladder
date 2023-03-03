@@ -3,14 +3,14 @@ using App.Settings.HttpClients.ValidateRules;
 
 namespace Test.Settings.HttpClients.ValidateRules
 {
-    public class HttpClientAuthenticationBaseValidateRuleTest
+    public class HttpClientAuthenticationBaseRuleTest
     {
         [Fact]
         public void WhenIdIsNullOrEmpty_ShouldReturnError()
         {
             // arrange
             var httpClientAuthentication = new HttpClientAuthentication();
-            var rule = new HttpClientAuthenticationBaseValidateRule();
+            var rule = new HttpClientAuthenticationBaseRule();
 
             // act
             var result = rule.Do(httpClientAuthentication);
@@ -25,7 +25,7 @@ namespace Test.Settings.HttpClients.ValidateRules
         {
             // arrange
             var httpClientAuthentication = new HttpClientAuthentication();
-            var rule = new HttpClientAuthenticationBaseValidateRule();
+            var rule = new HttpClientAuthenticationBaseRule();
 
             // act
             var result = rule.Do(httpClientAuthentication);
@@ -39,7 +39,7 @@ namespace Test.Settings.HttpClients.ValidateRules
         {
             // arrange
             var httpClientAuthentication = new HttpClientAuthentication();
-            var rule = new HttpClientAuthenticationBaseValidateRule();
+            var rule = new HttpClientAuthenticationBaseRule();
 
             // act
             var result = rule.Do(httpClientAuthentication);

@@ -2,7 +2,7 @@
 
 namespace App.Settings.ValidateRules
 {
-    public class StartupSettingValidateRule : IRule<StartupSetting>
+    public class StartupSettingRule : IRule<StartupSetting>
     {
         public ValidateResult Do(StartupSetting value)
         {

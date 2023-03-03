@@ -3,14 +3,14 @@ using App.Settings.ApiSecurets.ValidateRules;
 
 namespace Test.Settings.ApiSecurets.ValidateRules
 {
-    public class ApiSecuretSettingTypeBasicValidateRuleTest
+    public class ApiSecuretSettingTypeBasicRuleTest
     {
         [Fact]
         public void WhenApiSecuretTypeBasicHasEmptyOrNullUser_ShouldReturnError()
         {
             // arrange
             var apiSecuret = new ApiSecuretSetting();
-            var rule = new ApiSecuretSettingTypeBasicValidateRule();
+            var rule = new ApiSecuretSettingTypeBasicRule();
 
             // act
             var result = rule.Do(apiSecuret);
@@ -25,7 +25,7 @@ namespace Test.Settings.ApiSecurets.ValidateRules
         {
             // arrange
             var apiSecuret = new ApiSecuretSetting();
-            var rule = new ApiSecuretSettingTypeBasicValidateRule();
+            var rule = new ApiSecuretSettingTypeBasicRule();
 
             // act
             var result = rule.Do(apiSecuret);

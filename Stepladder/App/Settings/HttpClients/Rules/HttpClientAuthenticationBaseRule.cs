@@ -2,7 +2,7 @@
 
 namespace App.Settings.HttpClients.ValidateRules
 {
-    public class HttpClientAuthenticationBaseValidateRule : IRule<HttpClientAuthentication>
+    public class HttpClientAuthenticationBaseRule : IRule<HttpClientAuthentication>
     {
         public ValidateResult Do(HttpClientAuthentication value)
         {

@@ -20,7 +20,7 @@ namespace App.Settings.HttpClients
         {
             var rules = new IRule<HttpClientAuthentication>[]
             {
-                new HttpClientAuthenticationBaseValidateRule(),
+                new HttpClientAuthenticationBaseRule(),
                 new HttpClientAuthenticationClientCredentialValidateRule()
             };
 

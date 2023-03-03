@@ -17,7 +17,7 @@ namespace App.Settings.ApiSecurets
         {
             var rules = new IRule<ApiSecuretSetting>[]
             {
-                new ApiSecuretSettingTypeBasicValidateRule(),
+                new ApiSecuretSettingTypeBasicRule(),
             };
 
             return RuleExecute.Execute(this, rules);

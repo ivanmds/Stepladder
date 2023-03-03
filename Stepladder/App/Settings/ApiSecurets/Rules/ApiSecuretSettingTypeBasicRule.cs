@@ -2,7 +2,7 @@
 
 namespace App.Settings.ApiSecurets.ValidateRules
 {
-    public class ApiSecuretSettingTypeBasicValidateRule : IRule<ApiSecuretSetting>
+    public class ApiSecuretSettingTypeBasicRule : IRule<ApiSecuretSetting>
     {
         public ValidateResult Do(ApiSecuretSetting value)
         {

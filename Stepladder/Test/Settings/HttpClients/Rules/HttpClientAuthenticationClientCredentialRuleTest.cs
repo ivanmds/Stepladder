@@ -3,7 +3,7 @@ using App.Settings.HttpClients.ValidateRules;
 
 namespace Test.Settings.HttpClients.ValidateRules
 {
-    public class HttpClientAuthenticationClientCredentialValidateRuleTest
+    public class HttpClientAuthenticationClientCredentialRuleTest
     {
         [Fact]
         public void WhenClientIdIsNullOrEmpty_ShouldReturnError()

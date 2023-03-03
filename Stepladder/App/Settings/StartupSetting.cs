@@ -14,7 +14,7 @@ namespace App.Settings
         {
             var rules = new IRule<StartupSetting>[]
             {
-                new StartupSettingValidateRule(),
+                new StartupSettingRule(),
             };
 
             return RuleExecute.Execute(this, rules);

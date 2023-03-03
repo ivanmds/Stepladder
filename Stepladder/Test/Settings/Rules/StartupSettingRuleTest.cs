@@ -4,7 +4,7 @@ using App.Settings.ValidateRules;
 
 namespace Test.Settings.ValidateRules
 {
-    public class StartupSettingValidateRuleTest
+    public class StartupSettingRuleTest
     {
         [Fact]
         public void WhenStartupSettingHttpClientAuthenticationIdHasDuplicate_ShouldReturnError()
@@ -19,7 +19,7 @@ namespace Test.Settings.ValidateRules
                 }
             };
             
-            var rule = new StartupSettingValidateRule();
+            var rule = new StartupSettingRule();
 
             // act
             var result = rule.Do(startupSetting);
@@ -42,7 +42,7 @@ namespace Test.Settings.ValidateRules
                 }
             };
 
-            var rule = new StartupSettingValidateRule();
+            var rule = new StartupSettingRule();
 
             // act
             var result = rule.Do(startupSetting);
