@@ -21,6 +21,7 @@ namespace App.Extensions
             Console.WriteLine($"AddConfigFile File {pathConfigFile} loaded and validated");
 
             builder.Services.AddScoped<StepladderHttpContext>();
+            builder.Services.AddHttpClient();
         }
 
         private static void ApplicationSettingValidate(ApplicationSetting setting)

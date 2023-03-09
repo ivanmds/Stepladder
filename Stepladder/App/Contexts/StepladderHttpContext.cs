@@ -7,5 +7,6 @@ namespace App.Contexts
         public RouteSetting RouteSetting { get; set; }
         public HttpContext HttpContext { get; set; }
 
+        public HttpResponseMessage HttpResponseMessage { get; set; }
     }
 }

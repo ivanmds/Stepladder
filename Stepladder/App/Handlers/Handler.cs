@@ -9,5 +9,11 @@ namespace App.Handlers
             => _next = next;
 
         public abstract Task DoAsync(StepladderHttpContext context);
+
+        protected async Task NextAsync(StepladderHttpContext context)
+        {
+            if (_next != null)
+                await _next.DoAsync(context);
+        }
     }
 }
