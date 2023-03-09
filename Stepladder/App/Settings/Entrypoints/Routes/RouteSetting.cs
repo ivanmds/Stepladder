@@ -10,6 +10,7 @@ namespace App.Settings.Entrypoints.Routes
         public MethodType Method { get; set; }
         public bool EnableAnonymous { get; set; }
         public string FlowActionId { get; set; }
+        public ResponseMock ResponseMock { get; set; }
 
         public ValidateResult Valid()
         {

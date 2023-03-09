@@ -12,7 +12,8 @@ namespace App.Handlers
                 var httpClientFactory = context.HttpContext.RequestServices.GetService<IHttpClientFactory>();
                 using var httpClient = httpClientFactory.CreateClient(ActionSetting.Uri);
 
-                context.HttpResponseMessage = await httpClient.GetAsync(ActionSetting.Uri);
+                var body = await context.GetCurrentBodyToRequestStringAsync();
+                context.HttpResponseMessage = await httpClient.PostAsJsonAsync(ActionSetting.Uri, body);
             }
 
             await NextAsync(context);

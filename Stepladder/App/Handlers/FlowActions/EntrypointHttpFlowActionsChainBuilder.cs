@@ -36,7 +36,10 @@ namespace App.Handlers.FlowActions
                 }
             }
 
-            FlowActionsChain.PutFlowAction(routeSetting.FlowActionId, typeof(HttpWriteResponseHandler));
+            if(routeSetting.ResponseMock == null)
+                FlowActionsChain.PutFlowAction(routeSetting.FlowActionId, typeof(HttpWriteResponseHandler));
+            else
+                FlowActionsChain.PutFlowAction(routeSetting.FlowActionId, typeof(HttpWriteResponseMockHandler));
         }
     }
 }

@@ -26,6 +26,10 @@ entrypoints:
     method: post
     enableAnonymous: false
     flowActionId: create_account
+    responseMock:
+      bodyValue: "{\"codigoRetorno\":\"200\",\"descricaoMensagemRetorno\":\"Ok\"}"
+      contentType: "application/json"
+      statusCode: 200
   
 #  consumers:
 #    kafka:

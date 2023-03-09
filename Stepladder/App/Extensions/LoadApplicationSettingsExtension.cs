@@ -28,6 +28,7 @@ namespace App.Extensions
             builder.Services.AddScoped<HttpFirstHandler>();
             builder.Services.AddScoped<HttpResponseMessageParseHandler>();
             builder.Services.AddScoped<HttpWriteResponseHandler>();
+            builder.Services.AddScoped<HttpWriteResponseMockHandler>();
             builder.Services.AddHttpClient();
         }
 
