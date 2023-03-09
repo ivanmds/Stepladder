@@ -9,6 +9,7 @@ namespace App.Settings.Entrypoints.Routes
         public string Route { get; set; }
         public MethodType Method { get; set; }
         public bool EnableAnonymous { get; set; }
+        public string FlowActionId { get; set; }
 
         public ValidateResult Valid()
         {

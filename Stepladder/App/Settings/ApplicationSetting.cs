@@ -17,6 +17,7 @@ namespace App.Settings
         public StartupSetting Startup { get; set; }
         public EntrypointSetting Entrypoints { get; set; }
         public List<ActionSetting> Actions { get; set; }
+        public List<FlowActionsSetting> FlowActions { get; set; }
 
 
         public List<IValidable> GetValidables()
@@ -37,6 +38,9 @@ namespace App.Settings
 
                 if(Actions != null)
                     validables.AddRange(Actions);
+
+                if (FlowActions != null)
+                    validables.AddRange(FlowActions);
             }
 
             return validables;

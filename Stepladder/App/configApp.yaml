@@ -25,7 +25,7 @@ entrypoints:
   - route: "api/test"
     method: post
     enableAnonymous: false
-    #flowActionId: {id}
+    flowActionId: create_account
   
 #  consumers:
 #    kafka:
@@ -35,9 +35,10 @@ entrypoints:
   
 
 actions:
-  - id: 1
+  - id: "request_google"
     type: httpRequest
     uri: 'https://google.com.br'
+    method: get
     #contractMapId:
     #autenticationId: 10
   
@@ -47,11 +48,10 @@ actions:
 #    groupId: ''
 
 ## how put condictions between actions
-#flowActions:
-#  - id: 2001
-#    actionsId:
-#      - 1
-#      - 2
+flowActions:
+  - id: "create_account"
+    actionsId:
+      - "request_google"
 
 #contractMaps:
 #  - id: 1005

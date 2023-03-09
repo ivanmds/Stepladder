@@ -1,6 +1,7 @@
 ﻿using App.Settings.Actions;
 using App.Settings.Actions.Rules;
 using App.Settings.Actions.Types;
+using App.Settings.Entrypoints.Routes.Types;
 
 namespace Test.Settings.Actions.Rules
 {
@@ -49,6 +50,22 @@ namespace Test.Settings.Actions.Rules
             // assert
             var constains = result.Errors.Contains("ActionSetting.Uri should a valid uri");
             Assert.False(constains);
+        }
+
+
+        [Fact]
+        public void WhenActionSettingTypeHttpRequestHasEmptyMethod_ShouldReturnError()
+        {
+            // arrange
+            var setting = new ActionSetting { Method = MethodType.NONE };
+            var rule = new ActionSettingTypeHttpRequestRule();
+
+            // act
+            var result = rule.Do(setting);
+
+            // assert
+            var constains = result.Errors.Contains("ActionSetting.Method is required");
+            Assert.True(constains);
         }
     }
 }
