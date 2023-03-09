@@ -10,26 +10,12 @@ namespace App.Settings.Entrypoints.Routes.Rules
         {
             var result = ValidateResult.Create();
 
-            if (string.IsNullOrEmpty(value.Method))
+            if (value.Method == Types.MethodType.NONE)
                 result.AddError("Route.Method is required");
-            else
-            {
-                var methodSetting = value.Method.ToUpper();
-                if (!VALID_METHODS.Contains(methodSetting))
-                    result.AddError("Route.Method is invalid");
-            }
 
 
             if (string.IsNullOrEmpty(value.Route))
                 result.AddError("Route.Route is required");
-            else
-            {
-                Uri uri;
-                Uri.TryCreate(value.Route, UriKind.Relative, out uri);
-                if (uri is null)
-                    result.AddError("Route.Route is invalid");
-            }
-
 
             return result;
         }

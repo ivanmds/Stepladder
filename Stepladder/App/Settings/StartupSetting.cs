@@ -9,7 +9,7 @@ namespace App.Settings
     {
         public List<HttpClientAuthentication> HttpClientAuthentication { get; set; }
         public ApiSecuretSetting ApiSecuret { get; set; }
-
+        
         public ValidateResult Valid()
         {
             var rules = new IRule<StartupSetting>[]

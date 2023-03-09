@@ -1,6 +1,6 @@
-﻿using App.Handlers.ApiSecurets;
-using App.Settings.ApiSecurets.Types;
+﻿using App.Extensions.StartupHandles.ApiSecurets;
 using App.Settings;
+using App.Settings.ApiSecurets.Types;
 using Microsoft.AspNetCore.Authentication;
 
 namespace App.Extensions
@@ -13,7 +13,7 @@ namespace App.Extensions
             SetToBasicAuthenticate(builder);
         }
 
-        public static void UseAuthentication(this WebApplication app)
+        public static void UseConfigAuthentication(this WebApplication app)
         {
             if (isStarted)
             {

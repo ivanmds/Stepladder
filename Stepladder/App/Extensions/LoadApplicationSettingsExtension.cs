@@ -1,4 +1,5 @@
-﻿using App.Settings;
+﻿using App.Contexts;
+using App.Settings;
 using App.Validations;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -18,6 +19,8 @@ namespace App.Extensions
 
             ApplicationSettingValidate(applicationSettings);
             Console.WriteLine($"AddConfigFile File {pathConfigFile} loaded and validated");
+
+            builder.Services.AddScoped<StepladderHttpContext>();
         }
 
         private static void ApplicationSettingValidate(ApplicationSetting setting)

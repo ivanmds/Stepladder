@@ -1,11 +1,11 @@
 startup:
-  httpClientAuthentication:
-    - id: "api_integration_pix"
-      type: clientCredential
-      clientId: ""
-      clientSecret: ""
-      endpointAuth: ""
-      valueFrom: declared
+  #httpClientAuthentication:
+  #  - id: "api_integration_pix"
+  #    type: clientCredential
+  #    clientId: ""
+  #    clientSecret: ""
+  #    endpointAuth: ""
+  #    valueFrom: declared
 
   apiSecuret:
     type: basic
@@ -24,7 +24,8 @@ entrypoints:
   routes:
   - route: "api/test"
     method: post
-    flowActionId: {id}
+    enableAnonymous: false
+    #flowActionId: {id}
   
 #  consumers:
 #    kafka:
@@ -33,12 +34,12 @@ entrypoints:
 #        actionId: {id}
   
 
-#actions:
-#  - id: 1
-#    type: http
-#    uri: 'https://api/test'
-#    contractMapId:
-#    autenticationId: 10
+actions:
+  - id: 1
+    type: httpRequest
+    uri: 'https://google.com.br'
+    #contractMapId:
+    #autenticationId: 10
   
 #  - id: 2
 #    type: kafkaConsumer

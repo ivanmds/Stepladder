@@ -10,6 +10,7 @@ builder.AddApiSecuret();
 
 var app = builder.Build();
 
-app.UseAuthentication();
+app.UseConfigAuthentication();
+app.UseConfigRoutes();
 
 app.Run();

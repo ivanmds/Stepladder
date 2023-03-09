@@ -1,4 +1,6 @@
-﻿using App.Validations;
+﻿using App.Settings.Actions;
+using App.Settings.Entrypoints;
+using App.Validations;
 
 namespace App.Settings
 {
@@ -13,6 +15,8 @@ namespace App.Settings
         }
 
         public StartupSetting Startup { get; set; }
+        public EntrypointSetting Entrypoints { get; set; }
+        public List<ActionSetting> Actions { get; set; }
 
 
         public List<IValidable> GetValidables()
@@ -21,10 +25,19 @@ namespace App.Settings
             if (Startup != null)
             {
                 validables.Add(Startup);
-                validables.AddRange(Startup.HttpClientAuthentication);
-                validables.Add(Startup.ApiSecuret);
-            }
 
+                if (Startup.HttpClientAuthentication != null)
+                    validables.AddRange(Startup.HttpClientAuthentication);
+
+                validables.Add(Startup.ApiSecuret);
+                validables.Add(Entrypoints);
+
+                if (Entrypoints.Routes != null)
+                    validables.AddRange(Entrypoints.Routes);
+
+                if(Actions != null)
+                    validables.AddRange(Actions);
+            }
 
             return validables;
         }

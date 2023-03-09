@@ -1,7 +1,7 @@
 ﻿using App.Settings;
 using System.Text;
 
-namespace App.Handlers.ApiSecurets
+namespace App.Extensions.StartupHandles.ApiSecurets
 {
     public class BasicCredential
     {
@@ -23,9 +23,9 @@ namespace App.Handlers.ApiSecurets
                 CURRENT = this;
             }
 
-            if(string.IsNullOrEmpty(AUTH_BASE64))
+            if (string.IsNullOrEmpty(AUTH_BASE64))
             {
-                byte[] toEncodeAsBytes = ASCIIEncoding.ASCII.GetBytes($"{User}:{Password}");
+                byte[] toEncodeAsBytes = Encoding.ASCII.GetBytes($"{User}:{Password}");
                 AUTH_BASE64 = $"Basic {Convert.ToBase64String(toEncodeAsBytes)}";
             }
         }

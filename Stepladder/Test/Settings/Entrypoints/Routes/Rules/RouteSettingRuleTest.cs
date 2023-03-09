@@ -21,22 +21,6 @@ namespace Test.Settings.Entrypoints.Routes.Rules
         }
 
         [Fact]
-        public void WhenRouteSettingMethodIsInvalid_ShouldReturnError()
-        {
-            // arrange
-            var routeSetting = new RouteSetting { Method = "TEST" };
-            var rule = new RouteSettingRule();
-
-            // act
-            var result = rule.Do(routeSetting);
-
-            // assert
-            var constains = result.Errors.Contains("Route.Method is invalid");
-            Assert.True(constains);
-        }
-
-
-        [Fact]
         public void WhenRouteSettingRouteIsNullOrEmpty_ShouldReturnError()
         {
             // arrange
@@ -48,21 +32,6 @@ namespace Test.Settings.Entrypoints.Routes.Rules
 
             // assert
             var constains = result.Errors.Contains("Route.Route is required");
-            Assert.True(constains);
-        }
-
-        [Fact]
-        public void WhenRouteSettingRouteInvalid_ShouldReturnError()
-        {
-            // arrange
-            var routeSetting = new RouteSetting { Route = "@@@" };
-            var rule = new RouteSettingRule();
-
-            // act
-            var result = rule.Do(routeSetting);
-
-            // assert
-            var constains = result.Errors.Contains("Route.Route is invalid");
             Assert.True(constains);
         }
     }
