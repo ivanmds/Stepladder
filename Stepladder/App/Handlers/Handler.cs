@@ -1,10 +1,13 @@
 ﻿using App.Contexts;
+using App.Settings.Actions;
 
 namespace App.Handlers
 {
     public abstract class Handler
     {
         protected Handler _next;
+        public ActionSetting ActionSetting { get; set; }
+
         public void SetNext(Handler next)
             => _next = next;
 

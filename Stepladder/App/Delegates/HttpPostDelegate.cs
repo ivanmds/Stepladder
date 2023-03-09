@@ -27,7 +27,7 @@ namespace App.Delegates
             stepladderContext.HttpContext = context;
             stepladderContext.RouteSetting = _routeSetting;
 
-            var handler = ChainHandlerBuilder.ChainBuilder(stepladderContext);
+            var handler = HandlerChainBuilder.ChainBuilder(stepladderContext);
             await handler.DoAsync(stepladderContext);
         }
     }

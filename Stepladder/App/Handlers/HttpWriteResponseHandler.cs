@@ -9,13 +9,12 @@ namespace App.Handlers
             if (context.HttpResponseMessage != null)
             {
                 var response = context.HttpResponseMessage;
-                var responseBodyString = await response.Content.ReadAsStringAsync();
                 context.HttpContext.Response.StatusCode = (int)response.StatusCode;
 
                 var contentyType = response.Content.Headers.ContentType;
                 context.HttpContext.Response.Headers.Add("Content-Type", contentyType.ToString());
 
-                await context.HttpContext.Response.WriteAsync(responseBodyString);
+                await context.HttpContext.Response.WriteAsync(context.ResponseBodyStringValue);
             }
 
             await NextAsync(context);

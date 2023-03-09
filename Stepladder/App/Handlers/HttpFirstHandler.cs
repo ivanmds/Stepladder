@@ -6,7 +6,6 @@ namespace App.Handlers
     {
         public override async Task DoAsync(StepladderHttpContext context)
         {
-            
             await NextAsync(context);
         }
     }

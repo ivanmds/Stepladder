@@ -1,4 +1,5 @@
 ﻿using App.Contexts;
+using App.Handlers;
 using App.Settings;
 using App.Validations;
 using YamlDotNet.Serialization.NamingConventions;
@@ -21,6 +22,12 @@ namespace App.Extensions
             Console.WriteLine($"AddConfigFile File {pathConfigFile} loaded and validated");
 
             builder.Services.AddScoped<StepladderHttpContext>();
+
+            builder.Services.AddScoped<HttpClientGetRequestHandler>();
+            builder.Services.AddScoped<HttpClientPostRequestHandler>();
+            builder.Services.AddScoped<HttpFirstHandler>();
+            builder.Services.AddScoped<HttpResponseMessageParseHandler>();
+            builder.Services.AddScoped<HttpWriteResponseHandler>();
             builder.Services.AddHttpClient();
         }
 
