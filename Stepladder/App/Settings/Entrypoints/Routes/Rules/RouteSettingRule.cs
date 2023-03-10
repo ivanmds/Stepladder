@@ -15,9 +15,10 @@ namespace App.Settings.Entrypoints.Routes.Rules
             if (string.IsNullOrEmpty(value.Route))
                 result.AddError("Route.Route is required");
 
-            if (string.IsNullOrEmpty(value.FlowActionId))
+            if (string.IsNullOrEmpty(value.FlowActionId) && value.ResponseMock == null)
                 result.AddError("Route.FlowActionId is required");
-            else
+
+            if (value.FlowActionId != null)
             {
                 var appSetting = ApplicationSetting.Current;
                 var hasFlowActionId =  appSetting.FlowActions?.FirstOrDefault(f => f.Id == value.FlowActionId) != null;

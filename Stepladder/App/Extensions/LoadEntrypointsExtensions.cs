@@ -14,20 +14,24 @@ namespace App.Extensions
         {
             var appConfig = ApplicationSetting.Current;
 
-            if(appConfig.Entrypoints?.Routes?.Count() > 0)
+            if (appConfig.Entrypoints?.Routes?.Count() > 0)
             {
-                foreach(var route in appConfig.Entrypoints.Routes)
+                foreach (var route in appConfig.Entrypoints.Routes)
                 {
 
                     var info = $"STARTED ROUTE: {route.Route} METHOD: {route.Method}";
                     ENDPOINT_LOADED.AppendLine(info);
 
-                    if (route.Method == MethodType.POST)
-                    {
-                        var httpPost = new HttpRequestDelegate(route);
-                        app.MapPost(route.Route, route.EnableAnonymous ? httpPost.Do_Anonymous : httpPost.Do_Authorize);
-                        EntrypointHttpFlowActionsChainBuilder.Builder(route);
-                    }
+                    var requestDelegate = new HttpRequestDelegate(route);
+
+                    if (route.Method == MethodType.GET)
+                        app.MapGet(route.Route, route.EnableAnonymous ? requestDelegate.Do_Anonymous : requestDelegate.Do_Authorize);
+                    else if (route.Method == MethodType.POST)
+                        app.MapPost(route.Route, route.EnableAnonymous ? requestDelegate.Do_Anonymous : requestDelegate.Do_Authorize);
+
+
+                    EntrypointHttpFlowActionsChainBuilder.Builder(route);
+
                 }
             }
 

@@ -22,28 +22,32 @@ startup:
 
 entrypoints:
   routes:
-  - route: "api/test"
+  - route: "api/customers"
     method: post
-    enableAnonymous: false
-    flowActionId: create_account
+    enableAnonymous: true
+    flowActionId: create_customer
+   
+  
+  - route: "api/customers"
+    method: get
+    enableAnonymous: true
     responseMock:
-      bodyValue: "{\"codigoRetorno\":\"200\",\"descricaoMensagemRetorno\":\"Ok\"}"
+      bodyValue: "{\"name\":\"Ivan 2\",\"motherName\":\"Miriam\",\"document\":\"123455\"}"
       contentType: "application/json"
       statusCode: 200
-  
+    
 #  consumers:
 #    kafka:
 #      - groupId:
 #        topicName:
 #        actionId: {id}
-  
 
 actions:
-  - id: "request_google"
+  - id: get_customer_action
     type: httpRequest
-    uri: 'https://google.com.br'
+    uri: 'http://localhost:19225/api/customers'
     method: get
-    reponseContractMapId: 1005
+    reponseContractMapId: customer_response
     #autenticationId: 10
   
 #  - id: 2
@@ -51,18 +55,18 @@ actions:
 #    topicName: 'stepladder.test.request'
 #    groupId: ''
 
-## how put condictions between actions
 flowActions:
-  - id: "create_account"
+  - id: create_customer
     actionsId:
-      - "request_google"
+      - get_customer_action
 
 contractMaps:
-  - id: 1005
+  - id: customer_response
     mapFromTo:
-      - "customer.address.citi:customer.address.city"
-    remove:
-      - "customer.address.country"
+      - "name:fullName"
+      - "motherName:fullMotherName"
+    #remove:
+    #  - "customer.address.country"
 
                   
 #strategies:

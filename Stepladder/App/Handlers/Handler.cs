@@ -1,5 +1,6 @@
 ﻿using App.Contexts;
 using App.Settings.Actions;
+using App.Settings.ContractMap;
 
 namespace App.Handlers
 {
@@ -7,6 +8,7 @@ namespace App.Handlers
     {
         protected Handler _next;
         public ActionSetting ActionSetting { get; set; }
+        public ContractMapSetting ContractMap { get; set; }
 
         public void SetNext(Handler next)
             => _next = next;

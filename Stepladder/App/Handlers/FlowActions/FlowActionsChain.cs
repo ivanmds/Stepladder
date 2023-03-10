@@ -1,4 +1,5 @@
 ﻿using App.Settings.Actions;
+using App.Settings.ContractMap;
 
 namespace App.Handlers.FlowActions
 {
@@ -10,12 +11,19 @@ namespace App.Handlers.FlowActions
         public static void StartFlowActions(string flowActionId)
             => FLOW_ACTION[flowActionId] = new List<FlowAction>();
 
-        public static void PutFlowAction(string flowActionId, Type handleType, ActionSetting actionSetting =  null)
+        public static void PutFlowAction(
+            string flowActionId,
+            Type handleType,
+            ActionSetting actionSetting = null,
+            ContractMapSetting contractMap = null)
+
            => FLOW_ACTION[flowActionId].Add(
-               new FlowAction { 
-                   Order = FLOW_ACTION[flowActionId].Count + 1, 
+               new FlowAction
+               {
+                   Order = FLOW_ACTION[flowActionId].Count + 1,
                    HandleType = handleType,
-                   ActionSetting = actionSetting
+                   ActionSetting = actionSetting,
+                   ContractMap = contractMap
                });
 
         public static List<FlowAction> GetFlowActionsChain(string flowActionId)
@@ -27,5 +35,6 @@ namespace App.Handlers.FlowActions
         public int Order { get; set; }
         public Type HandleType { get; set; }
         public ActionSetting ActionSetting { get; set; }
+        public ContractMapSetting ContractMap { get; set; }
     }
 }

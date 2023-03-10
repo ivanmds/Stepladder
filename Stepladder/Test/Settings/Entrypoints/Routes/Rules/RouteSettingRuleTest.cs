@@ -38,10 +38,10 @@ namespace Test.Settings.Entrypoints.Routes.Rules
         }
 
         [Fact]
-        public void WhenRouteSettingFlowActionIdIsNullOrEmpty_ShouldReturnError()
+        public void WhenRouteSettingFlowActionIdIsNullOrEmptyAndResponseMockIsNull_ShouldReturnError()
         {
             // arrange
-            var routeSetting = new RouteSetting { FlowActionId = null };
+            var routeSetting = new RouteSetting { FlowActionId = null, ResponseMock = null };
             var rule = new RouteSettingRule();
 
             // act
@@ -50,6 +50,21 @@ namespace Test.Settings.Entrypoints.Routes.Rules
             // assert
             var constains = result.Errors.Contains("Route.FlowActionId is required");
             Assert.True(constains);
+        }
+
+        [Fact]
+        public void WhenRouteSettingFlowActionIdIsNullOrEmptyAndResponseMockIsNotNull_ShouldReturnSuccess()
+        {
+            // arrange
+            var routeSetting = new RouteSetting { FlowActionId = null, ResponseMock = new ResponseMock() };
+            var rule = new RouteSettingRule();
+
+            // act
+            var result = rule.Do(routeSetting);
+
+            // assert
+            var constains = result.Errors.Contains("Route.FlowActionId is required");
+            Assert.False(constains);
         }
 
         [Fact]
