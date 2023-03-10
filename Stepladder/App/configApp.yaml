@@ -28,7 +28,7 @@ entrypoints:
     flowActionId: create_customer
    
   
-  - route: "api/customers"
+  - route: "api/customers/{id}"
     method: get
     enableAnonymous: true
     responseMock:

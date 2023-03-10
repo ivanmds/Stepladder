@@ -15,7 +15,7 @@ namespace App.Extensions
                        .Build();
 
 
-            var pathConfigFile = "configApp.yaml";
+            var pathConfigFile = Environment.GetEnvironmentVariable("CONFIG_APP_PATH") ?? "configApp.yaml";
             var applicationSettings = deserializer.Deserialize<ApplicationSetting>(File.ReadAllText(pathConfigFile));
 
             ApplicationSettingValidate(applicationSettings);
