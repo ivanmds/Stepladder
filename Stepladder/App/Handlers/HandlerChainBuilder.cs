@@ -9,7 +9,7 @@ namespace App.Handlers
         {
             var routeSetting = context.RouteSetting;
 
-            var flowActions = FlowActionsChain.GetFlowActionsChain(routeSetting.GetFlocActionId);
+            var flowActions = FlowActionsChain.GetFlowActionsChain(routeSetting.GetFlowActionId);
 
             Handler firstHandler = new HttpFirstHandler();
             var current = firstHandler;

@@ -12,7 +12,7 @@ namespace App.Settings.Entrypoints.Routes
         public string FlowActionId { get; set; }
         public ResponseMock ResponseMock { get; set; }
 
-        public string GetFlocActionId => FlowActionId ?? Route;
+        public string GetFlowActionId => FlowActionId ?? Route;
 
         public ValidateResult Valid()
         {

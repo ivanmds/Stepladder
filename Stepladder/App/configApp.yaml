@@ -7,11 +7,11 @@ startup:
   #    endpointAuth: ""
   #    valueFrom: declared
 
-  apiSecuret:
-    type: basic
-    user: admin
-    password: 123456
-    valueFrom: declared
+  #apiSecuret:
+  #  type: basic
+  #  user: admin
+  #  password: 123456
+  #  valueFrom: declared
   
 #  connections:
 #    kafka:
@@ -22,17 +22,16 @@ startup:
 
 entrypoints:
   routes:
-  - route: "api/customers"
-    method: post
-    enableAnonymous: true
-    flowActionId: create_customer
-   
+  #- route: "api/customers"
+  #  method: post
+  #  enableAnonymous: true
+  #  flowActionId: create_customer
   
-  - route: "api/customers/{id}"
+  - route: "api/hello"
     method: get
     enableAnonymous: true
     responseMock:
-      bodyValue: "{\"name\":\"Ivan2\",\"motherName\":\"Miriam\",\"document\":\"123455\",\"address\":{\"address\":\"RuaPernambucana\",\"number\":\"360\"}}"
+      bodyValue: "{\"Message\":\"Hello\"}"
       contentType: "application/json"
       statusCode: 200
     
@@ -42,12 +41,12 @@ entrypoints:
 #        topicName:
 #        actionId: {id}
 
-actions:
-  - id: get_customer_action
-    type: httpRequest
-    uri: 'http://localhost:19225/api/customers'
-    method: get
-    reponseContractMapId: customer_response
+#actions:
+#  - id: get_customer_action
+#    type: httpRequest
+#    uri: 'http://localhost:19225/api/customers'
+#    method: get
+#    reponseContractMapId: customer_response
     #autenticationId: 10
   
 #  - id: 2
@@ -55,20 +54,20 @@ actions:
 #    topicName: 'stepladder.test.request'
 #    groupId: ''
 
-flowActions:
-  - id: create_customer
-    actionsId:
-      - get_customer_action
+#flowActions:
+#  - id: create_customer
+#    actionsId:
+#      - get_customer_action
 
-contractMaps:
-  - id: customer_response
-    mapFromTo:
-      - "name:person.Name"
-      - "motherName:person.motherName"
-      #- "address.address:rua"
-      #- "address.number:numero"
-    remove:
-      - address.address
+#contractMaps:
+#  - id: customer_response
+#    mapFromTo:
+#      - "name:person.Name"
+#      - "motherName:person.motherName"
+#      #- "address.address:rua"
+#      #- "address.number:numero"
+#    remove:
+#      - address.address
 
 #strategies:
 #  - cache:

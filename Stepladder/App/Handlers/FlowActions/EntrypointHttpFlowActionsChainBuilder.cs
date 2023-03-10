@@ -12,11 +12,11 @@ namespace App.Handlers.FlowActions
         {
             var appSetting = ApplicationSetting.Current;
 
-            var flowActionId = routeSetting.GetFlocActionId;
+            var flowActionId = routeSetting.GetFlowActionId;
 
             FlowActionsChain.StartFlowActions(flowActionId);
 
-            var flowAction = appSetting.FlowActions.FirstOrDefault(f => f.Id == flowActionId);
+            var flowAction = appSetting.FlowActions?.FirstOrDefault(f => f.Id == flowActionId);
 
             if (flowAction != null)
             {
