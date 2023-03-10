@@ -32,7 +32,7 @@ entrypoints:
     method: get
     enableAnonymous: true
     responseMock:
-      bodyValue: "{\"name\":\"Ivan 2\",\"motherName\":\"Miriam\",\"document\":\"123455\"}"
+      bodyValue: "{\"name\":\"Ivan2\",\"motherName\":\"Miriam\",\"document\":\"123455\",\"address\":{\"address\":\"RuaPernambucana\",\"number\":\"360\"}}"
       contentType: "application/json"
       statusCode: 200
     
@@ -63,12 +63,13 @@ flowActions:
 contractMaps:
   - id: customer_response
     mapFromTo:
-      - "name:fullName"
-      - "motherName:fullMotherName"
-    #remove:
-    #  - "customer.address.country"
+      - "name:person.Name"
+      - "motherName:person.motherName"
+      #- "address.address:rua"
+      #- "address.number:numero"
+    remove:
+      - address.address
 
-                  
 #strategies:
 #  - cache:
 #      id: redisCache_22

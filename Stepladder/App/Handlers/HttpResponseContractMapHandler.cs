@@ -1,5 +1,5 @@
 ﻿using App.Contexts;
-using System.Text.Json.Nodes;
+using App.JsonHelpers;
 
 namespace App.Handlers
 {
@@ -13,21 +13,8 @@ namespace App.Handlers
             {
                 var json = context.ResponseContext.JsonResponseBody;
 
-                foreach(var map  in ContractMap.MapFromTo) 
-                {
-                    var fields = map.Split(":");
-                    var (from, to) = (fields[0], fields[1]);
-
-                    JsonNode jsonNode;
-                    if (json.TryGetPropertyValue(from, out jsonNode) == false)
-                    {
-                        throw new ArgumentException($"Not found field {from} from request body.");
-                    }
-
-                    json.Remove(from);
-                    json.TryAdd(to, jsonNode.AsValue());
-                }
-
+                var jsonMapParse = new JsonMapParse(json, ContractMap);
+                json = jsonMapParse.MapParse();
                 context.ResponseContext.ResponseBodyStringValue = json.ToString();
             }
 
