@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace App.Delegates
 {
-    public class HttpPostDelegate
+    public class HttpRequestDelegate
     {
         private RouteSetting _routeSetting;
 
-        public HttpPostDelegate(RouteSetting routeSetting) 
+        public HttpRequestDelegate(RouteSetting routeSetting) 
         {
             _routeSetting = routeSetting;
         }

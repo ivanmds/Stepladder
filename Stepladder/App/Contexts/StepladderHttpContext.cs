@@ -1,27 +1,40 @@
 ﻿using App.Settings.Entrypoints.Routes;
-using System.Text.Json.Nodes;
+using System.Text;
 
 namespace App.Contexts
 {
     public class StepladderHttpContext
     {
+        public StepladderHttpContext()
+        {
+            ResponseContext = new ResponseContext();
+        }
+
+        public ResponseContext ResponseContext { get; set; }
         public RouteSetting RouteSetting { get; set; }
         public HttpContext HttpContext { get; set; }
 
-        public JsonObject JsonResponseBody { get; set; }
-        public string ResponseBodyStringValue { get; set; }
-        public string ResponseContentType { get; set; }
+        public bool HasNoError => Errors.Count() == 0;
+        public List<string> Errors { get; set; } = new List<string>();
+        public string ErrorString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var error in Errors)
+                sb.AppendLine(error);
 
-        public HttpResponseMessage HttpResponseMessage { get; set; }
+            return sb.ToString();
+        }
+            
+            
+
 
         public async Task<string> GetCurrentBodyToRequestStringAsync()
         {
-            if (HttpResponseMessage == null)
+            if (ResponseContext.HttpResponseMessage == null)
                 return await GetHttpContextRequestBodyStringAsync();
             else
-                return ResponseBodyStringValue;
+                return ResponseContext.ResponseBodyStringValue;
         }
-
 
         private async Task<string> GetHttpContextRequestBodyStringAsync()
         {

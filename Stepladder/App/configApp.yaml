@@ -43,7 +43,7 @@ actions:
     type: httpRequest
     uri: 'https://google.com.br'
     method: get
-    #contractMapId:
+    reponseContractMapId: 1005
     #autenticationId: 10
   
 #  - id: 2
@@ -57,13 +57,12 @@ flowActions:
     actionsId:
       - "request_google"
 
-#contractMaps:
-#  - id: 1005
-#    # fromName to destinationName separated by :
-#    map:
-#      - "customer.address.citi:customer.address.city"
-#    remove:
-#      - "customer.address.country"
+contractMaps:
+  - id: 1005
+    mapFromTo:
+      - "customer.address.citi:customer.address.city"
+    remove:
+      - "customer.address.country"
 
                   
 #strategies:

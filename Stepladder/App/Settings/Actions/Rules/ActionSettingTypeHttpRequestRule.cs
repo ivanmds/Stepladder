@@ -24,6 +24,14 @@ namespace App.Settings.Actions.Rules
 
                 if (value.Method == MethodType.NONE)
                     result.AddError("ActionSetting.Method is required");
+
+                if(value.ReponseContractMapId != null)
+                {
+                    var appSetting = ApplicationSetting.Current;
+                    var hasContractMap = appSetting?.ContractMaps?.Any(c => c.Id == value.ReponseContractMapId) ?? false;
+                    if(hasContractMap == false)
+                        result.AddError($"ActionSetting.ReponseContractMapId {value.ReponseContractMapId} should configured before use");
+                }
             }
 
             return result;

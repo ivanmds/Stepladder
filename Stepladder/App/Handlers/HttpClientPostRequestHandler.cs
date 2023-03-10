@@ -7,13 +7,13 @@ namespace App.Handlers
     {
         public override async Task DoAsync(StepladderHttpContext context)
         {
-            if (ActionSetting != null)
+            if (context.HasNoError && ActionSetting != null)
             {
                 var httpClientFactory = context.HttpContext.RequestServices.GetService<IHttpClientFactory>();
                 using var httpClient = httpClientFactory.CreateClient(ActionSetting.Uri);
 
                 var body = await context.GetCurrentBodyToRequestStringAsync();
-                context.HttpResponseMessage = await httpClient.PostAsJsonAsync(ActionSetting.Uri, body);
+                context.ResponseContext.HttpResponseMessage = await httpClient.PostAsJsonAsync(ActionSetting.Uri, body);
             }
 
             await NextAsync(context);

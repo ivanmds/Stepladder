@@ -24,7 +24,7 @@ namespace App.Extensions
 
                     if (route.Method == MethodType.POST)
                     {
-                        var httpPost = new HttpPostDelegate(route);
+                        var httpPost = new HttpRequestDelegate(route);
                         app.MapPost(route.Route, route.EnableAnonymous ? httpPost.Do_Anonymous : httpPost.Do_Authorize);
                         EntrypointHttpFlowActionsChainBuilder.Builder(route);
                     }

@@ -1,6 +1,8 @@
-﻿using App.Settings.Actions;
+﻿using App.Settings;
+using App.Settings.Actions;
 using App.Settings.Actions.Rules;
 using App.Settings.Actions.Types;
+using App.Settings.ContractMap;
 using App.Settings.Entrypoints.Routes.Types;
 
 namespace Test.Settings.Actions.Rules
@@ -66,6 +68,38 @@ namespace Test.Settings.Actions.Rules
             // assert
             var constains = result.Errors.Contains("ActionSetting.Method is required");
             Assert.True(constains);
+        }
+
+        [Fact]
+        public void WhenActionSettingTypeHttpRequestHasResponseContractMapIdNotConfigured_ShouldReturnError()
+        {
+            // arrange
+            var setting = new ActionSetting { ReponseContractMapId = "not_configured" };
+            var rule = new ActionSettingTypeHttpRequestRule();
+
+            // act
+            var result = rule.Do(setting);
+
+            // assert
+            var constains = result.Errors.Contains("ActionSetting.ReponseContractMapId not_configured should configured before use");
+            Assert.True(constains);
+        }
+
+
+        [Fact]
+        public void WhenActionSettingTypeHttpRequestHasResponseContractMapIdIsConfigured_ShouldReturnSuccess()
+        {
+            // arrange
+            var appSetting = new ApplicationSetting { ContractMaps = new List<ContractMapSetting> { new ContractMapSetting { Id = "contract_configured" } } };
+            var setting = new ActionSetting { ReponseContractMapId = "contract_configured" };
+            var rule = new ActionSettingTypeHttpRequestRule();
+
+            // act
+            var result = rule.Do(setting);
+
+            // assert
+            var constains = result.Errors.Contains("ActionSetting.ReponseContractMapId contract_configured should configured before use");
+            Assert.False(constains);
         }
     }
 }

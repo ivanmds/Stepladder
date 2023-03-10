@@ -11,6 +11,7 @@ namespace App.Settings.Actions
         public ActionType Type { get; set; }
         public MethodType Method { get; set; }
         public string Uri { get; set; }
+        public string ReponseContractMapId { get; set; }
 
         public ValidateResult Valid()
         {
