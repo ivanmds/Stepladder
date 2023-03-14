@@ -8,7 +8,7 @@ namespace App.Settings.ContractMap
         public string Id { get; set; }
         public List<string> MapFromTo { get; set; }
         public List<string> Remove { get; set; }
-        public ContractMapArray MapArray { get; set; }
+        public List<ContractMapArray> MapArray { get; set; } = new List<ContractMapArray>();
 
         public ValidateResult Valid()
         {
@@ -18,7 +18,8 @@ namespace App.Settings.ContractMap
             };
 
             var result =  RuleExecute.Execute(this, rules);
-            result.Concate(MapArray.Valid());
+            foreach(var map in MapArray)
+                result.Concate(map.Valid());
 
             return result;
         }

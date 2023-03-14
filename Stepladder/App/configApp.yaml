@@ -73,10 +73,10 @@ contractMaps:
     #remove:
     #  - address.address
     mapArray:
-      arrayMapFromTo: "addresses:enderecos"
-      mapFromTo:
-        - "street:rua"
-        - "number:numero"
+      - arrayMapFromTo: "addresses:enderecos"
+        mapFromTo:
+          - "street:rua"
+          - "number:numero"
 
 #strategies:
 #  - cache:

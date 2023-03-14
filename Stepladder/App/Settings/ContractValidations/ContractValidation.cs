@@ -6,7 +6,7 @@ namespace App.Settings.ContractValidations
     public class ContractValidation : IValidable
     {
         public string Id { get; set; }
-        public List<FieldValidation> Fields { get; set; }
+        public List<FieldValidation> Fields { get; set; } = new List<FieldValidation>();
 
         public ValidateResult Valid()
         {
