@@ -7,7 +7,7 @@ namespace App.Settings.Actions
     public class ActionRouteMap : IValidable
     {
         public string RouteKey { get; set; }
-        public RouteFromType FromType { get; set; }
+        public FromType FromType { get; set; }
 
         public ValidateResult Valid()
         {

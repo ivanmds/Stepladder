@@ -49,6 +49,10 @@ actions:
     routeMaps:
       - routeKey: '{id}'
         fromType: httpRequest
+    headerMaps:
+      - mapFromTo: "x-correlation-id:x-correlation-id"
+        fromType: httpRequest
+      
     reponseContractMapId: customer_response
     #autenticationId: 10
   

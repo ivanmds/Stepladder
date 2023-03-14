@@ -12,7 +12,7 @@ namespace App.Settings.Actions.Rules
             if (string.IsNullOrEmpty(value.RouteKey))
                 result.AddError("ActionRouteMap.RouteKey is required");
 
-            if (value.FromType == RouteFromType.None)
+            if (value.FromType == FromType.None)
                 result.AddError("ActionRouteMap.FromType is required");
 
             return result;

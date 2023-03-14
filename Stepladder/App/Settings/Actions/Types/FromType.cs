@@ -1,6 +1,6 @@
 ﻿namespace App.Settings.Actions.Types
 {
-    public enum RouteFromType
+    public enum FromType
     {
         None = 0,
         HttpRequest
