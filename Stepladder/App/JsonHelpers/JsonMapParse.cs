@@ -18,6 +18,8 @@ namespace App.JsonHelpers
         {
             JsonParseFieldsRun();
             JsonRemoveFieldsRun();
+            JsonMapArray();
+
             return _jsonObject;
         }
 
@@ -32,6 +34,14 @@ namespace App.JsonHelpers
                 var keyFromSplited = keyFrom.Split(".");
                 var keyToSplited = keyTo.Split(".");
                 JsonParseFieldsRun(keyFromSplited, keyToSplited);
+            }
+        }
+
+        private void JsonMapArray()
+        {
+            if(_contractMapSetting.MapArray != null)
+            {
+                // add
             }
         }
 

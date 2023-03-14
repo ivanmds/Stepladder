@@ -72,7 +72,7 @@ contractMaps:
       #- "addresses.number:numero"
     #remove:
     #  - address.address
-    mapArrayTo:
+    mapArray:
       arrayMapFromTo: "addresses:enderecos"
       mapFromTo:
         - "street:rua"

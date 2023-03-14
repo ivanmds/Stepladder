@@ -8,6 +8,7 @@ namespace App.Settings.ContractMap
         public string Id { get; set; }
         public List<string> MapFromTo { get; set; }
         public List<string> Remove { get; set; }
+        public ContractMapArray MapArray { get; set; }
 
         public ValidateResult Valid()
         {
@@ -16,7 +17,10 @@ namespace App.Settings.ContractMap
                 new ContractMapSettingRule(),
             };
 
-            return RuleExecute.Execute(this, rules);
+            var result =  RuleExecute.Execute(this, rules);
+            result.Concate(MapArray.Valid());
+
+            return result;
         }
     }
 }
