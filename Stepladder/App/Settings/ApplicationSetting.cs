@@ -1,5 +1,6 @@
 ﻿using App.Settings.Actions;
 using App.Settings.ContractMap;
+using App.Settings.ContractValidations;
 using App.Settings.Entrypoints;
 using App.Validations;
 
@@ -20,6 +21,7 @@ namespace App.Settings
         public List<ActionSetting> Actions { get; set; }
         public List<FlowActionsSetting> FlowActions { get; set; }
         public List<ContractMapSetting> ContractMaps { get; set; }
+        public List<ContractValidation> ContractValidations { get; set; }
 
 
         public List<IValidable> GetValidables()
@@ -32,21 +34,27 @@ namespace App.Settings
                 if (Startup.HttpClientAuthentication != null)
                     validables.AddRange(Startup.HttpClientAuthentication);
 
-                validables.Add(Startup.ApiSecuret);
+                if (Startup.ApiSecuret != null)
+                    validables.Add(Startup.ApiSecuret);
+            }
+
+            if (Entrypoints != null)
                 validables.Add(Entrypoints);
 
-                if (Entrypoints.Routes != null)
-                    validables.AddRange(Entrypoints.Routes);
+            if (Entrypoints.Routes != null)
+                validables.AddRange(Entrypoints.Routes);
 
-                if (Actions != null)
-                    validables.AddRange(Actions);
+            if (Actions != null)
+                validables.AddRange(Actions);
 
-                if (FlowActions != null)
-                    validables.AddRange(FlowActions);
+            if (FlowActions != null)
+                validables.AddRange(FlowActions);
 
-                if (ContractMaps != null)
-                    validables.AddRange(ContractMaps);
-            }
+            if (ContractMaps != null)
+                validables.AddRange(ContractMaps);
+
+            if (ContractValidations != null)
+                validables.AddRange(ContractValidations);
 
             return validables;
         }

@@ -87,11 +87,11 @@ contractMaps:
 #      mapFields:
 #        - "customer.id"
 
-#validations:
-#  - id: 8001
-#    fields:
-#    - name: "customer.name"
-#      type: Required
-#    - name: "customer.name"
-#      type: biggerThen
-#      size: 10
+contractValidations:
+  - id: 8001
+    fields:
+    - field: "customer.name"
+      type: Required
+    - field: "customer.name"
+      type: biggerThan
+      size: 10
