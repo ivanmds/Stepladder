@@ -177,6 +177,12 @@ namespace App.JsonHelpers
                         jsonArrayMapTo = new JsonArray();
                         jsonObjectCurrent.Add(field, jsonArrayMapTo);
                     }
+                    else
+                    {
+                        var jsonObject = new JsonObject();
+                        jsonObjectCurrent.Add(field, jsonObject);
+                        jsonObjectCurrent = jsonObject;
+                    }
                 }
             }
 

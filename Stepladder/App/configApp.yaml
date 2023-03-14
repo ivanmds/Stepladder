@@ -70,10 +70,10 @@ contractMaps:
       - "birthdate:person.birthdate"
       #- "addresses.street:rua"
       #- "addresses.number:numero"
-    #remove:
-    #  - addresses
+    remove:
+      - addresses
     mapArray:
-      - arrayMapFromTo: "addresses:addresses"
+      - arrayMapFromTo: "addresses:person.addresses"
         mapFromTo:
           - "street:rua"
           - "number:numero"
