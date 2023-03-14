@@ -1,4 +1,5 @@
 ﻿using App.Contexts;
+using App.Helpers;
 using App.Settings.Actions;
 
 namespace App.Handlers
@@ -11,6 +12,7 @@ namespace App.Handlers
             {
                 var httpClientFactory = context.HttpContext.RequestServices.GetService<IHttpClientFactory>();
                 using var httpClient = httpClientFactory.CreateClient(ActionSetting.Uri);
+                HttpClientHelper.MapHeaderValue(context, httpClient, ActionSetting);
                 var uri = BuildFinalHttpClientUri(context);
                 context.ResponseContext.HttpResponseMessage = await httpClient.GetAsync(uri);
             }

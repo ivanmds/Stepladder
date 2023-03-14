@@ -1,4 +1,5 @@
-﻿using App.Settings.Actions.Types;
+﻿using App.Settings.Actions.Rules;
+using App.Settings.Actions.Types;
 using App.Validations;
 
 namespace App.Settings.Actions
@@ -10,7 +11,12 @@ namespace App.Settings.Actions
 
         public ValidateResult Valid()
         {
-            throw new NotImplementedException();
+            var rules = new IRule<ActionHeaderMap>[]
+            {
+                new ActionHeaderMapRule()
+            };
+
+            return RuleExecute.Execute(this, rules);
         }
     }
 }

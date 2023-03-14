@@ -13,6 +13,7 @@ namespace App.Settings.Actions
         public string Uri { get; set; }
         public string ReponseContractMapId { get; set; }
         public List<ActionRouteMap> RouteMaps { get; set; } = new List<ActionRouteMap>();
+        public List<ActionHeaderMap> HeaderMaps { get; set; } = new List<ActionHeaderMap>();
 
         public ValidateResult Valid()
         {
@@ -24,6 +25,9 @@ namespace App.Settings.Actions
             var results = RuleExecute.Execute(this, rules);
             foreach (var route in RouteMaps) 
                 results.Concate(route.Valid());
+
+            foreach (var header in HeaderMaps)
+                results.Concate(header.Valid());
 
             return results;
         }
