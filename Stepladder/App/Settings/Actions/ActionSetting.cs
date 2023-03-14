@@ -12,6 +12,7 @@ namespace App.Settings.Actions
         public MethodType Method { get; set; }
         public string Uri { get; set; }
         public string ReponseContractMapId { get; set; }
+        public List<ActionRouteMap> RouteMaps { get; set; }
 
         public ValidateResult Valid()
         {
@@ -20,7 +21,11 @@ namespace App.Settings.Actions
                 new ActionSettingTypeHttpRequestRule()
             };
 
-            return RuleExecute.Execute(this, rules);
+            var results = RuleExecute.Execute(this, rules);
+            foreach (var route in RouteMaps) 
+                results.Concate(route.Valid());
+
+            return results;
         }
     }
 }

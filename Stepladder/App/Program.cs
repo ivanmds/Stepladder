@@ -6,8 +6,6 @@ builder.AddLoadApplicationSettings();
 await builder.AddHttpClientAuthenticationAsync();
 builder.AddApiSecuret();
 
-
-
 var app = builder.Build();
 
 app.UseConfigAuthentication();

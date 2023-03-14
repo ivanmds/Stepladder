@@ -38,7 +38,7 @@ namespace App.Settings
                 if (Entrypoints.Routes != null)
                     validables.AddRange(Entrypoints.Routes);
 
-                if(Actions != null)
+                if (Actions != null)
                     validables.AddRange(Actions);
 
                 if (FlowActions != null)

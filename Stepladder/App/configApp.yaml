@@ -22,10 +22,10 @@ startup:
 
 entrypoints:
   routes:
-  #- route: "api/customers"
-  #  method: post
-  #  enableAnonymous: true
-  #  flowActionId: create_customer
+  - route: "api/customers/{id}"
+    method: get
+    enableAnonymous: true
+    flowActionId: get_customer
   
   - route: "api/hello"
     method: get
@@ -41,12 +41,15 @@ entrypoints:
 #        topicName:
 #        actionId: {id}
 
-#actions:
-#  - id: get_customer_action
-#    type: httpRequest
-#    uri: 'http://localhost:19225/api/customers'
-#    method: get
-#    reponseContractMapId: customer_response
+actions:
+  - id: get_customer_action
+    type: httpRequest
+    uri: 'http://localhost:8080/customers/{id}'
+    method: get
+    routeMaps:
+      - routeKey: '{id}'
+        fromType: httpRequest
+    reponseContractMapId: customer_response
     #autenticationId: 10
   
 #  - id: 2
@@ -54,20 +57,21 @@ entrypoints:
 #    topicName: 'stepladder.test.request'
 #    groupId: ''
 
-#flowActions:
-#  - id: create_customer
-#    actionsId:
-#      - get_customer_action
+flowActions:
+  - id: get_customer
+    actionsId:
+      - get_customer_action
 
-#contractMaps:
-#  - id: customer_response
-#    mapFromTo:
-#      - "name:person.Name"
-#      - "motherName:person.motherName"
-#      #- "address.address:rua"
-#      #- "address.number:numero"
-#    remove:
-#      - address.address
+contractMaps:
+  - id: customer_response
+    mapFromTo:
+      - "name:person.Name"
+      - "motherName:person.motherName"
+      - "birthdate:person.birthdate" 
+      #- "addresses.street:rua"
+      #- "addresses.number:numero"
+    #remove:
+    #  - address.address
 
 #strategies:
 #  - cache:

@@ -21,7 +21,6 @@ namespace App.JsonHelpers
             return _jsonObject;
         }
 
-
         // see how can do better performance
         private void JsonParseFieldsRun()
         {
@@ -84,6 +83,9 @@ namespace App.JsonHelpers
 
         private void JsonRemoveFieldsRun()
         {
+            if (_contractMapSetting.Remove == null)
+                return;
+
             foreach (var removeField in _contractMapSetting.Remove)
             {
                 var removeFieldSplited = removeField.Split(".");

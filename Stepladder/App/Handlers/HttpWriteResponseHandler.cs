@@ -11,7 +11,7 @@ namespace App.Handlers
                 var response = context.ResponseContext.HttpResponseMessage;
                 context.HttpContext.Response.StatusCode = (int)response.StatusCode;
 
-                var contentyType = response.Content.Headers.ContentType;
+                var contentyType = response.Content.Headers?.ContentType?.ToString() ?? "application/json";
                 context.HttpContext.Response.Headers.Add("Content-Type", contentyType.ToString());
 
                 await context.HttpContext.Response.WriteAsync(context.ResponseContext.ResponseBodyStringValue);
