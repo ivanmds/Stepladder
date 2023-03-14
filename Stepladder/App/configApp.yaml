@@ -67,11 +67,16 @@ contractMaps:
     mapFromTo:
       - "name:person.Name"
       - "motherName:person.motherName"
-      - "birthdate:person.birthdate" 
+      - "birthdate:person.birthdate"
       #- "addresses.street:rua"
       #- "addresses.number:numero"
     #remove:
     #  - address.address
+    mapArrayTo:
+      arrayMapFromTo: "addresses:enderecos"
+      mapFromTo:
+        - "street:rua"
+        - "number:numero"
 
 #strategies:
 #  - cache:
