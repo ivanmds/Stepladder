@@ -71,12 +71,13 @@ contractMaps:
       #- "addresses.street:rua"
       #- "addresses.number:numero"
     #remove:
-    #  - address.address
+    #  - addresses
     mapArray:
-      - arrayMapFromTo: "addresses:enderecos"
+      - arrayMapFromTo: "addresses:addresses"
         mapFromTo:
           - "street:rua"
           - "number:numero"
+          - "neighborhood:bairro"
 
 #strategies:
 #  - cache:

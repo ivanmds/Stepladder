@@ -17,6 +17,9 @@ namespace App.Settings.ContractMap.Rules
                 {
                     if (map.Contains(' '))
                         result.AddError("ContractMapArray.MapFromTo not accept space");
+
+                    if (map.Contains('.'))
+                        result.AddError("ContractMapArray.MapFromTo not accept '.'");
                 }
             }
 
