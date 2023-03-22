@@ -112,3 +112,9 @@ contractValidations:
     - field: "name"
       type: biggerThan
       size: 5
+    - field: "motherName"
+      type: Required
+    - field: "motherName"
+      type: biggerThan
+      size: 10
+      

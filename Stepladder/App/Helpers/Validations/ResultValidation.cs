@@ -14,9 +14,10 @@ namespace App.Helpers.Validations
 
         public void Append(ResultFieldValidation fieldValidation)
         {
-            if(fieldValidation.Success == false)
-                _success = fieldValidation.Success;
-
+            if (fieldValidation.Success)
+                return;
+            
+            _success = false;
             FieldValidation.Add(fieldValidation);
         }
 
