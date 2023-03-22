@@ -56,5 +56,20 @@ namespace Test.Settings.Actions.Rules
             var contains = result.Errors.Contains("FlowActionsSetting.ActionsId request_goggle should be configured");
             Assert.False(contains);
         }
+
+        [Fact]
+        public void WhenFlowActionsSettingHasEmptyOrNullActionsId_ShouldReturnError()
+        {
+            // arrange
+            var setting = new FlowActionsSetting { ActionsId = new List<string>() };
+            var rule = new FlowActionsSettingRule();
+
+            // act
+            var result = rule.Do(setting);
+
+            // assert
+            var contains = result.Errors.Contains("FlowActionsSetting.ActionsId is required");
+            Assert.True(contains);
+        }
     }
 }

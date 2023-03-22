@@ -30,6 +30,7 @@ namespace App.Extensions
             builder.Services.AddScoped<HttpWriteResponseHandler>();
             builder.Services.AddScoped<HttpWriteResponseMockHandler>();
             builder.Services.AddScoped<HttpResponseContractMapHandler>();
+            builder.Services.AddScoped<HttpRequestContractValidationHandler>();
             builder.Services.AddHttpClient();
         }
 

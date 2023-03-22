@@ -1,5 +1,6 @@
 ﻿using App.Settings.Entrypoints.Routes;
-using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace App.Contexts
 {
@@ -14,19 +15,11 @@ namespace App.Contexts
         public RouteSetting RouteSetting { get; set; }
         public HttpContext HttpContext { get; set; }
 
-        public bool HasNoError => Errors.Count() == 0;
-        public List<string> Errors { get; set; } = new List<string>();
-        public string ErrorString()
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (var error in Errors)
-                sb.AppendLine(error);
-
-            return sb.ToString();
-        }
-            
-            
-
+        private bool _hasNoError = true;
+        public bool HasNoError => _hasNoError;
+       
+        public void SetHttpValidationWithError()
+            => _hasNoError = false;
 
         public async Task<string> GetCurrentBodyToRequestStringAsync()
         {
@@ -36,13 +29,28 @@ namespace App.Contexts
                 return ResponseContext.ResponseBodyStringValue;
         }
 
+        private string _httpContextRequestBodyJsonText = "";
         private async Task<string> GetHttpContextRequestBodyStringAsync()
         {
-            string requestBodyString = "";
-            using StreamReader stream = new StreamReader(HttpContext.Request.Body);
-            requestBodyString = await stream.ReadToEndAsync();
+            if (string.IsNullOrEmpty(_httpContextRequestBodyJsonText))
+            {
+                using StreamReader stream = new StreamReader(HttpContext.Request.Body);
+                _httpContextRequestBodyJsonText = await stream.ReadToEndAsync();
+            }
 
-            return requestBodyString;
+            return _httpContextRequestBodyJsonText;
+        }
+
+        private JsonObject _httpContextRequestBodyJson = null;
+        public async Task<JsonObject> GetHttpContextRequestBodyAsync()
+        {
+            if(_httpContextRequestBodyJson == null)
+            {
+                var jsonString = await GetHttpContextRequestBodyStringAsync();
+                _httpContextRequestBodyJson = JsonSerializer.Deserialize<JsonObject>(jsonString);
+            }
+
+            return _httpContextRequestBodyJson;
         }
     }
 }

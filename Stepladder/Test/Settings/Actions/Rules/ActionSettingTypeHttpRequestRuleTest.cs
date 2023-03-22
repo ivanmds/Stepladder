@@ -3,6 +3,7 @@ using App.Settings.Actions;
 using App.Settings.Actions.Rules;
 using App.Settings.Actions.Types;
 using App.Settings.ContractMap;
+using App.Settings.ContractValidations;
 using App.Settings.Entrypoints.Routes.Types;
 
 namespace Test.Settings.Actions.Rules
@@ -85,7 +86,6 @@ namespace Test.Settings.Actions.Rules
             Assert.True(constains);
         }
 
-
         [Fact]
         public void WhenActionSettingTypeHttpRequestHasResponseContractMapIdIsConfigured_ShouldReturnSuccess()
         {
@@ -99,6 +99,37 @@ namespace Test.Settings.Actions.Rules
 
             // assert
             var constains = result.Errors.Contains("ActionSetting.ReponseContractMapId contract_configured should configured before use");
+            Assert.False(constains);
+        }
+
+        [Fact]
+        public void WhenActionSettingTypeHttpRequestHasRequestContractValidationIdNotConfigured_ShouldReturnError()
+        {
+            // arrange
+            var setting = new ActionSetting { RequestContractValidationId = "not_configured" };
+            var rule = new ActionSettingTypeHttpRequestRule();
+
+            // act
+            var result = rule.Do(setting);
+
+            // assert
+            var constains = result.Errors.Contains("ActionSetting.RequestContractValidationId not_configured should configured before use");
+            Assert.True(constains);
+        }
+
+        [Fact]
+        public void WhenActionSettingTypeHttpRequestHasRequestHasRequestContractValidationIdIsConfigured_ShouldReturnSuccess()
+        {
+            // arrange
+            var appSetting = new ApplicationSetting { ContractValidations = new List<ContractValidation> { new ContractValidation { Id = "contract_configured" } } };
+            var setting = new ActionSetting { RequestContractValidationId = "contract_configured" };
+            var rule = new ActionSettingTypeHttpRequestRule();
+
+            // act
+            var result = rule.Do(setting);
+
+            // assert
+            var constains = result.Errors.Contains("ActionSetting.RequestContractValidationId contract_configured should configured before use");
             Assert.False(constains);
         }
     }

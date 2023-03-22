@@ -1,4 +1,5 @@
 ﻿using App.Validations;
+using System;
 
 namespace App.Settings.Actions.Rules
 {
@@ -22,6 +23,8 @@ namespace App.Settings.Actions.Rules
                       result.AddError($"FlowActionsSetting.ActionsId {actionId} should be configured");
                 }
             }
+            else
+                result.AddError($"FlowActionsSetting.ActionsId is required");
 
             return result;
         }

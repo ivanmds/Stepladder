@@ -1,128 +1,114 @@
+#startup:
+  #httpClientAuthentication:
+  #  - id: "api_integration_pix"
+  #    type: clientCredential
+  #    clientId: ""
+  #    clientSecret: ""
+  #    endpointAuth: ""
+  #    valueFrom: declared
+
+  #apiSecuret:
+  #  type: basic
+  #  user: admin
+  #  password: 123456
+  #  valueFrom: declared
+  
+#  connections:
+#    kafka:
+#      valueFrom:
+#    redis:
+#      valueFrom:
+
+
 entrypoints:
   routes:
-    - route: "api/limits/processor"
-      method: post
-      enableAnonymous: true
-      flowActionId: limit_processor
-    
+  - route: "api/customers/{id}"
+    method: get
+    enableAnonymous: true
+    flowActionId: get_customer
+
+  - route: "api/customers"
+    method: post
+    enableAnonymous: true
+    flowActionId: post_customer
+  
+#  consumers:
+#    kafka:
+#      - groupId:
+#        topicName:
+#        actionId: {id}
+
 actions:
-  - id: post_limit_processor
+  - id: get_customer_action
     type: httpRequest
-    uri: 'http://towner-core-scouter.acesso.stg-services/api/v2/limits/processor?api-version=1'
+    uri: 'http://localhost:8080/customers/{id}'
+    method: get
+    routeMaps:
+      - routeKey: '{id}'
+        fromType: httpRequest
+    headerMaps:
+      - mapFromTo: "x-correlation-id:x-correlation-id"
+        fromType: httpRequest
+    reponseContractMapId: customer_response
+
+  - id: post_customer_action
+    type: httpRequest
+    uri: 'http://localhost:8080/customers'
     method: post
     headerMaps:
-      - mapFromTo: "X-Correlation-ID:X-Correlation-ID"
+      - mapFromTo: "x-correlation-id:x-correlation-id"
         fromType: httpRequest
+    requestContractValidationId: customer_post_validation
+    reponseContractMapId: customer_response
+    #autenticationId: 10
+  
+#  - id: 2
+#    type: kafkaConsumer
+#    topicName: 'stepladder.test.request'
+#    groupId: ''
 
 flowActions:
-  - id: limit_processor
+  - id: get_customer
     actionsId:
-      - post_limit_processor
+      - get_customer_action
+  - id: post_customer
+    actionsId:
+      - post_customer_action
 
-#startup:
-#  #httpClientAuthentication:
-#  #  - id: "api_integration_pix"
-#  #    type: clientCredential
-#  #    clientId: ""
-#  #    clientSecret: ""
-#  #    endpointAuth: ""
-#  #    valueFrom: declared
+contractMaps:
+  - id: customer_response
+    mapFromTo:
+      - "name:person.Name"
+      - "motherName:person.motherName"
+      - "birthdate:person.birthdate"
+    remove:
+      - addresses
+    mapArray:
+      - arrayMapFromTo: "addresses:person.addresses"
+        mapFromTo:
+          - "street:rua"
+          - "number:numero"
+          - "neighborhood:bairro"
 
-#  #apiSecuret:
-#  #  type: basic
-#  #  user: admin
-#  #  password: 123456
-#  #  valueFrom: declared
-  
-##  connections:
-##    kafka:
-##      valueFrom:
-##    redis:
-##      valueFrom:
+#strategies:
+#  - cache:
+#      id: redisCache_22
+#      type: redis
 
+#  - httpIdempotency:
+#      id: idemp_55
+#      ttl: 60s
+#      provider: 
+#        type: redis
+#        id: redisCache_22
+#      mapFields:
+#        - "customer.id"
 
-#entrypoints:
-#  routes:
-#  - route: "api/customers/{id}"
-#    method: get
-#    enableAnonymous: true
-#    flowActionId: get_customer
-  
-#  - route: "api/hello"
-#    method: get
-#    enableAnonymous: true
-#    responseMock:
-#      bodyValue: "{\"Message\":\"Hello\"}"
-#      contentType: "application/json"
-#      statusCode: 200
-    
-##  consumers:
-##    kafka:
-##      - groupId:
-##        topicName:
-##        actionId: {id}
-
-#actions:
-#  - id: get_customer_action
-#    type: httpRequest
-#    uri: 'http://localhost:8080/customers/{id}'
-#    method: get
-#    routeMaps:
-#      - routeKey: '{id}'
-#        fromType: httpRequest
-#    headerMaps:
-#      - mapFromTo: "x-correlation-id:x-correlation-id"
-#        fromType: httpRequest
-      
-#    reponseContractMapId: customer_response
-#    #autenticationId: 10
-  
-##  - id: 2
-##    type: kafkaConsumer
-##    topicName: 'stepladder.test.request'
-##    groupId: ''
-
-#flowActions:
-#  - id: get_customer
-#    actionsId:
-#      - get_customer_action
-
-#contractMaps:
-#  - id: customer_response
-#    mapFromTo:
-#      - "name:person.Name"
-#      - "motherName:person.motherName"
-#      - "birthdate:person.birthdate"
-#      #- "addresses.street:rua"
-#      #- "addresses.number:numero"
-#    remove:
-#      - addresses
-#    mapArray:
-#      - arrayMapFromTo: "addresses:person.addresses"
-#        mapFromTo:
-#          - "street:rua"
-#          - "number:numero"
-#          - "neighborhood:bairro"
-
-##strategies:
-##  - cache:
-##      id: redisCache_22
-##      type: redis
-
-##  - httpIdempotency:
-##      id: idemp_55
-##      ttl: 60s
-##      provider: 
-##        type: redis
-##        id: redisCache_22
-##      mapFields:
-##        - "customer.id"
-
-#contractValidations:
-#  - id: 8001
-#    fields:
-#    - field: "customer.name"
-#      type: Required
-#    - field: "customer.name"
-#      type: biggerThan
-#      size: 10
+contractValidations:
+  - id: customer_post_validation
+    fields:
+    - field: "name"
+      type: Required
+    - field: "name"
+      type: biggerThan
+      size: 5

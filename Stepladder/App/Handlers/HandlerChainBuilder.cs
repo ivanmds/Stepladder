@@ -21,6 +21,9 @@ namespace App.Handlers
                 if(flowAction.ActionSetting != null)
                     handler.ActionSetting = flowAction.ActionSetting;
 
+                if (flowAction.ContractValidation != null)
+                    handler.ContractValidation = flowAction.ContractValidation;
+
                 if (flowAction.ContractMap != null)
                     handler.ContractMap = flowAction.ContractMap;
 

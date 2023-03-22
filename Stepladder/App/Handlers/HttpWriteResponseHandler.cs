@@ -21,7 +21,7 @@ namespace App.Handlers
             {
                 context.HttpContext.Response.StatusCode = 400;
                 context.HttpContext.Response.Headers.Add("Content-Type", "application/json");
-                await context.HttpContext.Response.WriteAsync(context.ErrorString());
+                await context.HttpContext.Response.WriteAsync(context.ResponseContext.ResponseBodyStringValue);
             }
 
             await NextAsync(context);

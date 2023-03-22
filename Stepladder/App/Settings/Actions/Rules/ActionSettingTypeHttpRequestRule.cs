@@ -32,6 +32,15 @@ namespace App.Settings.Actions.Rules
                     if(hasContractMap == false)
                         result.AddError($"ActionSetting.ReponseContractMapId {value.ReponseContractMapId} should configured before use");
                 }
+
+
+                if (value.RequestContractValidationId != null)
+                {
+                    var appSetting = ApplicationSetting.Current;
+                    var hasContractMap = appSetting?.ContractValidations?.Any(c => c.Id == value.RequestContractValidationId) ?? false;
+                    if (hasContractMap == false)
+                        result.AddError($"ActionSetting.RequestContractValidationId {value.RequestContractValidationId} should configured before use");
+                }
             }
 
             return result;

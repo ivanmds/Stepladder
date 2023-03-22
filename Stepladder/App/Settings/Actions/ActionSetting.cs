@@ -12,6 +12,7 @@ namespace App.Settings.Actions
         public MethodType Method { get; set; }
         public string Uri { get; set; }
         public string ReponseContractMapId { get; set; }
+        public string RequestContractValidationId { get; set; }
         public List<ActionRouteMap> RouteMaps { get; set; } = new List<ActionRouteMap>();
         public List<ActionHeaderMap> HeaderMaps { get; set; } = new List<ActionHeaderMap>();
 

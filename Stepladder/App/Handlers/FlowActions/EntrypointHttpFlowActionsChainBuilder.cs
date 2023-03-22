@@ -30,6 +30,12 @@ namespace App.Handlers.FlowActions
 
                 foreach (var action in actionsSetting)
                 {
+                    if (string.IsNullOrEmpty(action.RequestContractValidationId) == false)
+                    {
+                        var contractValidation = appSetting.ContractValidations.FirstOrDefault(a => a.Id == action.RequestContractValidationId);
+                        FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpRequestContractValidationHandler), contractValidation: contractValidation);
+                    }
+
                     if (action.Type == ActionType.HttpRequest)
                     {
                         if (action.Method == MethodType.GET)

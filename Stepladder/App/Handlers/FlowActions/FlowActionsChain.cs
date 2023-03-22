@@ -1,5 +1,6 @@
 ﻿using App.Settings.Actions;
 using App.Settings.ContractMap;
+using App.Settings.ContractValidations;
 
 namespace App.Handlers.FlowActions
 {
@@ -15,7 +16,8 @@ namespace App.Handlers.FlowActions
             string flowActionId,
             Type handleType,
             ActionSetting actionSetting = null,
-            ContractMapSetting contractMap = null)
+            ContractMapSetting contractMap = null,
+            ContractValidation contractValidation = null)
 
            => FLOW_ACTION[flowActionId].Add(
                new FlowAction
@@ -23,7 +25,8 @@ namespace App.Handlers.FlowActions
                    Order = FLOW_ACTION[flowActionId].Count + 1,
                    HandleType = handleType,
                    ActionSetting = actionSetting,
-                   ContractMap = contractMap
+                   ContractMap = contractMap,
+                   ContractValidation = contractValidation
                });
 
         public static List<FlowAction> GetFlowActionsChain(string flowActionId)
@@ -36,5 +39,6 @@ namespace App.Handlers.FlowActions
         public Type HandleType { get; set; }
         public ActionSetting ActionSetting { get; set; }
         public ContractMapSetting ContractMap { get; set; }
+        public ContractValidation ContractValidation { get; set; }
     }
 }
