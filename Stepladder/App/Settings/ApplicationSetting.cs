@@ -1,4 +1,5 @@
 ﻿using App.Settings.Actions;
+using App.Settings.Connections;
 using App.Settings.ContractMap;
 using App.Settings.ContractValidations;
 using App.Settings.Entrypoints;
@@ -17,6 +18,7 @@ namespace App.Settings
         }
 
         public StartupSetting Startup { get; set; }
+        public ConnectionSetting Connections { get; set; }
         public EntrypointSetting Entrypoints { get; set; }
         public List<ActionSetting> Actions { get; set; }
         public List<FlowActionsSetting> FlowActions { get; set; }
@@ -55,6 +57,9 @@ namespace App.Settings
 
             if (ContractValidations != null)
                 validables.AddRange(ContractValidations);
+
+            if (Connections != null)
+                validables.Add(Connections);
 
             return validables;
         }

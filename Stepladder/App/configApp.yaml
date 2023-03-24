@@ -19,6 +19,9 @@
 #    redis:
 #      valueFrom:
 
+connections:
+  redis:
+    connectionString: "localhost:6379"
 
 entrypoints:
   routes:

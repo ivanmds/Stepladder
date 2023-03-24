@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddLoadApplicationSettings();
 await builder.AddHttpClientAuthenticationAsync();
 builder.AddApiSecuret();
+builder.AddConnections();
 
 var app = builder.Build();
 
