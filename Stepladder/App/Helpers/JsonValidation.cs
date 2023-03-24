@@ -69,21 +69,21 @@ namespace App.Helpers
 
             foreach (var keyValue in groupByProperty)
             {
-                var PropertyValidation = PropertyValidate(keyValue);
-                resultValidation.Append(PropertyValidation);
+                var propertyValidation = PropertyValidate(keyValue);
+                resultValidation.Append(propertyValidation);
             }
 
             return resultValidation;
         }
 
-        private ResultPropertyValidation PropertyValidate(IGrouping<string, PropertyValidation> groupPropertyValidations)
+        private IEnumerable<ResultPropertyValidation> PropertyValidate(IGrouping<string, PropertyValidation> groupPropertyValidations)
         {
             var PropertyValidateSplitted = groupPropertyValidations.Key.Split('.');
 
             JsonNode mapFromJsonNode = null;
             JsonNode mapToJsonNode = null;
             JsonObject jsonObjectCurrent = _jsonCurrentValidation;
-            var result = ResultPropertyValidation.Create($"{_prefixPropertyName}{groupPropertyValidations.Key}");
+            var propertyName = $"{_prefixPropertyName}{groupPropertyValidations.Key}";
             var PropertyValidations = groupPropertyValidations.ToArray();
 
             foreach (var Property in PropertyValidateSplitted)
@@ -101,97 +101,104 @@ namespace App.Helpers
             foreach (var PropertyValidation in PropertyValidations)
             {
                 if (PropertyValidation.ValueType == PropertyValueType.String)
-                    StringPropertyValidation(result, jsonValue, PropertyValidation);
+                    yield return StringPropertyValidation(propertyName, jsonValue, PropertyValidation);
                 else if (PropertyValidation.ValueType == PropertyValueType.Int)
-                    IntPropertyValidation(result, jsonValue, PropertyValidation);
+                    yield return IntPropertyValidation(propertyName, jsonValue, PropertyValidation);
                 else if (PropertyValidation.ValueType == PropertyValueType.Float)
-                    FloatPropertyValidation(result, jsonValue, PropertyValidation);
+                    yield return FloatPropertyValidation(propertyName, jsonValue, PropertyValidation);
             }
-
-            return result;
         }
 
-        private void StringPropertyValidation(ResultPropertyValidation result, JsonValue jsonValue, PropertyValidation PropertyValidation)
+        private ResultPropertyValidation StringPropertyValidation(string propertyName, JsonValue jsonValue, PropertyValidation PropertyValidation)
         {
+            var result = ResultPropertyValidation.Create(propertyName);
             if (jsonValue?.TryGetValue<string>(out var value) == true)
             {
                 if (PropertyValidation.ValidationType == PropertyValidationType.Required)
                 {
                     if (string.IsNullOrEmpty(value))
-                        result.AppendError("Property is required");
+                        result.SetError(PropertyValidation);
                 }
                 else if (PropertyValidation.ValidationType == PropertyValidationType.LessThan)
                 {
                     if (value?.Count() >= PropertyValidation.Length)
-                        result.AppendError($"Property should be less than {PropertyValidation.Length}");
+                        result.SetError(PropertyValidation);
                 }
                 else if (PropertyValidation.ValidationType == PropertyValidationType.BiggerThan)
                 {
                     if (value?.Count() <= PropertyValidation.Length)
-                        result.AppendError($"Property should be bigger than {PropertyValidation.Length}");
+                        result.SetError(PropertyValidation);
                 }
             }
             else if (jsonValue != null)
-                result.AppendError("Property value should be a string");
+                result.SetError(PropertyValidation);
             else
             {
                 if (PropertyValidation.ValidationType == PropertyValidationType.Required)
                 {
-                    result.AppendError("Property is required");
+                    result.SetError(PropertyValidation);
                 }
             }
+
+            return result;
         }
 
-        private void IntPropertyValidation(ResultPropertyValidation result, JsonValue jsonValue, PropertyValidation PropertyValidation)
+        private ResultPropertyValidation IntPropertyValidation(string propertyName, JsonValue jsonValue, PropertyValidation PropertyValidation)
         {
+            var result = ResultPropertyValidation.Create(propertyName);
             if (jsonValue?.TryGetValue<int>(out var value) == true)
             {
                 if (PropertyValidation.ValidationType == PropertyValidationType.LessThan)
                 {
                     if (value >= PropertyValidation.Value)
-                        result.AppendError($"Property should be less than {PropertyValidation.Value}");
+                        result.SetError(PropertyValidation);
                 }
                 else if (PropertyValidation.ValidationType == PropertyValidationType.BiggerThan)
                 {
                     if (value <= PropertyValidation.Value)
-                        result.AppendError($"Property should be bigger than {PropertyValidation.Value}");
+                        result.SetError(PropertyValidation);
                 }
             }
             else if (jsonValue != null)
-                result.AppendError("Property value should be a string");
+                result.SetError(PropertyValidation);
             else
             {
                 if (PropertyValidation.ValidationType == PropertyValidationType.Required)
                 {
-                    result.AppendError("Property is required");
+                    result.SetError(PropertyValidation);
                 }
             }
+
+            return result;
         }
 
-        private void FloatPropertyValidation(ResultPropertyValidation result, JsonValue jsonValue, PropertyValidation PropertyValidation)
+        private ResultPropertyValidation FloatPropertyValidation(string propertyName, JsonValue jsonValue, PropertyValidation PropertyValidation)
         {
+            var result = ResultPropertyValidation.Create(propertyName);
             if (jsonValue?.TryGetValue<float>(out var value) == true)
             {
                 if (PropertyValidation.ValidationType == PropertyValidationType.LessThan)
                 {
                     if (value >= PropertyValidation.Value)
-                        result.AppendError($"Property should be less than {PropertyValidation.Value}");
+                        result.SetError(PropertyValidation);
                 }
                 else if (PropertyValidation.ValidationType == PropertyValidationType.BiggerThan)
                 {
                     if (value <= PropertyValidation.Value)
-                        result.AppendError($"Property should be bigger than {PropertyValidation.Value}");
+                        result.SetError(PropertyValidation);
                 }
             }
             else if (jsonValue != null)
-                result.AppendError("Property value should be a string");
+                result.SetError(PropertyValidation);
             else
             {
                 if (PropertyValidation.ValidationType == PropertyValidationType.Required)
                 {
-                    result.AppendError("Property is required");
+                    result.SetError(PropertyValidation);
                 }
             }
+
+            return result;
         }
     }
 }

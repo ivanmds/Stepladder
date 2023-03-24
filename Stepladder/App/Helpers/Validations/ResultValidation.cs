@@ -7,6 +7,7 @@ namespace App.Helpers.Validations
         private bool _success = true;
         public ResultValidation() { }
 
+        [JsonPropertyName("errors")]
         public List<ResultPropertyValidation> PropertyValidation { get; private set; } = new List<ResultPropertyValidation>();
 
         [JsonIgnore]
@@ -24,10 +25,10 @@ namespace App.Helpers.Validations
         public void Concate(ResultValidation resultValidation)
             => Append(resultValidation.PropertyValidation.ToArray());
 
-        public void Append(params ResultPropertyValidation[] PropertyValidations)
+        public void Append(IEnumerable<ResultPropertyValidation> propertyValidations)
         {
-            foreach (var PropertyValidation in PropertyValidations)
-                Append(PropertyValidation);
+            foreach (var propertyValidation in propertyValidations)
+                Append(propertyValidation);
         }
 
         public static ResultValidation Create()
