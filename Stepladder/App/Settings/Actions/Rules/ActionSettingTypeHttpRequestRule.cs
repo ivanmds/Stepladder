@@ -41,6 +41,17 @@ namespace App.Settings.Actions.Rules
                     if (hasContractMap == false)
                         result.AddError($"ActionSetting.RequestContractValidationId {value.RequestContractValidationId} should configured before use");
                 }
+
+                if(value.StrategieCacheId != null)
+                {
+                    var appSetting = ApplicationSetting.Current;
+                    var hasStrategieCacheId = appSetting?.Strategies?.Cache?.Id == value.StrategieCacheId;
+                    if (hasStrategieCacheId == false)
+                        result.AddError($"ActionSetting.StrategieCacheId {value.StrategieCacheId} should configured before use");
+
+                    if(value.Method != MethodType.GET)
+                        result.AddError("ActionSetting.StrategieCacheId only used in get methods");
+                }
             }
 
             return result;

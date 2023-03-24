@@ -5,6 +5,7 @@ using App.Settings.Actions.Types;
 using App.Settings.ContractMap;
 using App.Settings.ContractValidations;
 using App.Settings.Entrypoints.Routes.Types;
+using App.Settings.Strategies;
 
 namespace Test.Settings.Actions.Rules
 {
@@ -131,6 +132,57 @@ namespace Test.Settings.Actions.Rules
             // assert
             var constains = result.Errors.Contains("ActionSetting.RequestContractValidationId contract_configured should configured before use");
             Assert.False(constains);
+        }
+
+
+        [Fact]
+        public void WhenActionSettingTypeHttpRequestHasRequestStrategieCacheIdNotConfigured_ShouldReturnError()
+        {
+            // arrange
+            var setting = new ActionSetting { StrategieCacheId = "not_configured" };
+            var rule = new ActionSettingTypeHttpRequestRule();
+
+            // act
+            var result = rule.Do(setting);
+
+            // assert
+            var constains = result.Errors.Contains("ActionSetting.StrategieCacheId not_configured should configured before use");
+            Assert.True(constains);
+        }
+
+        [Fact]
+        public void WhenActionSettingTypeHttpRequestHasRequestHasRequestStrategieCacheIdIsConfigured_ShouldReturnSuccess()
+        {
+            // arrange
+            var appSetting = new ApplicationSetting { Strategies = new StrategiesSetting { Cache = new CacheSetting { Id = "cache_configured" } } };
+            var setting = new ActionSetting { StrategieCacheId = "cache_configured" };
+            var rule = new ActionSettingTypeHttpRequestRule();
+
+            // act
+            var result = rule.Do(setting);
+
+            // assert
+            var constains = result.Errors.Contains("ActionSetting.StrategieCacheId cache_configured should configured before use");
+            Assert.False(constains);
+        }
+
+        [Theory]
+        [InlineData(MethodType.POST)]
+        [InlineData(MethodType.PATCH)]
+        [InlineData(MethodType.PUT)]
+        [InlineData(MethodType.DELETE)]
+        public void WhenActionSettingTypeHttpRequestGetAndHasStrategieCacheIdConfigured_ShouldReturnError(MethodType methodType)
+        {
+            // arrange
+            var setting = new ActionSetting { StrategieCacheId = "configured", Method = methodType };
+            var rule = new ActionSettingTypeHttpRequestRule();
+
+            // act
+            var result = rule.Do(setting);
+
+            // assert
+            var constains = result.Errors.Contains("ActionSetting.StrategieCacheId only used in get methods");
+            Assert.True(constains);
         }
     }
 }
