@@ -3,6 +3,7 @@ using App.Settings.Connections;
 using App.Settings.ContractMap;
 using App.Settings.ContractValidations;
 using App.Settings.Entrypoints;
+using App.Settings.Strategies;
 using App.Validations;
 
 namespace App.Settings
@@ -24,6 +25,7 @@ namespace App.Settings
         public List<FlowActionsSetting> FlowActions { get; set; }
         public List<ContractMapSetting> ContractMaps { get; set; }
         public List<ContractValidation> ContractValidations { get; set; }
+        public StrategiesSetting Strategies { get; set; }
 
 
         public List<IValidable> GetValidables()
@@ -60,6 +62,9 @@ namespace App.Settings
 
             if (Connections != null)
                 validables.Add(Connections);
+
+            if (Strategies != null)
+                validables.Add(Strategies);
 
             return validables;
         }

@@ -93,10 +93,10 @@ contractMaps:
           - "number:numero"
           - "neighborhood:bairro"
 
-#strategies:
-#  - cache:
-#      id: redisCache_22
-#      type: redis
+strategies:
+  cache:
+    id: redisCache_22
+    type: redis
 
 #  - httpIdempotency:
 #      id: idemp_55
