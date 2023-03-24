@@ -16,41 +16,41 @@ namespace App.JsonHelpers
 
         public JsonObject MapParse()
         {
-            JsonParseFieldsRun();
-            JsonArrayParseFieldsRun();
+            JsonParsePropertiesRun();
+            JsonArrayParsePropertiesRun();
 
-            JsonRemoveFieldsRun();
+            JsonRemovePropertiesRun();
             return _jsonObject;
         }
 
         // see how can do better performance
-        private void JsonParseFieldsRun()
+        private void JsonParsePropertiesRun()
         {
             foreach (var mapFromTo in _contractMapSetting.MapFromTo)
             {
-                var fields = mapFromTo.Split(":");
-                var (keyFrom, keyTo) = (fields[0], fields[1]);
+                var Properties = mapFromTo.Split(":");
+                var (keyFrom, keyTo) = (Properties[0], Properties[1]);
 
                 var keyFromSplited = keyFrom.Split(".");
                 var keyToSplited = keyTo.Split(".");
-                JsonParseFieldsRun(keyFromSplited, keyToSplited);
+                JsonParsePropertiesRun(keyFromSplited, keyToSplited);
             }
         }
 
-        private void JsonParseFieldsRun(string[] mapFromSplited, string[] mapToSplited)
+        private void JsonParsePropertiesRun(string[] mapFromSplited, string[] mapToSplited)
         {
             JsonNode mapFromJsonNode = null;
             JsonNode mapToJsonNode = null;
             JsonObject jsonObjectCurrent = _jsonObject;
 
-            foreach (var field in mapFromSplited)
+            foreach (var Property in mapFromSplited)
             {
-                if (jsonObjectCurrent.TryGetPropertyValue(field, out mapFromJsonNode))
+                if (jsonObjectCurrent.TryGetPropertyValue(Property, out mapFromJsonNode))
                 {
                     if (mapFromJsonNode.GetType() == typeof(JsonObject))
                         jsonObjectCurrent = mapFromJsonNode as JsonObject;
                     else
-                        jsonObjectCurrent.Remove(field);
+                        jsonObjectCurrent.Remove(Property);
                 }
             }
 
@@ -59,15 +59,15 @@ namespace App.JsonHelpers
             {
                 var totalSplited = mapToSplited.Length;
                 var index = 0;
-                foreach (var field in mapToSplited)
+                foreach (var Property in mapToSplited)
                 {
                     index++;
 
                     if (index == totalSplited)
-                        jsonObjectCurrent.Add(field, mapFromJsonNode);
+                        jsonObjectCurrent.Add(Property, mapFromJsonNode);
                     else
                     {
-                        if (jsonObjectCurrent.TryGetPropertyValue(field, out mapToJsonNode))
+                        if (jsonObjectCurrent.TryGetPropertyValue(Property, out mapToJsonNode))
                         {
                             if (mapToJsonNode.GetType() == typeof(JsonObject))
                                 jsonObjectCurrent = mapToJsonNode as JsonObject;
@@ -75,7 +75,7 @@ namespace App.JsonHelpers
                         else
                         {
                             var nextJsonObjectCurrent = new JsonObject();
-                            jsonObjectCurrent.TryAdd(field, nextJsonObjectCurrent);
+                            jsonObjectCurrent.TryAdd(Property, nextJsonObjectCurrent);
                             jsonObjectCurrent = nextJsonObjectCurrent;
                         }
                     }
@@ -83,28 +83,28 @@ namespace App.JsonHelpers
             }
         }
 
-        private void JsonRemoveFieldsRun()
+        private void JsonRemovePropertiesRun()
         {
             if (_contractMapSetting.Remove == null)
                 return;
 
-            foreach (var removeField in _contractMapSetting.Remove)
+            foreach (var removeProperty in _contractMapSetting.Remove)
             {
-                var removeFieldSplited = removeField.Split(".");
+                var removePropertiesplited = removeProperty.Split(".");
                 JsonNode jsonNode = null;
                 JsonObject jsonObjectCurrent = _jsonObject;
 
-                var totalSplited = removeFieldSplited.Length;
+                var totalSplited = removePropertiesplited.Length;
                 var index = 0;
 
-                foreach (var field in removeFieldSplited)
+                foreach (var Property in removePropertiesplited)
                 {
                     index++;
                     if (index == totalSplited)
-                        jsonObjectCurrent.Remove(field);
+                        jsonObjectCurrent.Remove(Property);
                     else
                     {
-                        if (jsonObjectCurrent.TryGetPropertyValue(field, out jsonNode))
+                        if (jsonObjectCurrent.TryGetPropertyValue(Property, out jsonNode))
                             if (jsonNode.GetType() == typeof(JsonObject))
                                 jsonObjectCurrent = jsonNode as JsonObject;
                     }
@@ -113,32 +113,32 @@ namespace App.JsonHelpers
         }
 
 
-        private void JsonArrayParseFieldsRun()
+        private void JsonArrayParsePropertiesRun()
         {
             if (_contractMapSetting.MapArray?.Count > 0)
             {
                 foreach (var mapArray in _contractMapSetting.MapArray)
                 {
-                    var fields = mapArray.ArrayMapFromTo.Split(":");
-                    var (keyFrom, keyTo) = (fields[0], fields[1]);
+                    var Properties = mapArray.ArrayMapFromTo.Split(":");
+                    var (keyFrom, keyTo) = (Properties[0], Properties[1]);
                     string[] mapFromSplited = keyFrom.Split(".");
                     string[] mapToSplited = keyTo.Split(".");
-                    var (mapFrom, mapTo) = JsonArrayParseFieldsRun(mapFromSplited, mapToSplited);
+                    var (mapFrom, mapTo) = JsonArrayParsePropertiesRun(mapFromSplited, mapToSplited);
                     MapJsonArrayFromTo(mapArray, mapFrom, mapTo);
                 }
             }
         }
 
-        private (JsonArray mapFrom, JsonArray mapTo) JsonArrayParseFieldsRun(string[] mapFromSplited, string[] mapToSplited)
+        private (JsonArray mapFrom, JsonArray mapTo) JsonArrayParsePropertiesRun(string[] mapFromSplited, string[] mapToSplited)
         {
             JsonObject jsonObjectCurrent = _jsonObject;
             JsonArray jsonArrayMapFrom = null;
 
-            foreach (var field in mapFromSplited)
+            foreach (var Property in mapFromSplited)
             {
-                if (jsonObjectCurrent.TryGetPropertyValue(field, out var mapFromJsonNode))
+                if (jsonObjectCurrent.TryGetPropertyValue(Property, out var mapFromJsonNode))
                 {
-                    if (jsonObjectCurrent.TryGetPropertyValue(field, out var mapToJsonNode))
+                    if (jsonObjectCurrent.TryGetPropertyValue(Property, out var mapToJsonNode))
                     {
                         if (mapToJsonNode.GetType() == typeof(JsonObject))
                             jsonObjectCurrent = mapToJsonNode as JsonObject;
@@ -159,10 +159,10 @@ namespace App.JsonHelpers
             var totalSplited = mapToSplited.Length;
             var index = 0;
 
-            foreach (var field in mapToSplited)
+            foreach (var Property in mapToSplited)
             {
                 index++;
-                if (jsonObjectCurrent.TryGetPropertyValue(field, out var mapToJsonNode))
+                if (jsonObjectCurrent.TryGetPropertyValue(Property, out var mapToJsonNode))
                 {
                     if (mapToJsonNode.GetType() == typeof(JsonObject))
                         jsonObjectCurrent = mapToJsonNode as JsonObject;
@@ -175,12 +175,12 @@ namespace App.JsonHelpers
                     if (index == totalSplited)
                     {
                         jsonArrayMapTo = new JsonArray();
-                        jsonObjectCurrent.Add(field, jsonArrayMapTo);
+                        jsonObjectCurrent.Add(Property, jsonArrayMapTo);
                     }
                     else
                     {
                         var jsonObject = new JsonObject();
-                        jsonObjectCurrent.Add(field, jsonObject);
+                        jsonObjectCurrent.Add(Property, jsonObject);
                         jsonObjectCurrent = jsonObject;
                     }
                 }
@@ -201,8 +201,8 @@ namespace App.JsonHelpers
                         var jsonObject = jsonNode as JsonObject;
                         if (jsonObject != null)
                         {
-                            var fields = mapFromTo.Split(":");
-                            var (keyFrom, keyTo) = (fields[0], fields[1]);
+                            var Properties = mapFromTo.Split(":");
+                            var (keyFrom, keyTo) = (Properties[0], Properties[1]);
 
                             if (jsonObject.TryGetPropertyValue(keyFrom, out var mapToJsonNode))
                             {

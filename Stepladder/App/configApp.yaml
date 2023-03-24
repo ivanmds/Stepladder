@@ -101,20 +101,38 @@ contractMaps:
 #      provider: 
 #        type: redis
 #        id: redisCache_22
-#      mapFields:
+#      mapProperties:
 #        - "customer.id"
 
 contractValidations:
   - id: customer_post_validation
-    fields:
-    - field: "name"
-      type: Required
-    - field: "name"
-      type: biggerThan
-      size: 5
-    - field: "motherName"
-      type: Required
-    - field: "motherName"
-      type: biggerThan
-      size: 10
+    properties:
+    - propertyName: "name"
+      validationType: Required
+      valueType: string
+
+    - propertyName: "name"
+      validationType: biggerThan
+      valueType: string
+      length: 5
+
+    - propertyName: "motherName"
+      validationType: Required
+      valueType: string
+      
+    - propertyName: "motherName"
+      validationType: biggerThan
+      valueType: string
+      length: 10
+
+    validationArrayObjects:
+    - arrayPropertyName: "contacts"
+      properties:
+      - propertyName: "type"
+        valueType: int
+        validationType: required
+      - propertyName: "value"
+        valueType: string
+        validationType: biggerThan
+        length: 9
       

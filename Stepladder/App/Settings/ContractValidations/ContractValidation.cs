@@ -6,7 +6,8 @@ namespace App.Settings.ContractValidations
     public class ContractValidation : IValidable
     {
         public string Id { get; set; }
-        public List<FieldValidation> Fields { get; set; } = new List<FieldValidation>();
+        public List<PropertyValidation> Properties { get; set; }
+        public List<PropertyValidationArrayObject> ValidationArrayObjects { get; set; }
 
         public ValidateResult Valid()
         {
@@ -14,11 +15,21 @@ namespace App.Settings.ContractValidations
             {
                 new ContractValidationRule(),
             };
-            
+
             var results = RuleExecute.Execute(this, rules);
-            foreach (var field in Fields)
-                results.Concate(field.Valid());
-            
+
+            if (Properties != null)
+            {
+                foreach (var Property in Properties)
+                    results.Concate(Property.Valid());
+            }
+
+            if (ValidationArrayObjects != null)
+            {
+                foreach (var arrayObject in ValidationArrayObjects)
+                    results.Concate(arrayObject.Valid());
+            }
+
             return results;
         }
     }

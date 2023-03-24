@@ -7,22 +7,28 @@ namespace App.Helpers.Validations
         private bool _success = true;
         public ResultValidation() { }
 
-        public List<ResultFieldValidation> FieldValidation { get; private set; } = new List<ResultFieldValidation>();
+        public List<ResultPropertyValidation> PropertyValidation { get; private set; } = new List<ResultPropertyValidation>();
 
         [JsonIgnore]
         public bool Success => _success;
 
-        public void Append(ResultFieldValidation fieldValidation)
+        public void Append(ResultPropertyValidation propertyValidation)
         {
-            if (fieldValidation.Success)
+            if (propertyValidation.Success)
                 return;
-            
+
             _success = false;
-            FieldValidation.Add(fieldValidation);
+            PropertyValidation.Add(propertyValidation);
         }
 
-        public void Append(params ResultFieldValidation[] fieldValidations)
-            => FieldValidation.AddRange(fieldValidations);
+        public void Concate(ResultValidation resultValidation)
+            => Append(resultValidation.PropertyValidation.ToArray());
+
+        public void Append(params ResultPropertyValidation[] PropertyValidations)
+        {
+            foreach (var PropertyValidation in PropertyValidations)
+                Append(PropertyValidation);
+        }
 
         public static ResultValidation Create()
            => new ResultValidation();

@@ -1,6 +1,6 @@
 ﻿namespace App.Settings.ContractValidations.Types
 {
-    public enum FieldValidationType
+    public enum PropertyValidationType
     {
         None = 0,
         Required,

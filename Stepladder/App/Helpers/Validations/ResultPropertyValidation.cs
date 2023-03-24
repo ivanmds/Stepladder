@@ -2,9 +2,9 @@
 
 namespace App.Helpers.Validations
 {
-    public class ResultFieldValidation
+    public class ResultPropertyValidation
     {
-        public string FieldName { get; private set; }
+        public string PropertyName { get; private set; }
         public List<string> Errors { get; private set; } = new List<string>();
 
         [JsonIgnore]
@@ -13,9 +13,9 @@ namespace App.Helpers.Validations
         public void AppendError(string error)
             => Errors.Add(error);
 
-        public static ResultFieldValidation Create(string fieldName)
+        public static ResultPropertyValidation Create(string PropertyName)
         {
-            var result = new ResultFieldValidation { FieldName = fieldName };
+            var result = new ResultPropertyValidation { PropertyName = PropertyName };
             return result;
         }
     }

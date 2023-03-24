@@ -13,16 +13,16 @@ namespace App.Handlers
             {
                 var json = await context.GetHttpContextRequestBodyAsync();
                 var jsonValidation = new JsonValidation(json);
-                var resultValidation = ResultValidation.Create();
-                var groupByField = ContractValidation.Fields.GroupBy(p => p.Field);
-                
-                foreach(var keyValue in groupByField)
-                {
-                    var fieldValidation = jsonValidation.Validate(keyValue);
-                    resultValidation.Append(fieldValidation);
-                }
 
-                if(resultValidation.Success == false)
+                var resultValidation = ResultValidation.Create();
+
+                var resultPropertyValidation = jsonValidation.Validate(ContractValidation.Properties);
+                var resultArrayObjectsValidation = jsonValidation.Validate(ContractValidation.ValidationArrayObjects);
+
+                resultValidation.Concate(resultPropertyValidation);
+                resultValidation.Concate(resultArrayObjectsValidation);
+
+                if (resultValidation.Success == false)
                 {
                     context.SetHttpValidationWithError();
                     context.ResponseContext.ResponseBodyStringValue = JsonSerializer.Serialize(resultValidation);
