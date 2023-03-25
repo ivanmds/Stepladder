@@ -5,7 +5,7 @@ using Bankly.Sdk.Opentelemetry.Trace;
 using System.Diagnostics;
 using System.Text.Json;
 
-namespace App.Handlers
+namespace App.Handlers.Http
 {
     public class HttpRequestContractValidationHandler : Handler
     {
@@ -22,10 +22,16 @@ namespace App.Handlers
                 var jsonValidation = new JsonValidation(json);
 
                 var resultValidation = ResultValidation.Create();
+                ResultValidation resultPropertyValidation = null;
+                ResultValidation resultArrayObjectsValidation = null;
 
-                var resultPropertyValidation = jsonValidation.Validate(ContractValidation.Properties);
-                var resultArrayObjectsValidation = jsonValidation.Validate(ContractValidation.ValidationArrayObjects);
-
+                var task = Task.Run(() => {
+                    resultPropertyValidation = jsonValidation.Validate(ContractValidation.Properties);
+                    resultArrayObjectsValidation = jsonValidation.Validate(ContractValidation.ValidationArrayObjects);
+                });
+                
+                Task.WaitAll(task);
+                
                 resultValidation.Concate(resultPropertyValidation);
                 resultValidation.Concate(resultArrayObjectsValidation);
 

@@ -2,7 +2,7 @@
 using StackExchange.Redis;
 using System.Text.Json;
 
-namespace App.Handlers
+namespace App.Handlers.Http
 {
     public class HttpRequestStrategieCacheHandler : Handler
     {
@@ -25,15 +25,18 @@ namespace App.Handlers
 
             if (context.ResponseContext.IsSuccessStatusCode && context.HasCache == false)
             {
-                var cacheValue = new ResponseContext
+                Task.Run(async () =>
                 {
-                    ResponseBodyStringValue = context.ResponseContext.ResponseBodyStringValue,
-                    ResponseStatusCode = context.ResponseContext.ResponseStatusCode,
-                    IsSuccessStatusCode = context.ResponseContext.IsSuccessStatusCode
-                };
+                    var cacheValue = new ResponseContext
+                    {
+                        ResponseBodyStringValue = context.ResponseContext.ResponseBodyStringValue,
+                        ResponseStatusCode = context.ResponseContext.ResponseStatusCode,
+                        IsSuccessStatusCode = context.ResponseContext.IsSuccessStatusCode
+                    };
 
-                cacheValueString = JsonSerializer.Serialize(cacheValue);
-                database.StringSetAsync(cacheKey, cacheValueString, TimeSpan.FromSeconds(CacheSetting.Ttl), flags: CommandFlags.FireAndForget);
+                    cacheValueString = JsonSerializer.Serialize(cacheValue);
+                    await database.StringSetAsync(cacheKey, cacheValueString, TimeSpan.FromSeconds(CacheSetting.Ttl), flags: CommandFlags.FireAndForget);
+                });
             }
         }
     }

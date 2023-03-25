@@ -4,7 +4,7 @@ using App.Settings.ContractMap;
 using App.Settings.ContractValidations;
 using App.Settings.Strategies;
 
-namespace App.Handlers
+namespace App.Handlers.Http
 {
     public abstract class Handler
     {

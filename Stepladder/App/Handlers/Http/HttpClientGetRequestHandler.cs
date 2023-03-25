@@ -2,7 +2,7 @@
 using App.Helpers;
 using App.Settings.Actions;
 
-namespace App.Handlers
+namespace App.Handlers.Http
 {
     public class HttpClientGetRequestHandler : Handler
     {

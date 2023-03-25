@@ -3,18 +3,18 @@ using App.JsonHelpers;
 using Bankly.Sdk.Opentelemetry.Trace;
 using System.Diagnostics;
 
-namespace App.Handlers
+namespace App.Handlers.Http
 {
     public class HttpResponseContractMapHandler : Handler
     {
         public override async Task DoAsync(StepladderHttpContext context)
         {
-            if (context.HasCache == false && 
-                context.HasNoErrorValidation && 
+            if (context.HasCache == false &&
+                context.HasNoErrorValidation &&
                 context.ResponseContext.ResponseBodyStringValue != null &&
                 ContractMap != null)
             {
-
+                
                 var trace = context.HttpContext.RequestServices.GetService<ITraceService>();
                 Activity activity = null;
                 if (trace != null)

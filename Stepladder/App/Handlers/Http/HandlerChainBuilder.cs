@@ -1,7 +1,7 @@
 ﻿using App.Contexts;
-using App.Handlers.FlowActions;
+using App.Handlers.Http.FlowActions;
 
-namespace App.Handlers
+namespace App.Handlers.Http
 {
     public static class HandlerChainBuilder
     {
@@ -17,8 +17,8 @@ namespace App.Handlers
             foreach (var flowAction in flowActions)
             {
                 var handler = context.HttpContext.RequestServices.GetService(flowAction.HandleType) as Handler;
-                
-                if(flowAction.ActionSetting != null)
+
+                if (flowAction.ActionSetting != null)
                     handler.ActionSetting = flowAction.ActionSetting;
 
                 if (flowAction.ContractValidation != null)

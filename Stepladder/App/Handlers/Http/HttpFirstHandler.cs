@@ -1,6 +1,6 @@
 ﻿using App.Contexts;
 
-namespace App.Handlers
+namespace App.Handlers.Http
 {
     public class HttpFirstHandler : Handler
     {

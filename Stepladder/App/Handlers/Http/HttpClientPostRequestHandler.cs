@@ -4,7 +4,7 @@ using App.Settings.Actions;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace App.Handlers
+namespace App.Handlers.Http
 {
     public class HttpClientPostRequestHandler : Handler
     {
@@ -17,7 +17,7 @@ namespace App.Handlers
                 HttpClientHelper.MapHeaderValue(context, httpClient, ActionSetting);
                 var jsonBody = await context.GetCurrentBodyToRequestStringAsync();
                 JsonObject jsonObject = null;
-                if(string.IsNullOrEmpty(jsonBody) == false)
+                if (string.IsNullOrEmpty(jsonBody) == false)
                     jsonObject = JsonSerializer.Deserialize<JsonObject>(jsonBody);
 
                 var httpResponseMessage = await httpClient.PostAsJsonAsync(ActionSetting.Uri, jsonObject);

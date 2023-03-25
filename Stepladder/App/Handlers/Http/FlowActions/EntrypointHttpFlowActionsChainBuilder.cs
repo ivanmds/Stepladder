@@ -4,7 +4,7 @@ using App.Settings.Entrypoints.Routes;
 using App.Settings.Entrypoints.Routes.Types;
 using App.Settings;
 
-namespace App.Handlers.FlowActions
+namespace App.Handlers.Http.FlowActions
 {
     public static class EntrypointHttpFlowActionsChainBuilder
     {

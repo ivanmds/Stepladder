@@ -3,7 +3,7 @@ using App.Settings.ContractMap;
 using App.Settings.ContractValidations;
 using App.Settings.Strategies;
 
-namespace App.Handlers.FlowActions
+namespace App.Handlers.Http.FlowActions
 {
     public static class FlowActionsChain
     {

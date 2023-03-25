@@ -1,5 +1,5 @@
 ﻿using App.Contexts;
-using App.Handlers;
+using App.Handlers.Http;
 using App.Settings;
 using App.Validations;
 using YamlDotNet.Serialization.NamingConventions;
