@@ -1,4 +1,9 @@
-#startup:
+startup:
+  serviceName: "test-stepladder-v2"
+  serviceVersion: "2.0.1"
+  enableTelemetry: true
+  otelEndpoint: "http://otel-http.kube.acesso-stg.aws"
+
   #httpClientAuthentication:
   #  - id: "api_integration_pix"
   #    type: clientCredential

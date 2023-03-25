@@ -6,6 +6,7 @@ builder.AddLoadApplicationSettings();
 await builder.AddHttpClientAuthenticationAsync();
 builder.AddApiSecuret();
 builder.AddConnections();
+builder.AddTelemetric();
 
 var app = builder.Build();
 

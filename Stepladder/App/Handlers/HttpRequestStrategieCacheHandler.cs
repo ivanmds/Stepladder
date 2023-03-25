@@ -33,7 +33,7 @@ namespace App.Handlers
                 };
 
                 cacheValueString = JsonSerializer.Serialize(cacheValue);
-                await database.StringSetAsync(cacheKey, cacheValueString, TimeSpan.FromSeconds(CacheSetting.Ttl), flags: CommandFlags.FireAndForget);
+                database.StringSetAsync(cacheKey, cacheValueString, TimeSpan.FromSeconds(CacheSetting.Ttl), flags: CommandFlags.FireAndForget);
             }
         }
     }

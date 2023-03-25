@@ -16,6 +16,18 @@ namespace App.Settings.ValidateRules
             if (httpClientAuthenticationDuplicateIds?.Count > 0)
                 result.AddError("StartupSetting.HttpClientAuthentication.Id duplicate");
 
+            if(value.EnableTelemetry)
+            {
+                if(string.IsNullOrEmpty(value.ServiceName))
+                    result.AddError("StartupSetting.ServiceName is required");
+
+                if (string.IsNullOrEmpty(value.ServiceVersion))
+                    result.AddError("StartupSetting.ServiceVersion is required");
+
+                if (string.IsNullOrEmpty(value.OtelEndpoint))
+                    result.AddError("StartupSetting.OtelEndpoint is required");
+            }
+
             return result;
         }
     }

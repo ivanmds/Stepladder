@@ -7,6 +7,12 @@ namespace App.Settings
 {
     public class StartupSetting : IValidable
     {
+        public string ServiceName { get; set; }
+        public string ServiceVersion { get; set; }
+        public bool EnableTelemetry { get; set; }
+        public string OtelEndpoint { get; set; }
+
+
         public List<HttpClientAuthentication> HttpClientAuthentication { get; set; }
         public ApiSecuretSetting ApiSecuret { get; set; }
         
