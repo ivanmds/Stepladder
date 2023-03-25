@@ -1,5 +1,6 @@
 ﻿using App.Settings;
 using App.Settings.Connections;
+using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
 namespace App.Extensions
@@ -25,8 +26,11 @@ namespace App.Extensions
             
             if (multiplexer.IsConnected == false)
                 throw new Exception($"Redis error when try connection in {redisSetting.ConnectionString}");
+
+            var database = multiplexer.GetDatabase();
             
             builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+            builder.Services.AddSingleton(database);
         }
     }
 }

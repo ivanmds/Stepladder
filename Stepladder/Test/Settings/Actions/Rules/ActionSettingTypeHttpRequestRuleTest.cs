@@ -134,6 +134,23 @@ namespace Test.Settings.Actions.Rules
             Assert.False(constains);
         }
 
+        [Theory]
+        [InlineData(MethodType.GET)]
+        [InlineData(MethodType.DELETE)]
+        public void WhenActionSettingTypeHttpRequestHasRequestContractValidationIdCofiguredInvalidMethod_ShouldReturnError(MethodType methodType)
+        {
+            // arrange
+            var setting = new ActionSetting { RequestContractValidationId = "configured", Method = methodType };
+            var rule = new ActionSettingTypeHttpRequestRule();
+
+            // act
+            var result = rule.Do(setting);
+
+            // assert
+            var constains = result.Errors.Contains("ActionSetting.RequestContractValidationId only used in post, put and patch methods");
+            Assert.True(constains);
+        }
+
 
         [Fact]
         public void WhenActionSettingTypeHttpRequestHasRequestStrategieCacheIdNotConfigured_ShouldReturnError()
@@ -154,7 +171,7 @@ namespace Test.Settings.Actions.Rules
         public void WhenActionSettingTypeHttpRequestHasRequestHasRequestStrategieCacheIdIsConfigured_ShouldReturnSuccess()
         {
             // arrange
-            var appSetting = new ApplicationSetting { Strategies = new StrategiesSetting { Cache = new CacheSetting { Id = "cache_configured" } } };
+            var appSetting = new ApplicationSetting { Strategies = new StrategiesSetting { Caches = new List<CacheSetting> { new CacheSetting { Id = "cache_configured" } } } };
             var setting = new ActionSetting { StrategieCacheId = "cache_configured" };
             var rule = new ActionSettingTypeHttpRequestRule();
 

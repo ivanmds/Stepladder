@@ -27,6 +27,9 @@ namespace App.Handlers
                 if (flowAction.ContractMap != null)
                     handler.ContractMap = flowAction.ContractMap;
 
+                if (flowAction.CacheSetting != null)
+                    handler.CacheSetting = flowAction.CacheSetting;
+
                 current.SetNext(handler);
                 current = handler;
             }

@@ -1,6 +1,7 @@
 ﻿using App.Settings.Actions;
 using App.Settings.ContractMap;
 using App.Settings.ContractValidations;
+using App.Settings.Strategies;
 
 namespace App.Handlers.FlowActions
 {
@@ -17,7 +18,8 @@ namespace App.Handlers.FlowActions
             Type handleType,
             ActionSetting actionSetting = null,
             ContractMapSetting contractMap = null,
-            ContractValidation contractValidation = null)
+            ContractValidation contractValidation = null,
+            CacheSetting cacheSetting = null)
 
            => FLOW_ACTION[flowActionId].Add(
                new FlowAction
@@ -26,7 +28,8 @@ namespace App.Handlers.FlowActions
                    HandleType = handleType,
                    ActionSetting = actionSetting,
                    ContractMap = contractMap,
-                   ContractValidation = contractValidation
+                   ContractValidation = contractValidation,
+                   CacheSetting = cacheSetting
                });
 
         public static List<FlowAction> GetFlowActionsChain(string flowActionId)
@@ -40,5 +43,6 @@ namespace App.Handlers.FlowActions
         public ActionSetting ActionSetting { get; set; }
         public ContractMapSetting ContractMap { get; set; }
         public ContractValidation ContractValidation { get; set; }
+        public CacheSetting CacheSetting { get; set; }
     }
 }

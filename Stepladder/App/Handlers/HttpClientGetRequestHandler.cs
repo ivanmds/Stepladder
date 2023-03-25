@@ -8,13 +8,14 @@ namespace App.Handlers
     {
         public override async Task DoAsync(StepladderHttpContext context)
         {
-            if (context.HasNoError && ActionSetting != null)
+            if (context.HasCache == false && context.HasNoErrorValidation && ActionSetting != null)
             {
                 var httpClientFactory = context.HttpContext.RequestServices.GetService<IHttpClientFactory>();
                 using var httpClient = httpClientFactory.CreateClient(ActionSetting.Uri);
                 HttpClientHelper.MapHeaderValue(context, httpClient, ActionSetting);
                 var uri = BuildFinalHttpClientUri(context);
-                context.ResponseContext.HttpResponseMessage = await httpClient.GetAsync(uri);
+                var httpResponseMessage = await httpClient.GetAsync(uri);
+                await LoadHttpResponseMessageAsync(context, httpResponseMessage);
             }
 
             await NextAsync(context);
@@ -25,7 +26,7 @@ namespace App.Handlers
             var httpClientUri = ActionSetting.Uri;
             if (ActionSetting.RouteMaps?.Count > 0)
             {
-                foreach(var routeMap in ActionSetting.RouteMaps)
+                foreach (var routeMap in ActionSetting.RouteMaps)
                 {
                     var value = GetRouteValueFromHttpRequest(context, routeMap.RouteKey);
                     httpClientUri = httpClientUri.Replace(routeMap.RouteKey, value);

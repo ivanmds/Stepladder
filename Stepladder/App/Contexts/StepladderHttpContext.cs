@@ -11,19 +11,21 @@ namespace App.Contexts
             ResponseContext = new ResponseContext();
         }
 
+        public bool HasCache { get; set; }
+
         public ResponseContext ResponseContext { get; set; }
         public RouteSetting RouteSetting { get; set; }
         public HttpContext HttpContext { get; set; }
 
         private bool _hasNoError = true;
-        public bool HasNoError => _hasNoError;
+        public bool HasNoErrorValidation => _hasNoError;
        
         public void SetHttpValidationWithError()
             => _hasNoError = false;
 
         public async Task<string> GetCurrentBodyToRequestStringAsync()
         {
-            if (ResponseContext.HttpResponseMessage == null)
+            if (ResponseContext.ResponseBodyStringValue == null)
                 return await GetHttpContextRequestBodyStringAsync();
             else
                 return ResponseContext.ResponseBodyStringValue;

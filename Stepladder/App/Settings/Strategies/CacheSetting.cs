@@ -8,7 +8,7 @@ namespace App.Settings.Strategies
     {
         public string Id { get; set; }
         public CacheType Type { get; set; }
-
+        public int Ttl { get; set; } = 300;
         public ValidateResult Valid()
         {
             var rules = new IRule<CacheSetting>[]

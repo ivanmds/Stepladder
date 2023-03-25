@@ -36,6 +36,12 @@ namespace App.Handlers.FlowActions
                         FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpRequestContractValidationHandler), contractValidation: contractValidation);
                     }
 
+                    if (string.IsNullOrEmpty(action.StrategieCacheId) == false)
+                    {
+                        var cacheSetting = appSetting.Strategies.Caches.FirstOrDefault(a => a.Id == action.StrategieCacheId);
+                        FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpRequestStrategieCacheHandler), actionSetting: action, cacheSetting: cacheSetting);
+                    }
+
                     if (action.Type == ActionType.HttpRequest)
                     {
                         if (action.Method == MethodType.GET)
@@ -43,7 +49,6 @@ namespace App.Handlers.FlowActions
                         else if (action.Method == MethodType.POST)
                             FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpClientPostRequestHandler), actionSetting: action);
 
-                        FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpResponseMessageParseHandler));
 
                         if (action.ReponseContractMapId != null)
                         {

@@ -26,11 +26,11 @@ namespace App.Extensions
             builder.Services.AddScoped<HttpClientGetRequestHandler>();
             builder.Services.AddScoped<HttpClientPostRequestHandler>();
             builder.Services.AddScoped<HttpFirstHandler>();
-            builder.Services.AddScoped<HttpResponseMessageParseHandler>();
             builder.Services.AddScoped<HttpWriteResponseHandler>();
             builder.Services.AddScoped<HttpWriteResponseMockHandler>();
             builder.Services.AddScoped<HttpResponseContractMapHandler>();
             builder.Services.AddScoped<HttpRequestContractValidationHandler>();
+            builder.Services.AddScoped<HttpRequestStrategieCacheHandler>();
             builder.Services.AddHttpClient();
         }
 

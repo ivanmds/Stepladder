@@ -7,11 +7,12 @@ namespace App.Handlers
     {
         public override async Task DoAsync(StepladderHttpContext context)
         {
-            if (context.HasNoError && 
-                context.ResponseContext.JsonResponseBody != null &&
+            if (context.HasCache == false && 
+                context.HasNoErrorValidation && 
+                context.ResponseContext.ResponseBodyStringValue != null &&
                 ContractMap != null)
             {
-                var json = context.ResponseContext.JsonResponseBody;
+                var json = context.ResponseContext.GetJsonResponseBody();
 
                 var jsonMapParse = new JsonMapParse(json, ContractMap);
                 json = jsonMapParse.MapParse();

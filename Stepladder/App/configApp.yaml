@@ -46,6 +46,7 @@ actions:
     type: httpRequest
     uri: 'http://localhost:8080/customers/{id}'
     method: get
+    strategieCacheId: redisCache_22
     routeMaps:
       - routeKey: '{id}'
         fromType: httpRequest
@@ -94,9 +95,10 @@ contractMaps:
           - "neighborhood:bairro"
 
 strategies:
-  cache:
-    id: redisCache_22
-    type: redis
+  caches:
+    - id: redisCache_22
+      type: redis
+      ttl: 120 #seconds
 
 #  - httpIdempotency:
 #      id: idemp_55

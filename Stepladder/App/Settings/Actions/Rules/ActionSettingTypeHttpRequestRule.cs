@@ -40,12 +40,16 @@ namespace App.Settings.Actions.Rules
                     var hasContractMap = appSetting?.ContractValidations?.Any(c => c.Id == value.RequestContractValidationId) ?? false;
                     if (hasContractMap == false)
                         result.AddError($"ActionSetting.RequestContractValidationId {value.RequestContractValidationId} should configured before use");
+
+                    if (value.Method == MethodType.GET ||
+                        value.Method == MethodType.DELETE)
+                        result.AddError("ActionSetting.RequestContractValidationId only used in post, put and patch methods");
                 }
 
                 if(value.StrategieCacheId != null)
                 {
                     var appSetting = ApplicationSetting.Current;
-                    var hasStrategieCacheId = appSetting?.Strategies?.Cache?.Id == value.StrategieCacheId;
+                    var hasStrategieCacheId = appSetting?.Strategies.Caches.Any(c => c.Id == value.StrategieCacheId) ?? false;
                     if (hasStrategieCacheId == false)
                         result.AddError($"ActionSetting.StrategieCacheId {value.StrategieCacheId} should configured before use");
 

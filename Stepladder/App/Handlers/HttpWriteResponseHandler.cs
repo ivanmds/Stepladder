@@ -6,21 +6,16 @@ namespace App.Handlers
     {
         public override async Task DoAsync(StepladderHttpContext context)
         {
-            if (context.HasNoError && context.ResponseContext.HttpResponseMessage != null)
+            context.HttpContext.Response.Headers.Add("Content-Type", context.ResponseContext.ResponseContentType);
+
+            if (context.HasNoErrorValidation && context.ResponseContext.ResponseBodyStringValue != null)
             {
-                var response = context.ResponseContext.HttpResponseMessage;
-                context.HttpContext.Response.StatusCode = (int)response.StatusCode;
-
-                var contentyType = response.Content.Headers?.ContentType?.ToString() ?? "application/json";
-                context.HttpContext.Response.Headers.Add("Content-Type", contentyType.ToString());
-
+                context.HttpContext.Response.StatusCode = context.ResponseContext.ResponseStatusCode;
                 await context.HttpContext.Response.WriteAsync(context.ResponseContext.ResponseBodyStringValue);
             }
-
-            if(context.HasNoError == false)
+            else if (context.HasNoErrorValidation == false)
             {
                 context.HttpContext.Response.StatusCode = 400;
-                context.HttpContext.Response.Headers.Add("Content-Type", "application/json");
                 await context.HttpContext.Response.WriteAsync(context.ResponseContext.ResponseBodyStringValue);
             }
 

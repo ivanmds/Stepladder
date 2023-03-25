@@ -1,13 +1,23 @@
-﻿using System.Text.Json.Nodes;
+﻿using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace App.Contexts
 {
     public class ResponseContext
     {
-        public JsonObject JsonResponseBody { get; set; }
-        public string ResponseBodyStringValue { get; set; }
-        public string ResponseContentType { get; set; }
+        private JsonObject _jsonResponseBody = null;
 
-        public HttpResponseMessage HttpResponseMessage { get; set; }
+        public JsonObject GetJsonResponseBody()
+        {
+            if(_jsonResponseBody == null)
+                _jsonResponseBody = JsonSerializer.Deserialize<JsonObject>(ResponseBodyStringValue);
+
+            return _jsonResponseBody;
+        }
+
+        public string ResponseBodyStringValue { get; set; }
+        public int ResponseStatusCode { get; set; }
+        public string ResponseContentType { get; set; } = "application/json";
+        public bool IsSuccessStatusCode { get; set; }
     }
 }
