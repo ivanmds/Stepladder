@@ -7,7 +7,7 @@ namespace App.Settings.Strategies
     public class CacheSetting : IValidable
     {
         public string Id { get; set; }
-        public CacheType Type { get; set; }
+        public CacheType ProviderType { get; set; }
         public int Ttl { get; set; } = 300;
         public ValidateResult Valid()
         {

@@ -25,18 +25,15 @@ namespace App.Handlers.Http
 
             if (context.ResponseContext.IsSuccessStatusCode && context.HasCache == false)
             {
-                Task.Run(async () =>
+                var cacheValue = new ResponseContext
                 {
-                    var cacheValue = new ResponseContext
-                    {
-                        ResponseBodyStringValue = context.ResponseContext.ResponseBodyStringValue,
-                        ResponseStatusCode = context.ResponseContext.ResponseStatusCode,
-                        IsSuccessStatusCode = context.ResponseContext.IsSuccessStatusCode
-                    };
+                    ResponseBodyStringValue = context.ResponseContext.ResponseBodyStringValue,
+                    ResponseStatusCode = context.ResponseContext.ResponseStatusCode,
+                    IsSuccessStatusCode = context.ResponseContext.IsSuccessStatusCode
+                };
 
-                    cacheValueString = JsonSerializer.Serialize(cacheValue);
-                    await database.StringSetAsync(cacheKey, cacheValueString, TimeSpan.FromSeconds(CacheSetting.Ttl), flags: CommandFlags.FireAndForget);
-                });
+                cacheValueString = JsonSerializer.Serialize(cacheValue);
+                await database.StringSetAsync(cacheKey, cacheValueString, TimeSpan.FromSeconds(CacheSetting.Ttl), flags: CommandFlags.FireAndForget);
             }
         }
     }

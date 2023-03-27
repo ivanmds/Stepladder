@@ -102,8 +102,8 @@ contractMaps:
 strategies:
   caches:
     - id: redisCache_22
-      type: redis
-      ttl: 120 #seconds
+      providerType: redis
+      ttl: 120 #seconds default is 300 seconds
 
 #  - httpIdempotency:
 #      id: idemp_55
