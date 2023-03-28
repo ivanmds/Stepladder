@@ -14,7 +14,8 @@ namespace App.Handlers.Http
             {
                 var httpClientFactory = context.HttpContext.RequestServices.GetService<IHttpClientFactory>();
                 using var httpClient = httpClientFactory.CreateClient(ActionSetting.Uri);
-                HttpClientHelper.MapHeaderValue(context, httpClient, ActionSetting);
+                HttpHelper.SetPropagatedHeadersFromHttpRequestToHttpClient(context.HttpContext.Request, httpClient);
+                HttpHelper.MapHeaderValue(context, httpClient, ActionSetting);
                 var jsonBody = await context.GetCurrentBodyToRequestStringAsync();
                 JsonObject jsonObject = null;
                 if (string.IsNullOrEmpty(jsonBody) == false)

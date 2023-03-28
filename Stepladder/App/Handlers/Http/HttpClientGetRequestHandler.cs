@@ -12,7 +12,8 @@ namespace App.Handlers.Http
             {
                 var httpClientFactory = context.HttpContext.RequestServices.GetService<IHttpClientFactory>();
                 using var httpClient = httpClientFactory.CreateClient(ActionSetting.Uri);
-                HttpClientHelper.MapHeaderValue(context, httpClient, ActionSetting);
+                HttpHelper.MapHeaderValue(context, httpClient, ActionSetting);
+                HttpHelper.SetPropagatedHeadersFromHttpRequestToHttpClient(context.HttpContext.Request, httpClient);
                 var uri = BuildFinalHttpClientUri(context);
                 var httpResponseMessage = await httpClient.GetAsync(uri);
                 await LoadHttpResponseMessageAsync(context, httpResponseMessage);

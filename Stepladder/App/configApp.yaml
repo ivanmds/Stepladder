@@ -51,7 +51,7 @@ actions:
     type: httpRequest
     uri: 'http://localhost:8080/customers/{id}'
     method: get
-    strategyCacheId: redisCache_22
+    #strategyCacheId: redisCache_22
     routeMaps:
       - routeKey: '{id}'
         fromType: httpRequest

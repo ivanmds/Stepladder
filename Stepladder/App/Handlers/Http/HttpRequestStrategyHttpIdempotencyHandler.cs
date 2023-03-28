@@ -22,7 +22,7 @@ namespace App.Handlers.Http
                 StringBuilder headerValuesConcated = new StringBuilder();
                 foreach (var headerKey in HttpIdempotencySetting.MapHeaderProperties)
                 {
-                    var headerValue = HttpClientHelper.GetHeaderValue(context.HttpContext.Request.Headers, headerKey);
+                    var headerValue = HttpHelper.GetHeaderValue(context.HttpContext.Request.Headers, headerKey);
                     headerValuesConcated.Append(headerValue);
                 }
                 var headerValues = headerValuesConcated.ToString();

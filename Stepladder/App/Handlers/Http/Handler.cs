@@ -1,4 +1,5 @@
 ﻿using App.Contexts;
+using App.Helpers;
 using App.Settings.Actions;
 using App.Settings.ContractMap;
 using App.Settings.ContractValidations;
@@ -31,6 +32,7 @@ namespace App.Handlers.Http
             context.ResponseContext.ResponseBodyStringValue = await response.Content.ReadAsStringAsync();
             context.ResponseContext.ResponseStatusCode = (int)response.StatusCode;
             context.ResponseContext.IsSuccessStatusCode = response.IsSuccessStatusCode;
+            HttpHelper.SetPropagatedHeadersFromHttpResponseMessageToHttpResponse(response, context.HttpContext.Response);
         }
     }
 }

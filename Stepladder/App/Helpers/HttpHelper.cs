@@ -4,8 +4,20 @@ using App.Settings.Actions.Types;
 
 namespace App.Helpers
 {
-    public static class HttpClientHelper
+    public static class HttpHelper
     {
+        private static List<string> NOT_PROPAGATED_HEADER = new List<string>()
+        {
+            "Authorization",
+            "Postman-Token",
+            "Content-Length",
+            "Host",
+            "User-Agent",
+            "Accept",
+            "Accept-Encoding",
+            "Connection"
+        };
+
         public static void MapHeaderValue(
             StepladderHttpContext context,
             HttpClient httpClient,
@@ -24,6 +36,28 @@ namespace App.Helpers
                             httpClient.DefaultRequestHeaders.Add(keyTo, headerValue.ToString());
                     }
                 }
+            }
+        }
+
+        public static void SetPropagatedHeadersFromHttpRequestToHttpClient(HttpRequest httpRequest, HttpClient httpClient)
+        {
+            foreach(var header in httpRequest.Headers)
+            {
+                if (NOT_PROPAGATED_HEADER.Contains(header.Key))
+                    continue;
+
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation(header.Key, header.Value.ToString());
+            }
+        }
+
+        public static void SetPropagatedHeadersFromHttpResponseMessageToHttpResponse(HttpResponseMessage responseMessage, HttpResponse response)
+        {
+            foreach (var header in responseMessage.Headers)
+            {
+                if (NOT_PROPAGATED_HEADER.Contains(header.Key))
+                    continue;
+
+                response.Headers.TryAdd(header.Key, header.Value.FirstOrDefault());
             }
         }
 
