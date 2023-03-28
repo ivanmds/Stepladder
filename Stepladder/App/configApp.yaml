@@ -67,6 +67,8 @@ actions:
     headerMaps:
       - mapFromTo: "x-correlation-id:x-correlation-id"
         fromType: httpRequest
+
+    strategyHttpIdempotencyId: idemp_55
     requestContractValidationId: customer_post_validation
     reponseContractMapId: customer_response
     #autenticationId: 10
@@ -107,7 +109,7 @@ strategies:
 
   httpIdempotencies:
     - id: idemp_55
-      ttl: 60s # default value is 300 seconds
+      ttl: 60 # default value is 300 seconds
       providerType: redis
       mapHeaderProperties:
         - "x-http-idempotency"

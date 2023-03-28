@@ -14,6 +14,7 @@ namespace App.Settings.Actions
         public string ReponseContractMapId { get; set; }
         public string RequestContractValidationId { get; set; }
         public string StrategyCacheId { get; set; }
+        public string StrategyHttpIdempotencyId { get; set; }
         public List<ActionRouteMap> RouteMaps { get; set; } = new List<ActionRouteMap>();
         public List<ActionHeaderMap> HeaderMaps { get; set; } = new List<ActionHeaderMap>();
 

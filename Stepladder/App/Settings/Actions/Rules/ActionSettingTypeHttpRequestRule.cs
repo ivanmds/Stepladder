@@ -56,6 +56,17 @@ namespace App.Settings.Actions.Rules
                     if(value.Method != MethodType.GET)
                         result.AddError("ActionSetting.StrategyCacheId only used in get methods");
                 }
+
+                if (value.StrategyHttpIdempotencyId != null)
+                {
+                    var appSetting = ApplicationSetting.Current;
+                    var hasStrategyCacheId = appSetting?.Strategies.HttpIdempotencies.Any(c => c.Id == value.StrategyHttpIdempotencyId) ?? false;
+                    if (hasStrategyCacheId == false)
+                        result.AddError($"ActionSetting.StrategyHttpIdempotencyId {value.StrategyHttpIdempotencyId} should configured before use");
+
+                    if (value.Method == MethodType.GET)
+                       result.AddError("ActionSetting.StrategyHttpIdempotencyId only used in post, put, patch and delete methods");
+                }
             }
 
             return result;

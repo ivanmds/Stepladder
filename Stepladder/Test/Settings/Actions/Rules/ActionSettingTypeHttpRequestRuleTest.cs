@@ -201,5 +201,63 @@ namespace Test.Settings.Actions.Rules
             var constains = result.Errors.Contains("ActionSetting.StrategyCacheId only used in get methods");
             Assert.True(constains);
         }
+
+
+
+        [Fact]
+        public void WhenActionSettingTypeHttpRequestHasRequestStrategyHttpIdempotencyIdNotConfigured_ShouldReturnError()
+        {
+            // arrange
+            var setting = new ActionSetting { StrategyHttpIdempotencyId = "not_configured" };
+            var rule = new ActionSettingTypeHttpRequestRule();
+
+            // act
+            var result = rule.Do(setting);
+
+            // assert
+            var constains = result.Errors.Contains("ActionSetting.StrategyHttpIdempotencyId not_configured should configured before use");
+            Assert.True(constains);
+        }
+
+
+        [Fact]
+        public void WhenActionSettingTypeHttpRequestHasRequestHasRequestStrategyHttpIdempotencyIdIsConfigured_ShouldReturnSuccess()
+        {
+            // arrange
+            var appSetting = new ApplicationSetting 
+            { 
+                Strategies = new StrategiesSetting { 
+                    HttpIdempotencies = new List<HttpIdempotencySetting>
+                    { 
+                        new HttpIdempotencySetting { Id = "cache_configured" } 
+                    } 
+            }
+            };
+            var setting = new ActionSetting { StrategyHttpIdempotencyId = "cache_configured" };
+            var rule = new ActionSettingTypeHttpRequestRule();
+
+            // act
+            var result = rule.Do(setting);
+
+            // assert
+            var constains = result.Errors.Contains("ActionSetting.StrategyHttpIdempotencyId cache_configured should configured before use");
+            Assert.False(constains);
+        }
+
+        [Theory]
+        [InlineData(MethodType.GET)]
+        public void WhenActionSettingTypeHttpRequestGetAndHasStrategyHttpIdempotencyIdConfigured_ShouldReturnError(MethodType methodType)
+        {
+            // arrange
+            var setting = new ActionSetting { StrategyHttpIdempotencyId = "configured", Method = methodType };
+            var rule = new ActionSettingTypeHttpRequestRule();
+
+            // act
+            var result = rule.Do(setting);
+
+            // assert
+            var constains = result.Errors.Contains("ActionSetting.StrategyHttpIdempotencyId only used in post, put, patch and delete methods");
+            Assert.True(constains);
+        }
     }
 }
