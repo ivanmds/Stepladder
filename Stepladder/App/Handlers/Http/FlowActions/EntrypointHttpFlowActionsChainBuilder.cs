@@ -36,10 +36,10 @@ namespace App.Handlers.Http.FlowActions
                         FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpRequestContractValidationHandler), contractValidation: contractValidation);
                     }
 
-                    if (string.IsNullOrEmpty(action.StrategieCacheId) == false)
+                    if (string.IsNullOrEmpty(action.StrategyCacheId) == false)
                     {
-                        var cacheSetting = appSetting.Strategies.Caches.FirstOrDefault(a => a.Id == action.StrategieCacheId);
-                        FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpRequestStrategieCacheHandler), actionSetting: action, cacheSetting: cacheSetting);
+                        var cacheSetting = appSetting.Strategies.Caches.FirstOrDefault(a => a.Id == action.StrategyCacheId);
+                        FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpRequestStrategyCacheHandler), actionSetting: action, cacheSetting: cacheSetting);
                     }
 
                     if (action.Type == ActionType.HttpRequest)

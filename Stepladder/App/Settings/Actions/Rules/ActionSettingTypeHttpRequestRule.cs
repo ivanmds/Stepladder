@@ -46,15 +46,15 @@ namespace App.Settings.Actions.Rules
                         result.AddError("ActionSetting.RequestContractValidationId only used in post, put and patch methods");
                 }
 
-                if(value.StrategieCacheId != null)
+                if(value.StrategyCacheId != null)
                 {
                     var appSetting = ApplicationSetting.Current;
-                    var hasStrategieCacheId = appSetting?.Strategies.Caches.Any(c => c.Id == value.StrategieCacheId) ?? false;
-                    if (hasStrategieCacheId == false)
-                        result.AddError($"ActionSetting.StrategieCacheId {value.StrategieCacheId} should configured before use");
+                    var hasStrategyCacheId = appSetting?.Strategies.Caches.Any(c => c.Id == value.StrategyCacheId) ?? false;
+                    if (hasStrategyCacheId == false)
+                        result.AddError($"ActionSetting.StrategyCacheId {value.StrategyCacheId} should configured before use");
 
                     if(value.Method != MethodType.GET)
-                        result.AddError("ActionSetting.StrategieCacheId only used in get methods");
+                        result.AddError("ActionSetting.StrategyCacheId only used in get methods");
                 }
             }
 

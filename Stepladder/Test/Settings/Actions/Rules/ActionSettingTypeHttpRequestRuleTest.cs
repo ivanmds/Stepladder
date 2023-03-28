@@ -153,33 +153,33 @@ namespace Test.Settings.Actions.Rules
 
 
         [Fact]
-        public void WhenActionSettingTypeHttpRequestHasRequestStrategieCacheIdNotConfigured_ShouldReturnError()
+        public void WhenActionSettingTypeHttpRequestHasRequestStrategyCacheIdNotConfigured_ShouldReturnError()
         {
             // arrange
-            var setting = new ActionSetting { StrategieCacheId = "not_configured" };
+            var setting = new ActionSetting { StrategyCacheId = "not_configured" };
             var rule = new ActionSettingTypeHttpRequestRule();
 
             // act
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.StrategieCacheId not_configured should configured before use");
+            var constains = result.Errors.Contains("ActionSetting.StrategyCacheId not_configured should configured before use");
             Assert.True(constains);
         }
 
         [Fact]
-        public void WhenActionSettingTypeHttpRequestHasRequestHasRequestStrategieCacheIdIsConfigured_ShouldReturnSuccess()
+        public void WhenActionSettingTypeHttpRequestHasRequestHasRequestStrategyCacheIdIsConfigured_ShouldReturnSuccess()
         {
             // arrange
             var appSetting = new ApplicationSetting { Strategies = new StrategiesSetting { Caches = new List<CacheSetting> { new CacheSetting { Id = "cache_configured" } } } };
-            var setting = new ActionSetting { StrategieCacheId = "cache_configured" };
+            var setting = new ActionSetting { StrategyCacheId = "cache_configured" };
             var rule = new ActionSettingTypeHttpRequestRule();
 
             // act
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.StrategieCacheId cache_configured should configured before use");
+            var constains = result.Errors.Contains("ActionSetting.StrategyCacheId cache_configured should configured before use");
             Assert.False(constains);
         }
 
@@ -188,17 +188,17 @@ namespace Test.Settings.Actions.Rules
         [InlineData(MethodType.PATCH)]
         [InlineData(MethodType.PUT)]
         [InlineData(MethodType.DELETE)]
-        public void WhenActionSettingTypeHttpRequestGetAndHasStrategieCacheIdConfigured_ShouldReturnError(MethodType methodType)
+        public void WhenActionSettingTypeHttpRequestGetAndHasStrategyCacheIdConfigured_ShouldReturnError(MethodType methodType)
         {
             // arrange
-            var setting = new ActionSetting { StrategieCacheId = "configured", Method = methodType };
+            var setting = new ActionSetting { StrategyCacheId = "configured", Method = methodType };
             var rule = new ActionSettingTypeHttpRequestRule();
 
             // act
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.StrategieCacheId only used in get methods");
+            var constains = result.Errors.Contains("ActionSetting.StrategyCacheId only used in get methods");
             Assert.True(constains);
         }
     }

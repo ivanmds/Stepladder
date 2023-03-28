@@ -51,7 +51,7 @@ actions:
     type: httpRequest
     uri: 'http://localhost:8080/customers/{id}'
     method: get
-    strategieCacheId: redisCache_22
+    strategyCacheId: redisCache_22
     routeMaps:
       - routeKey: '{id}'
         fromType: httpRequest
@@ -110,7 +110,7 @@ strategies:
       ttl: 60s # default value is 300 seconds
       providerType: redis
       mapHeaderProperties:
-        - "customer.id"
+        - "x-http-idempotency"
 
 contractValidations:
   - id: customer_post_validation

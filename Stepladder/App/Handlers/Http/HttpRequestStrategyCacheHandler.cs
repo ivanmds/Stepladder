@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace App.Handlers.Http
 {
-    public class HttpRequestStrategieCacheHandler : Handler
+    public class HttpRequestStrategyCacheHandler : Handler
     {
         public override async Task DoAsync(StepladderHttpContext context)
         {
