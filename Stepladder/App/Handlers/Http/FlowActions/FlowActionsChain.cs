@@ -19,7 +19,8 @@ namespace App.Handlers.Http.FlowActions
             ActionSetting actionSetting = null,
             ContractMapSetting contractMap = null,
             ContractValidation contractValidation = null,
-            CacheSetting cacheSetting = null)
+            CacheSetting cacheSetting = null,
+            HttpIdempotencySetting httpIdempotencySetting = null)
 
            => FLOW_ACTION[flowActionId].Add(
                new FlowAction
@@ -29,7 +30,8 @@ namespace App.Handlers.Http.FlowActions
                    ActionSetting = actionSetting,
                    ContractMap = contractMap,
                    ContractValidation = contractValidation,
-                   CacheSetting = cacheSetting
+                   CacheSetting = cacheSetting,
+                   HttpIdempotencySetting = httpIdempotencySetting
                });
 
         public static List<FlowAction> GetFlowActionsChain(string flowActionId)
@@ -44,5 +46,6 @@ namespace App.Handlers.Http.FlowActions
         public ContractMapSetting ContractMap { get; set; }
         public ContractValidation ContractValidation { get; set; }
         public CacheSetting CacheSetting { get; set; }
+        public HttpIdempotencySetting HttpIdempotencySetting { get; set; }
     }
 }

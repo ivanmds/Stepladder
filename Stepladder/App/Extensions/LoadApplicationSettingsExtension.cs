@@ -31,6 +31,7 @@ namespace App.Extensions
             builder.Services.AddScoped<HttpResponseContractMapHandler>();
             builder.Services.AddScoped<HttpRequestContractValidationHandler>();
             builder.Services.AddScoped<HttpRequestStrategyCacheHandler>();
+            builder.Services.AddScoped<HttpRequestStrategyHttpIdempotencyHandler>();
             builder.Services.AddHttpClient();
         }
 

@@ -13,6 +13,7 @@ namespace App.Handlers.Http
         public ContractMapSetting ContractMap { get; set; }
         public ContractValidation ContractValidation { get; set; }
         public CacheSetting CacheSetting { get; set; }
+        public HttpIdempotencySetting HttpIdempotencySetting { get; set; }
 
         public void SetNext(Handler next)
             => _next = next;

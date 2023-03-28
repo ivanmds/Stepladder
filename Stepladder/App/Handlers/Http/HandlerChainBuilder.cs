@@ -30,6 +30,9 @@ namespace App.Handlers.Http
                 if (flowAction.CacheSetting != null)
                     handler.CacheSetting = flowAction.CacheSetting;
 
+                if(flowAction.HttpIdempotencySetting != null)
+                    handler.HttpIdempotencySetting = flowAction.HttpIdempotencySetting;
+
                 current.SetNext(handler);
                 current = handler;
             }

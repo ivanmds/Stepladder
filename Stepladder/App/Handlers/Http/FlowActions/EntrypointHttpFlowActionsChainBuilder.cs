@@ -39,7 +39,13 @@ namespace App.Handlers.Http.FlowActions
                     if (string.IsNullOrEmpty(action.StrategyCacheId) == false)
                     {
                         var cacheSetting = appSetting.Strategies.Caches.FirstOrDefault(a => a.Id == action.StrategyCacheId);
-                        FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpRequestStrategyCacheHandler), actionSetting: action, cacheSetting: cacheSetting);
+                        FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpRequestStrategyCacheHandler), cacheSetting: cacheSetting);
+                    }
+
+                    if (string.IsNullOrEmpty(action.StrategyHttpIdempotencyId) == false)
+                    {
+                        var httpIdempotencySetting = appSetting.Strategies.HttpIdempotencies.FirstOrDefault(i => i.Id == action.StrategyHttpIdempotencyId);
+                        FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpRequestStrategyHttpIdempotencyHandler), httpIdempotencySetting: httpIdempotencySetting);
                     }
 
                     if (action.Type == ActionType.HttpRequest)
