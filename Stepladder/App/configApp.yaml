@@ -105,14 +105,12 @@ strategies:
       providerType: redis
       ttl: 120 #seconds default is 300 seconds
 
-#  - httpIdempotency:
-#      id: idemp_55
-#      ttl: 60s
-#      provider: 
-#        type: redis
-#        id: redisCache_22
-#      mapProperties:
-#        - "customer.id"
+  httpIdempotencies:
+    - id: idemp_55
+      ttl: 60s # default value is 300 seconds
+      providerType: redis
+      mapHeaderProperties:
+        - "customer.id"
 
 contractValidations:
   - id: customer_post_validation

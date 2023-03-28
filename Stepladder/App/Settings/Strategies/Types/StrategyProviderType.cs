@@ -1,6 +1,6 @@
 ﻿namespace App.Settings.Strategies.Types
 {
-    public enum CacheType
+    public enum StrategyProviderType
     {
         None = 0,
         Redis = 1

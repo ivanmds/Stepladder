@@ -12,15 +12,19 @@ namespace App.Settings.Strategies.Rules
             if (string.IsNullOrEmpty(value.Id))
                 result.AddError("Cache.Id is required");
 
-            if(value.Type == CacheType.None)
-                result.AddError("Cache.Type is required");
+            if(value.ProviderType == StrategyProviderType.None)
+                result.AddError("Cache.ProviderType is required");
 
-            var appSetting = ApplicationSetting.Current;
-
-            if(value.Type ==  CacheType.Redis)
+            if(value.ProviderType ==  StrategyProviderType.Redis)
             {
+                var appSetting = ApplicationSetting.Current;
                 if (appSetting?.Connections?.Redis == null)
                     result.AddError("Configure connection redis before use cache redis");
+            }
+
+            if(value.Ttl < 10)
+            {
+                result.AddError("Cache.Ttl should be bigger than 9 seconds");
             }
 
             return result;
