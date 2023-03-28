@@ -8,12 +8,12 @@ namespace App.Handlers.Http
         {
             context.HttpContext.Response.Headers.Add("Content-Type", context.ResponseContext.ResponseContentType);
 
-            if (context.HasNoErrorValidation && context.ResponseContext.ResponseBodyStringValue != null)
+            if (context.HasNoErrorProcessor && context.ResponseContext.ResponseBodyStringValue != null)
             {
                 context.HttpContext.Response.StatusCode = context.ResponseContext.ResponseStatusCode;
                 await context.HttpContext.Response.WriteAsync(context.ResponseContext.ResponseBodyStringValue);
             }
-            else if (context.HasNoErrorValidation == false)
+            else if (context.HasNoErrorProcessor == false)
             {
                 context.HttpContext.Response.StatusCode = 400;
                 await context.HttpContext.Response.WriteAsync(context.ResponseContext.ResponseBodyStringValue);

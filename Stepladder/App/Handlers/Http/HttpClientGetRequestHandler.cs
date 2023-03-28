@@ -8,7 +8,7 @@ namespace App.Handlers.Http
     {
         public override async Task DoAsync(StepladderHttpContext context)
         {
-            if (context.HasCache == false && context.HasNoErrorValidation && ActionSetting != null)
+            if (context.HasCache == false && context.HasNoErrorProcessor && ActionSetting != null)
             {
                 var httpClientFactory = context.HttpContext.RequestServices.GetService<IHttpClientFactory>();
                 using var httpClient = httpClientFactory.CreateClient(ActionSetting.Uri);

@@ -10,7 +10,7 @@ namespace App.Handlers.Http
         public override async Task DoAsync(StepladderHttpContext context)
         {
             if (context.HasCache == false &&
-                context.HasNoErrorValidation &&
+                context.HasNoErrorProcessor &&
                 context.ResponseContext.ResponseBodyStringValue != null &&
                 ContractMap != null)
             {

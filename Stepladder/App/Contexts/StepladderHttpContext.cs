@@ -18,9 +18,11 @@ namespace App.Contexts
         public HttpContext HttpContext { get; set; }
 
         private bool _hasNoError = true;
-        public bool HasNoErrorValidation => _hasNoError;
+        public bool HasNoErrorProcessor => _hasNoError;
        
-        public void SetHttpValidationWithError()
+        public string SufixCache { get; set; } = string.Empty;
+
+        public void SetHttpProcessorWithError()
             => _hasNoError = false;
 
         public async Task<string> GetCurrentBodyToRequestStringAsync()

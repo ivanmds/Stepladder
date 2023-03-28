@@ -3,6 +3,7 @@ using App.Settings.Actions;
 using App.Settings.Entrypoints.Routes;
 using App.Settings.Entrypoints.Routes.Types;
 using App.Settings;
+using App.Settings.Strategies;
 
 namespace App.Handlers.Http.FlowActions
 {
@@ -36,16 +37,17 @@ namespace App.Handlers.Http.FlowActions
                         FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpRequestContractValidationHandler), contractValidation: contractValidation);
                     }
 
-                    if (string.IsNullOrEmpty(action.StrategyCacheId) == false)
-                    {
-                        var cacheSetting = appSetting.Strategies.Caches.FirstOrDefault(a => a.Id == action.StrategyCacheId);
-                        FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpRequestStrategyCacheHandler), cacheSetting: cacheSetting);
-                    }
-
                     if (string.IsNullOrEmpty(action.StrategyHttpIdempotencyId) == false)
                     {
                         var httpIdempotencySetting = appSetting.Strategies.HttpIdempotencies.FirstOrDefault(i => i.Id == action.StrategyHttpIdempotencyId);
                         FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpRequestStrategyHttpIdempotencyHandler), httpIdempotencySetting: httpIdempotencySetting);
+                        FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpRequestStrategyCacheHandler), cacheSetting: new CacheSetting { Ttl = httpIdempotencySetting.Ttl });
+                    }
+
+                    if (string.IsNullOrEmpty(action.StrategyCacheId) == false)
+                    {
+                        var cacheSetting = appSetting.Strategies.Caches.FirstOrDefault(a => a.Id == action.StrategyCacheId);
+                        FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpRequestStrategyCacheHandler), cacheSetting: cacheSetting);
                     }
 
                     if (action.Type == ActionType.HttpRequest)

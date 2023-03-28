@@ -1,6 +1,6 @@
 startup:
-  serviceName: "test-stepladder-v2"
-  serviceVersion: "2.0.1"
+  serviceName: "test-stepladder-v2" # add validate to required property
+  serviceVersion: "2.0.1" # add validate to required property
   enableTelemetry: true
   otelEndpoint: "http://otel-http.kube.acesso-sdb.aws"
 

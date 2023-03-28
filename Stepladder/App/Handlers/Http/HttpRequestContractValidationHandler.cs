@@ -37,7 +37,7 @@ namespace App.Handlers.Http
 
                 if (resultValidation.Success == false)
                 {
-                    context.SetHttpValidationWithError();
+                    context.SetHttpProcessorWithError();
                     context.ResponseContext.ResponseBodyStringValue = JsonSerializer.Serialize(resultValidation);
                 }
 

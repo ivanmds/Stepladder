@@ -26,5 +26,13 @@ namespace App.Helpers
                 }
             }
         }
+
+        public static string GetHeaderValue(IHeaderDictionary headerDictionary, string headerKey)
+        {
+            if (headerDictionary.TryGetValue(headerKey, out var headerValue))
+                return headerValue.ToString();
+
+            return string.Empty;
+        }
     }
 }

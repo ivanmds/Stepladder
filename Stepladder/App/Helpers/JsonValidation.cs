@@ -27,7 +27,6 @@ namespace App.Helpers
             var resultValidation = ResultValidation.Create();
             JsonObject jsonObjectCurrent = _jsonCurrentValidation;
             JsonNode mapFromJsonNode = null;
-            JsonNode mapToJsonNode = null;
 
             foreach (var validationObject in validationArrayObjects)
             {
@@ -81,7 +80,6 @@ namespace App.Helpers
             var PropertyValidateSplitted = groupPropertyValidations.Key.Split('.');
 
             JsonNode mapFromJsonNode = null;
-            JsonNode mapToJsonNode = null;
             JsonObject jsonObjectCurrent = _jsonCurrentValidation;
             var propertyName = $"{_prefixPropertyName}{groupPropertyValidations.Key}";
             var PropertyValidations = groupPropertyValidations.ToArray();
