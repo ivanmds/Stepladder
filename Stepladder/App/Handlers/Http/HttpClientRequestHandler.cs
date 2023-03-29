@@ -39,6 +39,9 @@ namespace App.Handlers.Http
                 }
             }
 
+            if(ActionSetting.Method == Types.HttpMethodType.GET)
+                httpClientUri = $"{httpClientUri}{context.HttpContext.Request.QueryString}";
+
             return httpClientUri;
         }
 

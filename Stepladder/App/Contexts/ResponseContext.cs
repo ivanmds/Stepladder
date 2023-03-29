@@ -9,7 +9,7 @@ namespace App.Contexts
         private JsonArray _jsonArrayResponseBody = null;
         public JsonObject GetJsonResponseBody()
         {
-            if(_jsonResponseBody == null)
+            if(_jsonResponseBody == null && string.IsNullOrEmpty(ResponseBodyStringValue) == false)
                 _jsonResponseBody = JsonSerializer.Deserialize<JsonObject>(ResponseBodyStringValue);
 
             return _jsonResponseBody;
@@ -17,7 +17,7 @@ namespace App.Contexts
 
         public JsonArray GetJsonArrayResponseBody()
         {
-            if (_jsonArrayResponseBody == null)
+            if (_jsonArrayResponseBody == null && string.IsNullOrEmpty(ResponseBodyStringValue) == false)
                 _jsonArrayResponseBody = JsonSerializer.Deserialize<JsonArray>(ResponseBodyStringValue);
 
             return _jsonArrayResponseBody;

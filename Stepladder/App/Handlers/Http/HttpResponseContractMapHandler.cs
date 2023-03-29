@@ -26,7 +26,7 @@ namespace App.Handlers.Http
                 if (isArray)
                 {
                     var jsonArray = context.ResponseContext.GetJsonArrayResponseBody();
-                  
+                    
                     foreach (var json in jsonArray) 
                     {
                         var jsonObject = json as JsonObject;
@@ -42,9 +42,12 @@ namespace App.Handlers.Http
                 else
                 {
                     var json = context.ResponseContext.GetJsonResponseBody();
-                    var jsonMapParse = new JsonMapParse(json, ContractMap);
-                    json = jsonMapParse.MapParse();
-                    context.ResponseContext.ResponseBodyStringValue = json.ToString();
+                    if (json != null)
+                    {
+                        var jsonMapParse = new JsonMapParse(json, ContractMap);
+                        json = jsonMapParse.MapParse();
+                        context.ResponseContext.ResponseBodyStringValue = json.ToString();
+                    }
                 }
 
                 activity?.Dispose();

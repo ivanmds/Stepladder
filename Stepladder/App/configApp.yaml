@@ -49,6 +49,14 @@ entrypoints:
   - route: "api/customers"
     method: post
     flowActionId: post_customer
+
+  - route: "api/customers/{id}"
+    method: put
+    flowActionId: put_customer_id
+
+  - route: "api/customers/{id}"
+    method: delete
+    flowActionId: delete_customer_id
   
 #  consumers:
 #    kafka:
@@ -92,7 +100,25 @@ actions:
     requestContractValidationId: customer_post_validation
     reponseContractMapId: customer_response
     #autenticationId: 10
+
+  - id: put_customer_id_action
+    type: httpRequest
+    uri: 'http://localhost:8080/customers/{id}'
+    method: put
+    routeMaps:
+      - routeKey: '{id}'
+        fromType: httpRequest
+    reponseContractMapId: customer_response
   
+  - id: delete_customer_id_action
+    type: httpRequest
+    uri: 'http://localhost:8080/customers/{id}'
+    method: delete
+    routeMaps:
+      - routeKey: '{id}'
+        fromType: httpRequest
+    reponseContractMapId: customer_response
+
 #  - id: 2
 #    type: kafkaConsumer
 #    topicName: 'stepladder.test.request'
@@ -110,6 +136,14 @@ flowActions:
   - id: post_customer
     actionsId:
       - post_customer_action
+  
+  - id: put_customer_id
+    actionsId:
+      - put_customer_id_action
+
+  - id: delete_customer_id
+    actionsId:
+      - delete_customer_id_action
 
 contractMaps:
   - id: customer_response
