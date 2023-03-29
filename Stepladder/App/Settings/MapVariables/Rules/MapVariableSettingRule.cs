@@ -8,8 +8,11 @@ namespace App.Settings.MapVariables.Rules
         {
             var result = ValidateResult.Create();
 
-            if (string.IsNullOrEmpty(value.Name))
+            if (string.IsNullOrEmpty(value.From))
                 result.AddError("MapVariable.Name is required");
+
+            if(string.IsNullOrEmpty(value.To))
+                result.AddError("MapVariable.To is required");
 
             return result;
         }

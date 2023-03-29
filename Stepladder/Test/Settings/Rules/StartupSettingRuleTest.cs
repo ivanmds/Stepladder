@@ -107,8 +107,8 @@ namespace Test.Settings.ValidateRules
             {
                 MapVariables = new List<MapVariableSetting>
                 {
-                    new MapVariableSetting { Name = "test_duplicated_id" },
-                    new MapVariableSetting { Name = "test_duplicated_id" }
+                    new MapVariableSetting { From = "test_duplicated_id" },
+                    new MapVariableSetting { From = "test_duplicated_id" }
                 }
             };
 
@@ -130,8 +130,8 @@ namespace Test.Settings.ValidateRules
             {
                 MapVariables = new List<MapVariableSetting>
                 {
-                    new MapVariableSetting { Name = "test_duplicated_id1" },
-                    new MapVariableSetting { Name = "test_duplicated_id2" }
+                    new MapVariableSetting { From = "test_duplicated_id1" },
+                    new MapVariableSetting { From = "test_duplicated_id2" }
                 }
             };
 

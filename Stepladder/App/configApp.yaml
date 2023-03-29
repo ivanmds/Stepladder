@@ -20,11 +20,9 @@ startup:
   #  password: 123456
   #  valueFrom: declared
 
-  mapVariables:
-    - name: REDIS_CONNECTION_STRING
-      valueFrom:
-        type: awsSecret
-        name: Redis
+  #mapVariables:
+  #  - from: AWS_SECRET_REDIS_CONNECTION_STRING
+  #    to: REDIS_CONNECTION_STRING
 
 
 #  connections:

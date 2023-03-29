@@ -34,7 +34,7 @@ namespace App.Settings.ValidateRules
                     result.AddError("Startup.OtelEndpoint is required");
             }
 
-            var mapVariablesDuplicateNames = value.MapVariables?.GroupBy(p => p.Name)
+            var mapVariablesDuplicateNames = value.MapVariables?.GroupBy(p => p.From)
                 .Where(g => g.Count() > 1)
                 .Select(y => y.Key)
                 .ToList();

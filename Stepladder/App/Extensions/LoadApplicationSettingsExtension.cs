@@ -1,4 +1,5 @@
-﻿using App.Contexts;
+﻿using App.Constants;
+using App.Contexts;
 using App.Handlers.Http;
 using App.Settings;
 using App.Validations;
@@ -17,6 +18,8 @@ namespace App.Extensions
 
             var pathConfigFile = Environment.GetEnvironmentVariable("CONFIG_APP_PATH") ?? "configApp.yaml";
             var applicationSettings = deserializer.Deserialize<ApplicationSetting>(File.ReadAllText(pathConfigFile));
+
+            LoadMapVariables();
 
             ApplicationSettingValidate(applicationSettings);
             Console.WriteLine($"AddConfigFile File {pathConfigFile} loaded and validated");
@@ -42,10 +45,36 @@ namespace App.Extensions
             foreach (var validable in validables)
                 result.Concate(validable.Valid());
 
-            if(result.HasError)
+            if (result.HasError)
             {
                 throw new Exception(result.ToString());
             }
+        }
+
+        private static void LoadMapVariables()
+        {
+            var appSetting = ApplicationSetting.Current;
+            var redisConnectionString = Environment.GetEnvironmentVariable(EnvVariablesConst.REDIS_CONNECTION_STRING);
+            if (string.IsNullOrEmpty(redisConnectionString) == false)
+                SetRedisConnectionString(redisConnectionString);
+
+
+            if (appSetting.Startup.MapVariables != null)
+            {
+                foreach (var mapVar in appSetting.Startup.MapVariables)
+                {
+                    var envValue = Environment.GetEnvironmentVariable(mapVar.From);
+                    if (mapVar.To == EnvVariablesConst.REDIS_CONNECTION_STRING)
+                        SetRedisConnectionString(envValue);
+                }
+            }
+        }
+
+
+        private static void SetRedisConnectionString(string connection)
+        {
+            if (ApplicationSetting.Current.Connections?.Redis != null)
+                ApplicationSetting.Current.Connections.Redis.ConnectionString = connection;
         }
     }
 }

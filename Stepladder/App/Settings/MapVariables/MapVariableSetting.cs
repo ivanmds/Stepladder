@@ -5,8 +5,8 @@ namespace App.Settings.MapVariables
 {
     public class MapVariableSetting : IValidable
     {
-        public string Name { get; set; }
-        public ValueFromSetting ValueFrom { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }
 
         public ValidateResult Valid()
         {
@@ -16,7 +16,6 @@ namespace App.Settings.MapVariables
             };
 
             var result = RuleExecute.Execute(this, rules);
-            result.Concate(ValueFrom.Valid());
 
             return result;
         }

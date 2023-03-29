@@ -6,7 +6,7 @@ namespace Test.Settings.MapVariables.Rules
     public class MapVariableSettingRuleTest
     {
         [Fact]
-        public void WhenMapVariableSettingHasEmptyName_ShouldReturnError()
+        public void WhenMapVariableSettingHasEmptyFrom_ShouldReturnError()
         {
             // arrange
             var setting = new MapVariableSetting();
@@ -16,7 +16,22 @@ namespace Test.Settings.MapVariables.Rules
             var result = rule.Do(setting);
 
             // assert
-            var contains = result.Errors.Contains("MapVariable.Name is required");
+            var contains = result.Errors.Contains("MapVariable.From is required");
+            Assert.True(contains);
+        }
+
+        [Fact]
+        public void WhenMapVariableSettingHasEmptyTo_ShouldReturnError()
+        {
+            // arrange
+            var setting = new MapVariableSetting();
+            var rule = new MapVariableSettingRule();
+
+            // act
+            var result = rule.Do(setting);
+
+            // assert
+            var contains = result.Errors.Contains("MapVariable.To is required");
             Assert.True(contains);
         }
     }
