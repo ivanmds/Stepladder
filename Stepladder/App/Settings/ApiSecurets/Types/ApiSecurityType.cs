@@ -1,6 +1,6 @@
 ﻿namespace App.Settings.ApiSecurets.Types
 {
-    public enum ApiSecuretType
+    public enum ApiSecurityType
     {
         None,
         Basic

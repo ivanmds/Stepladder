@@ -4,17 +4,17 @@ using App.Validations;
 
 namespace App.Settings.ApiSecurets
 {
-    public class ApiSecuretSetting : IValidable
+    public class ApiSecuritySetting : IValidable
     {
-        public ApiSecuretType Type { get; set; }
+        public ApiSecurityType Type { get; set; }
         public string User { get; set; }
         public string Password { get; set; }
 
         public ValidateResult Valid()
         {
-            var rules = new IRule<ApiSecuretSetting>[]
+            var rules = new IRule<ApiSecuritySetting>[]
             {
-                new ApiSecuretSettingTypeBasicRule(),
+                new ApiSecuritySettingTypeBasicRule(),
             };
 
             return RuleExecute.Execute(this, rules);

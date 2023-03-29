@@ -23,11 +23,12 @@ namespace App.Extensions
                     ENDPOINT_LOADED.AppendLine(info);
 
                     var requestDelegate = new HttpRequestDelegate(route);
+                    var enabledAnonymous = appConfig.Startup.HasApiSecurity == false || route.EnableAnonymous == true;
 
                     if (route.Method == MethodType.GET)
-                        app.MapGet(route.Route, route.EnableAnonymous ? requestDelegate.Do_Anonymous : requestDelegate.Do_Authorize);
+                        app.MapGet(route.Route, enabledAnonymous ? requestDelegate.Do_Anonymous : requestDelegate.Do_Authorize);
                     else if (route.Method == MethodType.POST)
-                        app.MapPost(route.Route, route.EnableAnonymous ? requestDelegate.Do_Anonymous : requestDelegate.Do_Authorize);
+                        app.MapPost(route.Route, enabledAnonymous ? requestDelegate.Do_Anonymous : requestDelegate.Do_Authorize);
 
 
                     EntrypointHttpFlowActionsChainBuilder.Builder(route);

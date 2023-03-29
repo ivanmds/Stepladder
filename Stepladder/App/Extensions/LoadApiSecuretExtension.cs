@@ -24,7 +24,7 @@ namespace App.Extensions
 
         private static void SetToBasicAuthenticate(this WebApplicationBuilder builder)
         {
-            if (ApplicationSetting.Current?.Startup?.ApiSecuret?.Type == ApiSecuretType.Basic)
+            if (ApplicationSetting.Current?.Startup?.ApiSecurity?.Type == ApiSecurityType.Basic)
             {
                 new BasicCredential();
 

@@ -1,4 +1,5 @@
 ﻿using App.Settings.ApiSecurets;
+using App.Settings.ApiSecurets.Types;
 using App.Settings.HttpClients;
 using App.Settings.MapVariables;
 using App.Settings.ValidateRules;
@@ -8,6 +9,8 @@ namespace App.Settings
 {
     public class StartupSetting : IValidable
     {
+        public bool HasApiSecurity => ApiSecurity != null && ApiSecurity.Type != ApiSecurityType.None;
+
         public string ServiceName { get; set; }
         public string ServiceVersion { get; set; }
         public bool EnableTelemetry { get; set; }
@@ -18,7 +21,7 @@ namespace App.Settings
 
         public List<HttpClientAuthentication> HttpClientAuthentication { get; set; }
         public List<MapVariableSetting>  MapVariables { get; set; }
-        public ApiSecuretSetting ApiSecuret { get; set; }
+        public ApiSecuritySetting ApiSecurity { get; set; }
         
         public ValidateResult Valid()
         {
@@ -33,8 +36,8 @@ namespace App.Settings
                 foreach (var httpClientAuth in HttpClientAuthentication)
                     result.Concate(httpClientAuth.Valid());
 
-            if(ApiSecuret != null)
-                result.Concate(ApiSecuret.Valid());
+            if(ApiSecurity != null)
+                result.Concate(ApiSecurity.Valid());
 
             if(MapVariables != null)
                 foreach (var mapVariable in MapVariables)

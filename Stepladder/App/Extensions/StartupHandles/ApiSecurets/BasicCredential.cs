@@ -17,8 +17,8 @@ namespace App.Extensions.StartupHandles.ApiSecurets
             if (CURRENT == null)
             {
                 var appSettings = ApplicationSetting.Current;
-                User = appSettings.Startup.ApiSecuret.User;
-                Password = appSettings.Startup.ApiSecuret.Password;
+                User = appSettings.Startup.ApiSecurity.User;
+                Password = appSettings.Startup.ApiSecurity.Password;
 
                 CURRENT = this;
             }

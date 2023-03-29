@@ -14,7 +14,7 @@ startup:
   #    endpointAuth: ""
   #    valueFrom: declared
 
-  #apiSecuret:
+  #apiSecurity:
   #  type: basic
   #  user: admin
   #  password: 123456

@@ -4,20 +4,20 @@ using App.Settings.ApiSecurets.ValidateRules;
 
 namespace Test.Settings.ApiSecurets.ValidateRules
 {
-    public class ApiSecuretSettingTypeBasicRuleTest
+    public class ApiSecuritySettingTypeBasicRuleTest
     {
         [Fact]
         public void WhenApiSecuretTypeBasicHasEmptyOrNullUser_ShouldReturnError()
         {
             // arrange
-            var apiSecuret = new ApiSecuretSetting();
-            var rule = new ApiSecuretSettingTypeBasicRule();
+            var apiSecuret = new ApiSecuritySetting();
+            var rule = new ApiSecuritySettingTypeBasicRule();
 
             // act
             var result = rule.Do(apiSecuret);
 
             // assert
-            var constains = result.Errors.Contains("ApiSecuret.User is required");
+            var constains = result.Errors.Contains("ApiSecurity.User is required");
             Assert.True(constains);
         }
 
@@ -25,14 +25,14 @@ namespace Test.Settings.ApiSecurets.ValidateRules
         public void WhenApiSecuretTypeBasicHasEmptyOrNullPassword_ShouldReturnError()
         {
             // arrange
-            var apiSecuret = new ApiSecuretSetting();
-            var rule = new ApiSecuretSettingTypeBasicRule();
+            var apiSecuret = new ApiSecuritySetting();
+            var rule = new ApiSecuritySettingTypeBasicRule();
 
             // act
             var result = rule.Do(apiSecuret);
 
             // assert
-            var constains = result.Errors.Contains("ApiSecuret.Password is required");
+            var constains = result.Errors.Contains("ApiSecurity.Password is required");
             Assert.True(constains);
         }
 
@@ -40,14 +40,14 @@ namespace Test.Settings.ApiSecurets.ValidateRules
         public void WhenApiSecuretTypeBasicHasTypeNone_ShouldReturnError()
         {
             // arrange
-            var apiSecuret = new ApiSecuretSetting { Type = ApiSecuretType.None };
-            var rule = new ApiSecuretSettingTypeBasicRule();
+            var apiSecuret = new ApiSecuritySetting { Type = ApiSecurityType.None };
+            var rule = new ApiSecuritySettingTypeBasicRule();
 
             // act
             var result = rule.Do(apiSecuret);
 
             // assert
-            var constains = result.Errors.Contains("ApiSecuret.Type is required");
+            var constains = result.Errors.Contains("ApiSecurity.Type is required");
             Assert.True(constains);
         }
     }
