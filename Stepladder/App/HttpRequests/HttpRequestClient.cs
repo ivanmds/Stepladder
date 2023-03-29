@@ -50,7 +50,6 @@ namespace App.HttpRequests
             }
             else if (httpMethodType == HttpMethodType.DELETE)
             {
-                var jsonObject = ParseBodyString(stringBody);
                 return await _httpClient.DeleteAsync(uri);
             }
 
