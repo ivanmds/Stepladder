@@ -14,6 +14,9 @@ namespace App.Settings.ApiSecurets.ValidateRules
             if (string.IsNullOrEmpty(value.Password))
                 result.AddError("ApiSecuret.Password is required");
 
+            if (value.Type == Types.ApiSecuretType.None)
+                result.AddError("ApiSecuret.Type is required");
+
             return result;
         }
     }

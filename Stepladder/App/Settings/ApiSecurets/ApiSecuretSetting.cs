@@ -1,6 +1,5 @@
 ﻿using App.Settings.ApiSecurets.Types;
 using App.Settings.ApiSecurets.ValidateRules;
-using App.Settings.Types;
 using App.Validations;
 
 namespace App.Settings.ApiSecurets
@@ -10,8 +9,6 @@ namespace App.Settings.ApiSecurets
         public ApiSecuretType Type { get; set; }
         public string User { get; set; }
         public string Password { get; set; }
-        public ValueFromType ValueFrom { get; set; }
-
 
         public ValidateResult Valid()
         {

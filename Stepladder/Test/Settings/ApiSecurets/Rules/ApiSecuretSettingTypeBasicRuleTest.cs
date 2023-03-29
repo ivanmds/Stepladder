@@ -1,4 +1,5 @@
 ﻿using App.Settings.ApiSecurets;
+using App.Settings.ApiSecurets.Types;
 using App.Settings.ApiSecurets.ValidateRules;
 
 namespace Test.Settings.ApiSecurets.ValidateRules
@@ -32,6 +33,21 @@ namespace Test.Settings.ApiSecurets.ValidateRules
 
             // assert
             var constains = result.Errors.Contains("ApiSecuret.Password is required");
+            Assert.True(constains);
+        }
+
+        [Fact]
+        public void WhenApiSecuretTypeBasicHasTypeNone_ShouldReturnError()
+        {
+            // arrange
+            var apiSecuret = new ApiSecuretSetting { Type = ApiSecuretType.None };
+            var rule = new ApiSecuretSettingTypeBasicRule();
+
+            // act
+            var result = rule.Do(apiSecuret);
+
+            // assert
+            var constains = result.Errors.Contains("ApiSecuret.Type is required");
             Assert.True(constains);
         }
     }

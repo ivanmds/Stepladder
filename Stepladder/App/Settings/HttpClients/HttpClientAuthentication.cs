@@ -1,6 +1,5 @@
 ﻿using App.Settings.HttpClients.Types;
 using App.Settings.HttpClients.ValidateRules;
-using App.Settings.Types;
 using App.Validations;
 
 namespace App.Settings.HttpClients
@@ -13,7 +12,6 @@ namespace App.Settings.HttpClients
         public string EndpointAuth { get; set; }
 
         public AuthenticationType Type { get; set; }
-        public ValueFromType ValueFrom { get; set; }
 
 
         public ValidateResult Valid()
