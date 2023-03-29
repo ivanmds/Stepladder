@@ -12,12 +12,6 @@ namespace App.Settings
     {
         public static ApplicationSetting Current { get; private set; }
 
-        static ApplicationSetting()
-        {
-            if (Current == null)
-                new ApplicationSetting();
-        }
-
         public ApplicationSetting()
         {
             if (Current == null)
@@ -37,16 +31,9 @@ namespace App.Settings
         public List<IValidable> GetValidables()
         {
             var validables = new List<IValidable>();
-            if (Startup != null)
-            {
+
+            if(Startup != null)
                 validables.Add(Startup);
-
-                if (Startup.HttpClientAuthentication != null)
-                    validables.AddRange(Startup.HttpClientAuthentication);
-
-                if (Startup.ApiSecuret != null)
-                    validables.Add(Startup.ApiSecuret);
-            }
 
             if (Entrypoints != null)
                 validables.Add(Entrypoints);

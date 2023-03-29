@@ -14,8 +14,7 @@ namespace App.Settings.ValidateRules
                 .ToList();
 
             if (httpClientAuthenticationDuplicateIds?.Count > 0)
-                result.AddError("Startup.HttpClientAuthentication.Id duplicate");
-
+                result.AddError("Startup.HttpClientAuthentication.Id duplicated");
 
             if (string.IsNullOrEmpty(value.ServiceName))
                 result.AddError("Startup.ServiceName is required");
@@ -34,6 +33,14 @@ namespace App.Settings.ValidateRules
                 if (string.IsNullOrEmpty(value.OtelEndpoint))
                     result.AddError("Startup.OtelEndpoint is required");
             }
+
+            var mapVariablesDuplicateNames = value.MapVariables?.GroupBy(p => p.Name)
+                .Where(g => g.Count() > 1)
+                .Select(y => y.Key)
+                .ToList();
+
+            if (mapVariablesDuplicateNames?.Count > 0)
+                result.AddError("Startup.MapVariables.Name duplicated");
 
             return result;
         }

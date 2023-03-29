@@ -1,5 +1,6 @@
 ﻿using App.Settings;
 using App.Settings.HttpClients;
+using App.Settings.MapVariables;
 using App.Settings.ValidateRules;
 
 namespace Test.Settings.ValidateRules
@@ -14,8 +15,8 @@ namespace Test.Settings.ValidateRules
             {
                 HttpClientAuthentication = new List<HttpClientAuthentication>
                 {
-                    new HttpClientAuthentication { Id = "test_duplicate_id" },
-                    new HttpClientAuthentication { Id = "test_duplicate_id" }
+                    new HttpClientAuthentication { Id = "test_duplicated_id" },
+                    new HttpClientAuthentication { Id = "test_duplicated_id" }
                 }
             };
             
@@ -25,7 +26,7 @@ namespace Test.Settings.ValidateRules
             var result = rule.Do(startupSetting);
 
             // assert
-            var contains = result.Errors.Contains("Startup.HttpClientAuthentication.Id duplicate");
+            var contains = result.Errors.Contains("Startup.HttpClientAuthentication.Id duplicated");
             Assert.True(contains);
         }
 
@@ -37,8 +38,8 @@ namespace Test.Settings.ValidateRules
             {
                 HttpClientAuthentication = new List<HttpClientAuthentication>
                 {
-                    new HttpClientAuthentication { Id = "test_duplicate_id1" },
-                    new HttpClientAuthentication { Id = "test_duplicate_id2" }
+                    new HttpClientAuthentication { Id = "test_duplicated_id1" },
+                    new HttpClientAuthentication { Id = "test_duplicated_id2" }
                 }
             };
 
@@ -48,7 +49,7 @@ namespace Test.Settings.ValidateRules
             var result = rule.Do(startupSetting);
 
             // assert
-            var contains = result.Errors.Contains("Startup.HttpClientAuthentication.Id duplicate");
+            var contains = result.Errors.Contains("Startup.HttpClientAuthentication.Id duplicated");
             Assert.False(contains);
         }
 
@@ -95,6 +96,53 @@ namespace Test.Settings.ValidateRules
             // assert
             var contains = result.Errors.Contains("Startup.Prefix is required");
             Assert.True(contains);
+        }
+
+
+        [Fact]
+        public void WhenStartupSettingMapVariablesNameHasDuplicate_ShouldReturnError()
+        {
+            // arrange
+            var startupSetting = new StartupSetting
+            {
+                MapVariables = new List<MapVariableSetting>
+                {
+                    new MapVariableSetting { Name = "test_duplicated_id" },
+                    new MapVariableSetting { Name = "test_duplicated_id" }
+                }
+            };
+
+            var rule = new StartupSettingRule();
+
+            // act
+            var result = rule.Do(startupSetting);
+
+            // assert
+            var contains = result.Errors.Contains("Startup.MapVariables.Name duplicated");
+            Assert.True(contains);
+        }
+
+        [Fact]
+        public void WhenStartupSettingMapVariablesNameHasNotDuplicate_ShouldReturnError()
+        {
+            // arrange
+            var startupSetting = new StartupSetting
+            {
+                MapVariables = new List<MapVariableSetting>
+                {
+                    new MapVariableSetting { Name = "test_duplicated_id1" },
+                    new MapVariableSetting { Name = "test_duplicated_id2" }
+                }
+            };
+
+            var rule = new StartupSettingRule();
+
+            // act
+            var result = rule.Do(startupSetting);
+
+            // assert
+            var contains = result.Errors.Contains("Startup.MapVariables.Name duplicated");
+            Assert.False(contains);
         }
     }
 }

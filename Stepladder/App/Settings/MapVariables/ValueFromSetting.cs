@@ -1,4 +1,5 @@
-﻿using App.Settings.MapVariables.Types;
+﻿using App.Settings.MapVariables.Rules;
+using App.Settings.MapVariables.Types;
 using App.Validations;
 
 namespace App.Settings.MapVariables
@@ -10,7 +11,12 @@ namespace App.Settings.MapVariables
 
         public ValidateResult Valid()
         {
-            throw new NotImplementedException();
+            var rules = new IRule<ValueFromSetting>[]
+            {
+                new ValueFromSettingRule()
+            };
+
+            return RuleExecute.Execute(this, rules);
         }
     }
 }

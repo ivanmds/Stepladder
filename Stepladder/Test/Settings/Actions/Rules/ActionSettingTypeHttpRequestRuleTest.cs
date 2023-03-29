@@ -11,6 +11,11 @@ namespace Test.Settings.Actions.Rules
 {
     public class ActionSettingTypeHttpRequestRuleTest
     {
+        public ActionSettingTypeHttpRequestRuleTest() 
+        {
+            new ApplicationSetting();
+        }
+
         [Fact]
         public void WhenActionSettingTypeHttpRequestHasEmptyOrNullUri_ShouldReturnError()
         {

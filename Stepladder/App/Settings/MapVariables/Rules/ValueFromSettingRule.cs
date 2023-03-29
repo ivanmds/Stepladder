@@ -18,7 +18,7 @@ namespace App.Settings.MapVariables.Rules
             if (value.Type == ValueFromType.AwsSecret)
             {
                 var appSetting = ApplicationSetting.Current;
-                if (appSetting.Startup.AwsSecretEnable == false)
+                if (appSetting.Startup?.AwsSecretEnable == false)
                     result.AddError("ValueFrom.Type AwsSecret need that Startup.AwsSecretEnable is enabled");
             }
 
