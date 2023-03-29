@@ -1,5 +1,5 @@
 ﻿using App.Settings.Actions.Types;
-using App.Settings.Entrypoints.Routes.Types;
+using App.Types;
 using App.Validations;
 
 namespace App.Settings.Actions.Rules
@@ -22,7 +22,7 @@ namespace App.Settings.Actions.Rules
                         result.AddError("Action.Uri should a valid uri");
                 }
 
-                if (value.Method == MethodType.NONE)
+                if (value.Method == HttpMethodType.NONE)
                     result.AddError("Action.Method is required");
 
                 if(value.ReponseContractMapId != null)
@@ -41,8 +41,8 @@ namespace App.Settings.Actions.Rules
                     if (hasContractMap == false)
                         result.AddError($"Action.RequestContractValidationId {value.RequestContractValidationId} should configured before use");
 
-                    if (value.Method == MethodType.GET ||
-                        value.Method == MethodType.DELETE)
+                    if (value.Method == HttpMethodType.GET ||
+                        value.Method == HttpMethodType.DELETE)
                         result.AddError("Action.RequestContractValidationId only used in post, put and patch methods");
                 }
 
@@ -53,7 +53,7 @@ namespace App.Settings.Actions.Rules
                     if (hasStrategyCacheId == false)
                         result.AddError($"Action.StrategyCacheId {value.StrategyCacheId} should configured before use");
 
-                    if(value.Method != MethodType.GET)
+                    if(value.Method != HttpMethodType.GET)
                         result.AddError("Action.StrategyCacheId only used in get methods");
                 }
 
@@ -64,7 +64,7 @@ namespace App.Settings.Actions.Rules
                     if (hasStrategyCacheId == false)
                         result.AddError($"Action.StrategyHttpIdempotencyId {value.StrategyHttpIdempotencyId} should configured before use");
 
-                    if (value.Method == MethodType.GET)
+                    if (value.Method == HttpMethodType.GET)
                        result.AddError("Action.StrategyHttpIdempotencyId only used in post, put, patch and delete methods");
                 }
             }

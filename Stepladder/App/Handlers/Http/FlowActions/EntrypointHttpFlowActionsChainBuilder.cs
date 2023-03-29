@@ -1,7 +1,6 @@
 ﻿using App.Settings.Actions.Types;
 using App.Settings.Actions;
 using App.Settings.Entrypoints.Routes;
-using App.Settings.Entrypoints.Routes.Types;
 using App.Settings;
 using App.Settings.Strategies;
 
@@ -52,11 +51,7 @@ namespace App.Handlers.Http.FlowActions
 
                     if (action.Type == ActionType.HttpRequest)
                     {
-                        if (action.Method == MethodType.GET)
-                            FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpClientGetRequestHandler), actionSetting: action);
-                        else if (action.Method == MethodType.POST)
-                            FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpClientPostRequestHandler), actionSetting: action);
-
+                        FlowActionsChain.PutFlowAction(flowActionId, typeof(HttpClientRequestHandler), actionSetting: action);
 
                         if (action.ReponseContractMapId != null)
                         {

@@ -1,7 +1,8 @@
 ﻿using App.Contexts;
-using App.JsonHelpers;
+using App.Helpers;
 using Bankly.Sdk.Opentelemetry.Trace;
 using System.Diagnostics;
+using System.Text.Json.Nodes;
 
 namespace App.Handlers.Http
 {
@@ -20,11 +21,31 @@ namespace App.Handlers.Http
                 if (trace != null)
                     activity = trace.StartActivity("HttpResponseContractMapHandler");
 
-                var json = context.ResponseContext.GetJsonResponseBody();
+                var isArray = context.ResponseContext.CheckIfResponseIsArray();
 
-                var jsonMapParse = new JsonMapParse(json, ContractMap);
-                json = jsonMapParse.MapParse();
-                context.ResponseContext.ResponseBodyStringValue = json.ToString();
+                if (isArray)
+                {
+                    var jsonArray = context.ResponseContext.GetJsonArrayResponseBody();
+                  
+                    foreach (var json in jsonArray) 
+                    {
+                        var jsonObject = json as JsonObject;
+                        if(jsonObject == null)
+                            continue;
+
+                        var jsonMapParse = new JsonMapParse(jsonObject, ContractMap);
+                        jsonMapParse.MapParse();
+                    }
+
+                    context.ResponseContext.ResponseBodyStringValue = jsonArray.ToString();
+                }
+                else
+                {
+                    var json = context.ResponseContext.GetJsonResponseBody();
+                    var jsonMapParse = new JsonMapParse(json, ContractMap);
+                    json = jsonMapParse.MapParse();
+                    context.ResponseContext.ResponseBodyStringValue = json.ToString();
+                }
 
                 activity?.Dispose();
             }

@@ -6,7 +6,7 @@ namespace App.Contexts
     public class ResponseContext
     {
         private JsonObject _jsonResponseBody = null;
-        private string _responseBodyStringValue = null;
+        private JsonArray _jsonArrayResponseBody = null;
         public JsonObject GetJsonResponseBody()
         {
             if(_jsonResponseBody == null)
@@ -15,15 +15,24 @@ namespace App.Contexts
             return _jsonResponseBody;
         }
 
-        public string ResponseBodyStringValue 
+        public JsonArray GetJsonArrayResponseBody()
         {
-            get => _responseBodyStringValue;
-            set
-            {
-                _responseBodyStringValue = value;
-                Task.Run(() => GetJsonResponseBody());
-            }
+            if (_jsonArrayResponseBody == null)
+                _jsonArrayResponseBody = JsonSerializer.Deserialize<JsonArray>(ResponseBodyStringValue);
+
+            return _jsonArrayResponseBody;
         }
+
+        public bool CheckIfResponseIsArray()
+        {
+            var start = ResponseBodyStringValue.StartsWith('[');
+            var end1 = ResponseBodyStringValue.EndsWith("]");
+            var end2 = ResponseBodyStringValue.EndsWith("]\n");
+
+            return start && (end1 || end2);
+        }
+
+        public string ResponseBodyStringValue { get; set; }
         public int ResponseStatusCode { get; set; }
         public string ResponseContentType { get; set; } = "application/json";
         public bool IsSuccessStatusCode { get; set; }

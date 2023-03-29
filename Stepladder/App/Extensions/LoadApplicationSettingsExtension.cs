@@ -1,6 +1,7 @@
 ﻿using App.Constants;
 using App.Contexts;
 using App.Handlers.Http;
+using App.HttpRequests;
 using App.Settings;
 using App.Validations;
 using YamlDotNet.Serialization.NamingConventions;
@@ -26,16 +27,18 @@ namespace App.Extensions
 
             builder.Services.AddScoped<StepladderHttpContext>();
 
-            builder.Services.AddScoped<HttpClientGetRequestHandler>();
-            builder.Services.AddScoped<HttpClientPostRequestHandler>();
             builder.Services.AddScoped<HttpFirstHandler>();
+            builder.Services.AddScoped<HttpClientRequestHandler>();
             builder.Services.AddScoped<HttpWriteResponseHandler>();
             builder.Services.AddScoped<HttpWriteResponseMockHandler>();
             builder.Services.AddScoped<HttpResponseContractMapHandler>();
             builder.Services.AddScoped<HttpRequestContractValidationHandler>();
             builder.Services.AddScoped<HttpRequestStrategyCacheHandler>();
             builder.Services.AddScoped<HttpRequestStrategyHttpIdempotencyHandler>();
+
+
             builder.Services.AddHttpClient();
+            builder.Services.AddSingleton<HttpRequestClient>();
         }
 
         private static void ApplicationSettingValidate(ApplicationSetting setting)

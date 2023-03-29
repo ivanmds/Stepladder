@@ -1,5 +1,5 @@
 ﻿using App.Settings.Entrypoints.Routes.Rules;
-using App.Settings.Entrypoints.Routes.Types;
+using App.Types;
 using App.Validations;
 
 namespace App.Settings.Entrypoints.Routes
@@ -7,7 +7,7 @@ namespace App.Settings.Entrypoints.Routes
     public class RouteSetting : IValidable
     {
         public string Route { get; set; }
-        public MethodType Method { get; set; }
+        public HttpMethodType Method { get; set; }
         public bool EnableAnonymous { get; set; }
         public string FlowActionId { get; set; }
         public ResponseMock ResponseMock { get; set; }

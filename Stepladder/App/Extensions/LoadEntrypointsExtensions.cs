@@ -1,7 +1,7 @@
 ﻿using App.Delegates;
 using App.Handlers.Http.FlowActions;
 using App.Settings;
-using App.Settings.Entrypoints.Routes.Types;
+using App.Types;
 using System.Text;
 
 namespace App.Extensions
@@ -18,18 +18,22 @@ namespace App.Extensions
             {
                 foreach (var route in appConfig.Entrypoints.Routes)
                 {
-
                     var info = $"STARTED ROUTE: {route.Route} METHOD: {route.Method}";
                     ENDPOINT_LOADED.AppendLine(info);
 
                     var requestDelegate = new HttpRequestDelegate(route);
                     var enabledAnonymous = appConfig.Startup.HasApiSecurity == false || route.EnableAnonymous == true;
 
-                    if (route.Method == MethodType.GET)
+                    if (route.Method == HttpMethodType.GET)
                         app.MapGet(route.Route, enabledAnonymous ? requestDelegate.Do_Anonymous : requestDelegate.Do_Authorize);
-                    else if (route.Method == MethodType.POST)
+                    else if (route.Method == HttpMethodType.POST)
                         app.MapPost(route.Route, enabledAnonymous ? requestDelegate.Do_Anonymous : requestDelegate.Do_Authorize);
-
+                    else if (route.Method == HttpMethodType.PUT)
+                        app.MapPut(route.Route, enabledAnonymous ? requestDelegate.Do_Anonymous : requestDelegate.Do_Authorize);
+                    else if (route.Method == HttpMethodType.PATCH)
+                        app.MapPatch(route.Route, enabledAnonymous ? requestDelegate.Do_Anonymous : requestDelegate.Do_Authorize);
+                    else if (route.Method == HttpMethodType.DELETE)
+                        app.MapDelete(route.Route, enabledAnonymous ? requestDelegate.Do_Anonymous : requestDelegate.Do_Authorize);
 
                     EntrypointHttpFlowActionsChainBuilder.Builder(route);
 

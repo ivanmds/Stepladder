@@ -4,8 +4,8 @@ using App.Settings.Actions.Rules;
 using App.Settings.Actions.Types;
 using App.Settings.ContractMap;
 using App.Settings.ContractValidations;
-using App.Settings.Entrypoints.Routes.Types;
 using App.Settings.Strategies;
+using App.Types;
 
 namespace Test.Settings.Actions.Rules
 {
@@ -66,7 +66,7 @@ namespace Test.Settings.Actions.Rules
         public void WhenActionSettingTypeHttpRequestHasEmptyMethod_ShouldReturnError()
         {
             // arrange
-            var setting = new ActionSetting { Method = MethodType.NONE };
+            var setting = new ActionSetting { Method = HttpMethodType.NONE };
             var rule = new ActionSettingTypeHttpRequestRule();
 
             // act
@@ -140,9 +140,9 @@ namespace Test.Settings.Actions.Rules
         }
 
         [Theory]
-        [InlineData(MethodType.GET)]
-        [InlineData(MethodType.DELETE)]
-        public void WhenActionSettingTypeHttpRequestHasRequestContractValidationIdCofiguredInvalidMethod_ShouldReturnError(MethodType methodType)
+        [InlineData(HttpMethodType.GET)]
+        [InlineData(HttpMethodType.DELETE)]
+        public void WhenActionSettingTypeHttpRequestHasRequestContractValidationIdCofiguredInvalidMethod_ShouldReturnError(HttpMethodType methodType)
         {
             // arrange
             var setting = new ActionSetting { RequestContractValidationId = "configured", Method = methodType };
@@ -190,11 +190,11 @@ namespace Test.Settings.Actions.Rules
         }
 
         [Theory]
-        [InlineData(MethodType.POST)]
-        [InlineData(MethodType.PATCH)]
-        [InlineData(MethodType.PUT)]
-        [InlineData(MethodType.DELETE)]
-        public void WhenActionSettingTypeHttpRequestGetAndHasStrategyCacheIdConfigured_ShouldReturnError(MethodType methodType)
+        [InlineData(HttpMethodType.POST)]
+        [InlineData(HttpMethodType.PATCH)]
+        [InlineData(HttpMethodType.PUT)]
+        [InlineData(HttpMethodType.DELETE)]
+        public void WhenActionSettingTypeHttpRequestGetAndHasStrategyCacheIdConfigured_ShouldReturnError(HttpMethodType methodType)
         {
             // arrange
             var setting = new ActionSetting { StrategyCacheId = "configured", Method = methodType };
@@ -251,8 +251,8 @@ namespace Test.Settings.Actions.Rules
         }
 
         [Theory]
-        [InlineData(MethodType.GET)]
-        public void WhenActionSettingTypeHttpRequestGetAndHasStrategyHttpIdempotencyIdConfigured_ShouldReturnError(MethodType methodType)
+        [InlineData(HttpMethodType.GET)]
+        public void WhenActionSettingTypeHttpRequestGetAndHasStrategyHttpIdempotencyIdConfigured_ShouldReturnError(HttpMethodType methodType)
         {
             // arrange
             ApplicationSetting.Current.

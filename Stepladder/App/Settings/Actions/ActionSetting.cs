@@ -1,6 +1,6 @@
 ﻿using App.Settings.Actions.Rules;
 using App.Settings.Actions.Types;
-using App.Settings.Entrypoints.Routes.Types;
+using App.Types;
 using App.Validations;
 
 namespace App.Settings.Actions
@@ -9,7 +9,7 @@ namespace App.Settings.Actions
     {
         public string Id { get; set; }
         public ActionType Type { get; set; }
-        public MethodType Method { get; set; }
+        public HttpMethodType Method { get; set; }
         public string Uri { get; set; }
         public string ReponseContractMapId { get; set; }
         public string RequestContractValidationId { get; set; }

@@ -1,4 +1,5 @@
-﻿using App.Validations;
+﻿using App.Types;
+using App.Validations;
 
 namespace App.Settings.Entrypoints.Routes.Rules
 {
@@ -8,7 +9,7 @@ namespace App.Settings.Entrypoints.Routes.Rules
         {
             var result = ValidateResult.Create();
 
-            if (value.Method == Types.MethodType.NONE)
+            if (value.Method == HttpMethodType.NONE)
                 result.AddError("Route.Method is required");
 
 

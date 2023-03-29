@@ -1,21 +1,26 @@
 ﻿using App.Contexts;
 using App.Helpers;
+using App.HttpRequests;
 using App.Settings.Actions;
 
 namespace App.Handlers.Http
 {
-    public class HttpClientGetRequestHandler : Handler
+    public class HttpClientRequestHandler : Handler
     {
         public override async Task DoAsync(StepladderHttpContext context)
         {
             if (context.HasCache == false && context.HasNoErrorProcessor && ActionSetting != null)
             {
-                var httpClientFactory = context.HttpContext.RequestServices.GetService<IHttpClientFactory>();
-                using var httpClient = httpClientFactory.CreateClient(ActionSetting.Uri);
-                HttpHelper.MapHeaderValue(context, httpClient, ActionSetting);
-                HttpHelper.SetPropagatedHeadersFromHttpRequestToHttpClient(context.HttpContext.Request, httpClient);
+                var httpRequestClient = context.HttpContext.RequestServices.GetService<HttpRequestClient>();
+
+                var mappedHeaders = HttpHelper.LoadMapHeaders(context, ActionSetting);
+                httpRequestClient.SetHeaders(mappedHeaders);
+                httpRequestClient.SetToHttpClientPropagatedHeaders(context.HttpContext.Request.Headers);
+
                 var uri = BuildFinalHttpClientUri(context);
-                var httpResponseMessage = await httpClient.GetAsync(uri);
+                var jsonBody = await context.GetCurrentBodyToRequestStringAsync();
+
+                var httpResponseMessage = await httpRequestClient.SendAsync(uri, ActionSetting.Method, jsonBody);
                 await LoadHttpResponseMessageAsync(context, httpResponseMessage);
             }
 

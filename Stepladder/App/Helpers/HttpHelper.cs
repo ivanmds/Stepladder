@@ -18,11 +18,11 @@ namespace App.Helpers
             "Connection"
         };
 
-        public static void MapHeaderValue(
+        public static IDictionary<string, string> LoadMapHeaders(
             StepladderHttpContext context,
-            HttpClient httpClient,
             ActionSetting actionSetting)
         {
+            var headers = new Dictionary<string, string>();
             if (actionSetting.HeaderMaps.Count > 0)
             {
                 foreach (var headerMap in actionSetting.HeaderMaps)
@@ -33,15 +33,17 @@ namespace App.Helpers
                     if (headerMap.FromType == FromType.HttpRequest)
                     {
                         if(context.HttpContext.Request.Headers.TryGetValue(keyFrom, out var headerValue))
-                            httpClient.DefaultRequestHeaders.Add(keyTo, headerValue.ToString());
+                            headers.Add(keyTo, headerValue.ToString());
                     }
                 }
             }
+
+            return headers;
         }
 
-        public static void SetPropagatedHeadersFromHttpRequestToHttpClient(HttpRequest httpRequest, HttpClient httpClient)
+        public static void SetToHttpClientPropagatedHeaders(IHeaderDictionary headers, HttpClient httpClient)
         {
-            foreach(var header in httpRequest.Headers)
+            foreach(var header in headers)
             {
                 if (NOT_PROPAGATED_HEADER.Contains(header.Key))
                     continue;
@@ -50,7 +52,7 @@ namespace App.Helpers
             }
         }
 
-        public static void SetPropagatedHeadersFromHttpResponseMessageToHttpResponse(HttpResponseMessage responseMessage, HttpResponse response)
+        public static void SetHttpResponsePropagatedHeaders(HttpResponseMessage responseMessage, HttpResponse response)
         {
             foreach (var header in responseMessage.Headers)
             {

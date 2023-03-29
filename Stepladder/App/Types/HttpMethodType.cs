@@ -1,6 +1,6 @@
-﻿namespace App.Settings.Entrypoints.Routes.Types
+﻿namespace App.Types
 {
-    public enum MethodType
+    public enum HttpMethodType
     {
         NONE,
         GET,

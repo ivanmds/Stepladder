@@ -32,7 +32,7 @@ namespace App.Handlers.Http
             context.ResponseContext.ResponseBodyStringValue = await response.Content.ReadAsStringAsync();
             context.ResponseContext.ResponseStatusCode = (int)response.StatusCode;
             context.ResponseContext.IsSuccessStatusCode = response.IsSuccessStatusCode;
-            HttpHelper.SetPropagatedHeadersFromHttpResponseMessageToHttpResponse(response, context.HttpContext.Response);
+            HttpHelper.SetHttpResponsePropagatedHeaders(response, context.HttpContext.Response);
         }
     }
 }

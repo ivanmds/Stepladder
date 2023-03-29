@@ -1,7 +1,7 @@
 ﻿using App.Settings.ContractMap;
 using System.Text.Json.Nodes;
 
-namespace App.JsonHelpers
+namespace App.Helpers
 {
     public class JsonMapParse
     {
@@ -140,6 +140,9 @@ namespace App.JsonHelpers
                 {
                     if (jsonObjectCurrent.TryGetPropertyValue(Property, out var mapToJsonNode))
                     {
+                        if (mapToJsonNode == null)
+                            continue;
+
                         if (mapToJsonNode.GetType() == typeof(JsonObject))
                             jsonObjectCurrent = mapToJsonNode as JsonObject;
                         else if (mapFromJsonNode.GetType() == typeof(JsonArray))
@@ -192,6 +195,9 @@ namespace App.JsonHelpers
 
         private void MapJsonArrayFromTo(ContractMapArray contractMapArray, JsonArray mapFrom, JsonArray mapTo)
         {
+            if (mapFrom == null || mapTo == null)
+                return;
+
             if (contractMapArray.MapFromTo?.Count > 0)
             {
                 foreach (var jsonNode in mapFrom.ToArray())

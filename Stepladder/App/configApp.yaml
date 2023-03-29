@@ -37,14 +37,17 @@ connections:
 
 entrypoints:
   routes:
+  - route: "api/customers"
+    method: get
+    #enableAnonymous: true
+    flowActionId: get_customer
+
   - route: "api/customers/{id}"
     method: get
-    enableAnonymous: true
-    flowActionId: get_customer
+    flowActionId: get_customer_id
 
   - route: "api/customers"
     method: post
-    enableAnonymous: true
     flowActionId: post_customer
   
 #  consumers:
@@ -55,6 +58,16 @@ entrypoints:
 
 actions:
   - id: get_customer_action
+    type: httpRequest
+    uri: 'http://localhost:8080/customers'
+    method: get
+    #strategyCacheId: redisCache_22
+    headerMaps:
+      - mapFromTo: "x-correlation-id:x-correlation-id"
+        fromType: httpRequest
+    reponseContractMapId: customer_response
+
+  - id: get_customer_id_action
     type: httpRequest
     uri: 'http://localhost:8080/customers/{id}'
     method: get
@@ -89,6 +102,11 @@ flowActions:
   - id: get_customer
     actionsId:
       - get_customer_action
+
+  - id: get_customer_id
+    actionsId:
+      - get_customer_id_action
+
   - id: post_customer
     actionsId:
       - post_customer_action
