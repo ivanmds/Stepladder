@@ -25,7 +25,7 @@ namespace Test.Settings.ValidateRules
             var result = rule.Do(startupSetting);
 
             // assert
-            var contains = result.Errors.Contains("StartupSetting.HttpClientAuthentication.Id duplicate");
+            var contains = result.Errors.Contains("Startup.HttpClientAuthentication.Id duplicate");
             Assert.True(contains);
         }
 
@@ -48,8 +48,53 @@ namespace Test.Settings.ValidateRules
             var result = rule.Do(startupSetting);
 
             // assert
-            var contains = result.Errors.Contains("StartupSetting.HttpClientAuthentication.Id duplicate");
+            var contains = result.Errors.Contains("Startup.HttpClientAuthentication.Id duplicate");
             Assert.False(contains);
+        }
+
+        [Fact]
+        public void WhenStartupServiceNameIsEmpty_ShouldReturnError()
+        {
+            // arrange 
+            var startupSetting = new StartupSetting();
+            var rule = new StartupSettingRule();
+
+            // act
+            var result = rule.Do(startupSetting);
+
+            // assert
+            var contains = result.Errors.Contains("Startup.ServiceName is required");
+            Assert.True(contains);
+        }
+
+        [Fact]
+        public void WhenStartupServiceVersionIsEmpty_ShouldReturnError()
+        {
+            // arrange 
+            var startupSetting = new StartupSetting();
+            var rule = new StartupSettingRule();
+
+            // act
+            var result = rule.Do(startupSetting);
+
+            // assert
+            var contains = result.Errors.Contains("Startup.ServiceVersion is required");
+            Assert.True(contains);
+        }
+
+        [Fact]
+        public void WhenStartupPrefixIsEmptyAndAwsSecretEnableIsTrue_ShouldReturnError()
+        {
+            // arrange 
+            var startupSetting = new StartupSetting { AwsSecretEnable = true };
+            var rule = new StartupSettingRule();
+
+            // act
+            var result = rule.Do(startupSetting);
+
+            // assert
+            var contains = result.Errors.Contains("Startup.Prefix is required");
+            Assert.True(contains);
         }
     }
 }

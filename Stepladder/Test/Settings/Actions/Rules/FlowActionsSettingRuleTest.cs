@@ -25,12 +25,10 @@ namespace Test.Settings.Actions.Rules
         public void WhenFlowActionsSettingHasActionsIdNotConfigured_ShouldReturnError()
         {
             // arrange
-            var appSetting = new ApplicationSetting { Actions = new List<ActionSetting>() };
-            appSetting.Actions.Add(new ActionSetting { Id = "request_goggle" });
-
+            ApplicationSetting.Current.Actions = new List<ActionSetting>() { new ActionSetting { Id = "request_goggle" } };
             var setting = new FlowActionsSetting { ActionsId = new List<string> { "request_goggle", "not_configured" } };
             var rule = new FlowActionsSettingRule();
-            
+
             // act
             var result = rule.Do(setting);
 
@@ -43,9 +41,7 @@ namespace Test.Settings.Actions.Rules
         public void WhenFlowActionsSettingHasActionsIdConfigured_ShouldReturnSuccess()
         {
             // arrange
-            var appSetting = new ApplicationSetting { Actions = new List<ActionSetting>() };
-            appSetting.Actions.Add(new ActionSetting { Id = "request_goggle" });
-
+            ApplicationSetting.Current.Actions = new List<ActionSetting>(){ new ActionSetting { Id = "request_goggle" } };
             var setting = new FlowActionsSetting { ActionsId = new List<string> { "request_goggle" } };
             var rule = new FlowActionsSettingRule();
 

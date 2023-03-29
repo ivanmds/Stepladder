@@ -3,6 +3,8 @@ startup:
   serviceVersion: "2.0.1" # add validate to required property
   enableTelemetry: true
   otelEndpoint: "http://otel-http.kube.acesso-sdb.aws"
+  prefix: "stepladder"
+  awsSecretEnable: false
 
   #httpClientAuthentication:
   #  - id: "api_integration_pix"
@@ -17,7 +19,14 @@ startup:
   #  user: admin
   #  password: 123456
   #  valueFrom: declared
-  
+
+  mapVariables:
+    - name: REDIS_CONNECTION_STRING
+      valueFrom:
+        type: awsSecret
+        name: Redis
+
+
 #  connections:
 #    kafka:
 #      valueFrom:

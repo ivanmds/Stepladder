@@ -14,18 +14,25 @@ namespace App.Settings.ValidateRules
                 .ToList();
 
             if (httpClientAuthenticationDuplicateIds?.Count > 0)
-                result.AddError("StartupSetting.HttpClientAuthentication.Id duplicate");
+                result.AddError("Startup.HttpClientAuthentication.Id duplicate");
 
-            if(value.EnableTelemetry)
+
+            if (string.IsNullOrEmpty(value.ServiceName))
+                result.AddError("Startup.ServiceName is required");
+
+            if (string.IsNullOrEmpty(value.ServiceVersion))
+                result.AddError("Startup.ServiceVersion is required");
+
+            if (value.AwsSecretEnable)
             {
-                if(string.IsNullOrEmpty(value.ServiceName))
-                    result.AddError("StartupSetting.ServiceName is required");
+                if (string.IsNullOrEmpty(value.Prefix))
+                    result.AddError("Startup.Prefix is required");
+            }
 
-                if (string.IsNullOrEmpty(value.ServiceVersion))
-                    result.AddError("StartupSetting.ServiceVersion is required");
-
+            if (value.EnableTelemetry)
+            {
                 if (string.IsNullOrEmpty(value.OtelEndpoint))
-                    result.AddError("StartupSetting.OtelEndpoint is required");
+                    result.AddError("Startup.OtelEndpoint is required");
             }
 
             return result;

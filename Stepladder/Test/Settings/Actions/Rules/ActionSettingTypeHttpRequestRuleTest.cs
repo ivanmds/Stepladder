@@ -22,7 +22,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.Uri is required");
+            var constains = result.Errors.Contains("Action.Uri is required");
             Assert.True(constains);
         }
 
@@ -37,7 +37,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.Uri should a valid uri");
+            var constains = result.Errors.Contains("Action.Uri should a valid uri");
             Assert.True(constains);
         }
 
@@ -52,7 +52,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.Uri should a valid uri");
+            var constains = result.Errors.Contains("Action.Uri should a valid uri");
             Assert.False(constains);
         }
 
@@ -68,7 +68,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.Method is required");
+            var constains = result.Errors.Contains("Action.Method is required");
             Assert.True(constains);
         }
 
@@ -83,7 +83,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.ReponseContractMapId not_configured should configured before use");
+            var constains = result.Errors.Contains("Action.ReponseContractMapId not_configured should configured before use");
             Assert.True(constains);
         }
 
@@ -91,7 +91,7 @@ namespace Test.Settings.Actions.Rules
         public void WhenActionSettingTypeHttpRequestHasResponseContractMapIdIsConfigured_ShouldReturnSuccess()
         {
             // arrange
-            var appSetting = new ApplicationSetting { ContractMaps = new List<ContractMapSetting> { new ContractMapSetting { Id = "contract_configured" } } };
+            ApplicationSetting.Current.ContractMaps = new List<ContractMapSetting> { new ContractMapSetting { Id = "contract_configured" } };
             var setting = new ActionSetting { ReponseContractMapId = "contract_configured" };
             var rule = new ActionSettingTypeHttpRequestRule();
 
@@ -99,7 +99,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.ReponseContractMapId contract_configured should configured before use");
+            var constains = result.Errors.Contains("Action.ReponseContractMapId contract_configured should configured before use");
             Assert.False(constains);
         }
 
@@ -114,7 +114,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.RequestContractValidationId not_configured should configured before use");
+            var constains = result.Errors.Contains("Action.RequestContractValidationId not_configured should configured before use");
             Assert.True(constains);
         }
 
@@ -122,7 +122,7 @@ namespace Test.Settings.Actions.Rules
         public void WhenActionSettingTypeHttpRequestHasRequestHasRequestContractValidationIdIsConfigured_ShouldReturnSuccess()
         {
             // arrange
-            var appSetting = new ApplicationSetting { ContractValidations = new List<ContractValidation> { new ContractValidation { Id = "contract_configured" } } };
+            ApplicationSetting.Current.ContractValidations = new List<ContractValidation> { new ContractValidation { Id = "contract_configured" } };
             var setting = new ActionSetting { RequestContractValidationId = "contract_configured" };
             var rule = new ActionSettingTypeHttpRequestRule();
 
@@ -130,7 +130,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.RequestContractValidationId contract_configured should configured before use");
+            var constains = result.Errors.Contains("Action.RequestContractValidationId contract_configured should configured before use");
             Assert.False(constains);
         }
 
@@ -147,7 +147,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.RequestContractValidationId only used in post, put and patch methods");
+            var constains = result.Errors.Contains("Action.RequestContractValidationId only used in post, put and patch methods");
             Assert.True(constains);
         }
 
@@ -156,6 +156,7 @@ namespace Test.Settings.Actions.Rules
         public void WhenActionSettingTypeHttpRequestHasRequestStrategyCacheIdNotConfigured_ShouldReturnError()
         {
             // arrange
+            ApplicationSetting.Current.Strategies = new StrategiesSetting { Caches = new List<CacheSetting> { new CacheSetting { Id = "cache_configured" } } };
             var setting = new ActionSetting { StrategyCacheId = "not_configured" };
             var rule = new ActionSettingTypeHttpRequestRule();
 
@@ -163,7 +164,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.StrategyCacheId not_configured should configured before use");
+            var constains = result.Errors.Contains("Action.StrategyCacheId not_configured should configured before use");
             Assert.True(constains);
         }
 
@@ -171,7 +172,7 @@ namespace Test.Settings.Actions.Rules
         public void WhenActionSettingTypeHttpRequestHasRequestHasRequestStrategyCacheIdIsConfigured_ShouldReturnSuccess()
         {
             // arrange
-            var appSetting = new ApplicationSetting { Strategies = new StrategiesSetting { Caches = new List<CacheSetting> { new CacheSetting { Id = "cache_configured" } } } };
+            ApplicationSetting.Current.Strategies = new StrategiesSetting { Caches = new List<CacheSetting> { new CacheSetting { Id = "cache_configured" } } };
             var setting = new ActionSetting { StrategyCacheId = "cache_configured" };
             var rule = new ActionSettingTypeHttpRequestRule();
 
@@ -179,7 +180,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.StrategyCacheId cache_configured should configured before use");
+            var constains = result.Errors.Contains("Action.StrategyCacheId cache_configured should configured before use");
             Assert.False(constains);
         }
 
@@ -198,7 +199,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.StrategyCacheId only used in get methods");
+            var constains = result.Errors.Contains("Action.StrategyCacheId only used in get methods");
             Assert.True(constains);
         }
 
@@ -215,7 +216,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.StrategyHttpIdempotencyId not_configured should configured before use");
+            var constains = result.Errors.Contains("Action.StrategyHttpIdempotencyId not_configured should configured before use");
             Assert.True(constains);
         }
 
@@ -224,15 +225,15 @@ namespace Test.Settings.Actions.Rules
         public void WhenActionSettingTypeHttpRequestHasRequestHasRequestStrategyHttpIdempotencyIdIsConfigured_ShouldReturnSuccess()
         {
             // arrange
-            var appSetting = new ApplicationSetting 
-            { 
-                Strategies = new StrategiesSetting { 
+            ApplicationSetting.Current.
+                Strategies = new StrategiesSetting
+                {
                     HttpIdempotencies = new List<HttpIdempotencySetting>
-                    { 
-                        new HttpIdempotencySetting { Id = "cache_configured" } 
-                    } 
-            }
-            };
+                    {
+                        new HttpIdempotencySetting { Id = "cache_configured" }
+                    }
+                };
+
             var setting = new ActionSetting { StrategyHttpIdempotencyId = "cache_configured" };
             var rule = new ActionSettingTypeHttpRequestRule();
 
@@ -240,7 +241,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.StrategyHttpIdempotencyId cache_configured should configured before use");
+            var constains = result.Errors.Contains("Action.StrategyHttpIdempotencyId cache_configured should configured before use");
             Assert.False(constains);
         }
 
@@ -249,6 +250,14 @@ namespace Test.Settings.Actions.Rules
         public void WhenActionSettingTypeHttpRequestGetAndHasStrategyHttpIdempotencyIdConfigured_ShouldReturnError(MethodType methodType)
         {
             // arrange
+            ApplicationSetting.Current.
+               Strategies = new StrategiesSetting
+               {
+                   HttpIdempotencies = new List<HttpIdempotencySetting>
+                   {
+                        new HttpIdempotencySetting { Id = "configured" }
+                   }
+               };
             var setting = new ActionSetting { StrategyHttpIdempotencyId = "configured", Method = methodType };
             var rule = new ActionSettingTypeHttpRequestRule();
 
@@ -256,7 +265,7 @@ namespace Test.Settings.Actions.Rules
             var result = rule.Do(setting);
 
             // assert
-            var constains = result.Errors.Contains("ActionSetting.StrategyHttpIdempotencyId only used in post, put, patch and delete methods");
+            var constains = result.Errors.Contains("Action.StrategyHttpIdempotencyId only used in post, put, patch and delete methods");
             Assert.True(constains);
         }
     }

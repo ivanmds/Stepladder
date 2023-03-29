@@ -71,9 +71,7 @@ namespace Test.Settings.Entrypoints.Routes.Rules
         public void WhenRouteSettingFlowActionIdNotConfigured_ShouldReturnError()
         {
             // arrange
-            var appSetting = new ApplicationSetting { FlowActions = new List<FlowActionsSetting>() };
-            appSetting.FlowActions.Add(new FlowActionsSetting { Id = "create_account" });
-
+            ApplicationSetting.Current.FlowActions = new List<FlowActionsSetting>() { new FlowActionsSetting { Id = "create_account" } };
             var routeSetting = new RouteSetting { FlowActionId = "create_account_not_configured" };
             var rule = new RouteSettingRule();
 
@@ -89,9 +87,7 @@ namespace Test.Settings.Entrypoints.Routes.Rules
         public void WhenRouteSettingFlowActionIdIsConfigured_ShouldReturnSuccess()
         {
             // arrange
-            var appSetting = new ApplicationSetting { FlowActions = new List<FlowActionsSetting>() };
-            appSetting.FlowActions.Add(new FlowActionsSetting { Id = "create_account" });
-
+            ApplicationSetting.Current.FlowActions = new List<FlowActionsSetting>() { new FlowActionsSetting { Id = "create_account" } };
             var routeSetting = new RouteSetting { FlowActionId = "create_account" };
             var rule = new RouteSettingRule();
 

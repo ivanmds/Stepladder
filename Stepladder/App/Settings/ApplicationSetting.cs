@@ -12,6 +12,12 @@ namespace App.Settings
     {
         public static ApplicationSetting Current { get; private set; }
 
+        static ApplicationSetting()
+        {
+            if (Current == null)
+                new ApplicationSetting();
+        }
+
         public ApplicationSetting()
         {
             if (Current == null)

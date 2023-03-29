@@ -11,6 +11,8 @@ namespace App.Settings
         public string ServiceVersion { get; set; }
         public bool EnableTelemetry { get; set; }
         public string OtelEndpoint { get; set; }
+        public string Prefix { get; set; }
+        public bool AwsSecretEnable { get; set; }
 
 
         public List<HttpClientAuthentication> HttpClientAuthentication { get; set; }

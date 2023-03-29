@@ -42,7 +42,7 @@ namespace Test.Settings.Strategies.Rules
         public void WhenConfigureHttpIdempotencyRedisWioutConfigureConnectionRedis_ShouldReturnError()
         {
             // arrange
-            var appSetting = new ApplicationSetting() { Connections = new ConnectionSetting() { Redis = null } };
+            ApplicationSetting.Current.Connections = new ConnectionSetting() { Redis = null };
             var setting = new HttpIdempotencySetting { ProviderType = StrategyProviderType.Redis };
             var rule = new HttpIdempotencySettingRule();
 
