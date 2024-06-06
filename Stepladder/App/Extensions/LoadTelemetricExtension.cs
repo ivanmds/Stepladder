@@ -1,6 +1,6 @@
 ﻿using App.Settings;
-using Bankly.Sdk.Opentelemetry.Configuration;
-using Bankly.Sdk.Opentelemetry.Extensions;
+using Opentelemetry.Configuration;
+using Opentelemetry.Extensions;
 using OpenTelemetry.Trace;
 
 namespace App.Extensions

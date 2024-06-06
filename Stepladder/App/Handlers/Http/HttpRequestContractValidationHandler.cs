@@ -1,7 +1,7 @@
 ﻿using App.Contexts;
 using App.Helpers;
 using App.Helpers.Validations;
-using Bankly.Sdk.Opentelemetry.Trace;
+using Opentelemetry.Trace;
 using System.Diagnostics;
 using System.Text.Json;
 

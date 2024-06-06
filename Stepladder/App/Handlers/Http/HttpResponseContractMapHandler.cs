@@ -1,6 +1,6 @@
 ﻿using App.Contexts;
 using App.Helpers;
-using Bankly.Sdk.Opentelemetry.Trace;
+using Opentelemetry.Trace;
 using System.Diagnostics;
 using System.Text.Json.Nodes;
 
